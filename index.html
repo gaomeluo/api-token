@@ -129,6 +129,27 @@
   .news-title { font-size: 15px; }
   .news-title a { color: var(--text); }
   .news-meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
+  /* 大气资讯轮播模块 */
+  .featured-wrap { margin-bottom: 28px; background: linear-gradient(135deg, rgba(20,30,60,.7), rgba(12,18,36,.85)); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 12px 44px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04); }
+  .featured-inner { display: flex; gap: 0; min-height: 340px; }
+  @media(max-width:700px){ .featured-inner { flex-direction: column; min-height: auto; } }
+  .featured-img-box { flex: 0 0 50%; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(14,20,40,.9), rgba(8,12,24,.95)); min-height: 280px; }
+  .featured-img-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; transition: opacity .5s ease; opacity: 1; }
+  .featured-img-box img.hiding { opacity: 0; }
+  .featured-img-box::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(6,9,20,.7)); pointer-events: none; z-index: 1; }
+  .featured-dots { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 3; }
+  .featured-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.25); cursor: pointer; transition: .25s; }
+  .featured-dots span.active { background: var(--accent); box-shadow: 0 0 14px var(--accent); transform: scale(1.3); }
+  .featured-text { flex: 1; padding: 32px 36px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+  .featured-text .ft-tag { font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 12px; }
+  .featured-text h2 { margin: 0 0 16px; font-size: 26px; line-height: 1.35; font-weight: 700; background: linear-gradient(135deg, #e0ecff, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .featured-text .ft-summary { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .featured-text .ft-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; padding: 11px 26px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #04121a; font-weight: 600; text-decoration: none; box-shadow: var(--glow); align-self: flex-start; transition: .2s; }
+  .featured-text .ft-btn:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 0 32px rgba(56,225,255,.5); }
+  .featured-text .ft-arrow { display: flex; gap: 12px; position: absolute; bottom: 32px; right: 36px; }
+  .featured-text .ft-arrow button { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--text); cursor: pointer; font-size: 20px; transition: .22s; display: flex; align-items: center; justify-content: center; }
+  .featured-text .ft-arrow button:hover { border-color: var(--accent); color: var(--accent); box-shadow: var(--glow); }
+  .featured-pill { position: absolute; top: 32px; right: 36px; font-size: 12px; padding: 4px 14px; border-radius: 999px; background: rgba(56,225,255,.12); color: var(--accent); border: 1px solid rgba(56,225,255,.3); letter-spacing: .5px; }
 </style>
 </head>
 <body>
@@ -137,11 +158,25 @@
     <h1>🔌 API Token 大全</h1>
     <div class="sub">国内外免费 / 付费 API 一站式收录 · 性价比对比 · 擅长领域导航</div>
   </div>
-  <a class="btn ghost" onclick="showNews()">📰 资讯</a>
-  <a class="btn" href="admin.html">⚙️ 管理后台</a>
 </header>
 
 <div class="wrap">
+  <section class="featured-wrap" id="newsSection" style="display:none">
+    <div class="featured-inner">
+      <div class="featured-img-box">
+        <img id="featImg" src="" alt="" />
+        <div class="featured-dots" id="featDots"></div>
+      </div>
+      <div class="featured-text">
+        <div class="ft-tag">📰 最新资讯</div>
+        <h2 id="featTitle"></h2>
+        <div class="ft-summary" id="featSummary"></div>
+        <a class="ft-btn" id="featLink" href="#" target="_blank">立即访问 →</a>
+        <div class="ft-arrow"><button onclick="prevNews()">‹</button><button onclick="nextNews()">›</button></div>
+        <div class="featured-pill" id="featCount"></div>
+      </div>
+    </div>
+  </section>
   <div class="tabs">
     <div class="tab active" data-type="free" onclick="switchType('free')">🆓 免费榜</div>
     <div class="tab" data-type="paid" onclick="switchType('paid')">💎 付费榜</div>
@@ -178,20 +213,9 @@
   <div class="modal" id="cmpModal"></div>
 </div>
 
-<!-- 资讯 modal -->
-<div class="overlay" id="newsOverlay" onclick="if(event.target===this)closeNews()">
-  <div class="modal" id="newsModal" style="max-width:760px;">
-    <span class="close" onclick="closeNews()">✕</span>
-    <h2>📰 API / 模型最新动态</h2>
-    <p class="hint" style="margin-top:0;">自动索引自公开新闻源（模型发布、API 变更、定价更新）。点击「刷新」获取最新。</p>
-    <button class="btn small" onclick="loadNews(true)">🔄 刷新</button>
-    <div id="newsList" style="margin-top:14px;"></div>
-  </div>
-</div>
-
 <script>
 // API 基地址：本地(localhost)用相对路径；部署到 GitHub Pages 时改为 Cloudflare Worker 地址
-const API_BASE = location.hostname.endsWith("github.io") ? "https://api-token.pages.dev" : "";
+const API_BASE = location.hostname.endsWith("github.io") ? "https://api-token.pages.dev/" : "";
 // 内置示例数据（联网/连后端失败时回退，保证预览可交互）
 const FALLBACK = [
   {
@@ -844,23 +868,32 @@ function openCompare() {
 }
 function closeCompare() { document.getElementById("cmpOverlay").classList.remove("show"); }
 
-function showNews(){ document.getElementById("newsOverlay").classList.add("show"); loadNews(false); }
-function closeNews(){ document.getElementById("newsOverlay").classList.remove("show"); }
-function fmtDate(s){ if(!s) return "—"; try { return new Date(s).toLocaleString("zh-CN"); } catch(e){ return s; } }
-async function loadNews(refresh){
-  const box = document.getElementById("newsList");
-  box.innerHTML = '<span class="hint">加载中…</span>';
-  try {
-    const r = await fetch(API_BASE + "/api/news" + (refresh ? "?refresh=true" : ""));
-    const d = await r.json();
-    if (!d.items || !d.items.length) { box.innerHTML = '<span class="hint">暂无新闻</span>'; return; }
-    box.innerHTML = d.items.map(n => `<div class="news-item">
-      <div class="news-title"><a href="${n.link}" target="_blank">${n.title}</a></div>
-      <div class="news-meta"><span>${n.source||""}</span> · <span>${fmtDate(n.pubDate)}</span>${d.seed?' · 示例数据':''}</div>
-    </div>`).join("");
-  } catch(e){ box.innerHTML = '<span class="hint">加载失败（预览模式无后端）</span>'; }
+// 大气资讯轮播（左侧大图 + 右侧标题/摘要/按钮）
+let siteNews = [], newsIdx = 0, newsTimer = null;
+function renderNewsSlide(animate){
+  if (!siteNews.length) return;
+  const n = siteNews[newsIdx];
+  const img = document.getElementById("featImg");
+  if (animate) { img.classList.add("hiding"); setTimeout(()=>{ img.src = n.image || ""; img.classList.remove("hiding"); }, 350); }
+  else { img.src = n.image || ""; }
+  document.getElementById("featTitle").textContent = n.title;
+  document.getElementById("featSummary").textContent = n.summary || "";
+  document.getElementById("featLink").href = n.link || "#";
+  document.getElementById("featCount").textContent = (newsIdx + 1) + " / " + siteNews.length;
+  document.getElementById("featDots").innerHTML = siteNews.map((_, i) => `<span class="${i === newsIdx ? 'active' : ''}" onclick="goNews(${i})"></span>`).join("");
+}
+function goNews(i){ newsIdx = i; clearInterval(newsTimer); renderNewsSlide(true); newsTimer = setInterval(()=>{ newsIdx = (newsIdx + 1) % siteNews.length; renderNewsSlide(true); }, 5000); }
+function prevNews(){ goNews((newsIdx - 1 + siteNews.length) % siteNews.length); }
+function nextNews(){ goNews((newsIdx + 1) % siteNews.length); }
+async function loadSiteNews(){
+  try { siteNews = await (await fetch(API_BASE + "/api/site-news")).json(); } catch(e) { siteNews = []; return; }
+  if (!siteNews.length) return;
+  document.getElementById("newsSection").style.display = "block";
+  renderNewsSlide(false);
+  newsTimer = setInterval(()=>{ newsIdx = (newsIdx + 1) % siteNews.length; renderNewsSlide(true); }, 5000);
 }
 
+loadSiteNews();
 load();
 </script>
 </body>
