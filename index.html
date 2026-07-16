@@ -215,7 +215,8 @@
 
 <script>
 // API 基地址：本地(localhost)用相对路径；部署到 GitHub Pages 时改为 Cloudflare Worker 地址
-const API_BASE = location.hostname.endsWith("github.io") ? "https://api-token.pages.dev/" : "";
+// ⚠️ 你的 Cloudflare Worker 地址（如果不是这个，改成你 Workers 后台看到的真实地址）
+const API_BASE = (location.hostname === "localhost" || location.hostname.startsWith("127.")) ? "" : "https://api-token.825370356.workers.dev";
 // 内置示例数据（联网/连后端失败时回退，保证预览可交互）
 const FALLBACK = [
   {
