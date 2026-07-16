@@ -309,7 +309,7 @@ async function loadAll(){
   try {
     const [t, s] = await Promise.all([fetch(API_BASE + "/api/tokens"), fetch(API_BASE + "/api/stats")]);
     TOKENS = await t.json(); STATS = await s.json();
-    renderKPI(); renderPromo(); renderTags(); renderList();
+    renderKPI(); renderPromo(); renderTags(); renderList(); renderSiteNewsList();
   } catch(e){ document.getElementById("promoList").innerHTML = '<span class="hint">无法连接后端</span>'; }
 }
 
