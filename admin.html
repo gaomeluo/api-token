@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338e1ff'/%3E%3Cstop offset='100%25' stop-color='%237c5cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Cpolygon points='15,7 7,16 15,25 10,16' fill='url(%23g)'/%3E%3Cpolygon points='17,7 25,16 17,25 22,16' fill='url(%23g)'/%3E%3C/svg%3E" />
 <title>管理后台 · API Token 大全</title>
 <style>
   :root { --bg:#060914; --panel:rgba(22,30,52,.55); --panel2:rgba(34,44,72,.6); --text:#e8ecf8;
@@ -11,8 +12,7 @@
   * { box-sizing: border-box; }
   body { margin:0; font-family:"Inter",-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
     color:var(--text); line-height:1.6; min-height:100vh;
-    background:
-      radial-gradient(900px 520px at 10% -10%, rgba(56,225,255,.16), transparent 60%),
+    background: radial-gradient(900px 520px at 10% -10%, rgba(56,225,255,.16), transparent 60%),
       radial-gradient(900px 520px at 100% 0%, rgba(124,92,255,.16), transparent 60%),
       radial-gradient(800px 600px at 50% 120%, rgba(56,225,255,.08), transparent 60%),
       linear-gradient(180deg, #070b16, #05070f);
@@ -24,75 +24,82 @@
     -webkit-mask-image: radial-gradient(circle at 50% 25%, #000 25%, transparent 80%);
     mask-image: radial-gradient(circle at 50% 25%, #000 25%, transparent 80%); }
   a { color:var(--accent); text-decoration:none; }
-  header { padding:16px 28px; border-bottom:1px solid var(--line); display:flex;
-    align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
-    background: rgba(10,14,26,.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    position: sticky; top:0; z-index:30; }
-  header h1 { margin:0; font-size:21px; letter-spacing:.5px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text;
-    background-clip:text; color:transparent; }
-  header .sub { color:var(--muted); font-size:13px; }
-  .wrap { max-width:1040px; margin:0 auto; padding:20px 28px 80px; }
+
+  /* layout */
+  .layout { display:flex; min-height:100vh; }
+  .sidebar { width:210px; flex-shrink:0; background:rgba(10,14,28,.7); border-right:1px solid var(--line);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); display:flex; flex-direction:column;
+    position:fixed; top:0; left:0; bottom:0; z-index:40; overflow-y:auto; padding-top:16px; }
+  .sidebar .sb-logo { padding:0 18px 16px; font-size:18px; font-weight:700;
+    background:linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sidebar .sb-section { padding:6px 18px 4px; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-top:8px; }
+  .sidebar a { display:flex; align-items:center; gap:10px; padding:10px 18px; font-size:14px; color:var(--muted); transition:.15s; border-left:2px solid transparent; }
+  .sidebar a:hover { color:var(--text); background:rgba(56,225,255,.05); }
+  .sidebar a.active { color:var(--accent); border-left-color:var(--accent); background:rgba(56,225,255,.08); }
+  .sidebar a .si { font-size:16px; width:22px; text-align:center; }
+  .main { margin-left:210px; flex:1; padding:24px 32px 80px; max-width:calc(100vw - 210px); }
+  @media(max-width:768px){ .sidebar { width:56px; } .sidebar .sb-logo, .sidebar .sb-section, .sidebar a span { display:none; }
+    .sidebar a { justify-content:center; padding:12px 0; } .sidebar a .si { font-size:20px; }
+    .main { margin-left:56px; max-width:calc(100vw - 56px); padding:16px; } }
+
   .btn { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#04121a; font-weight:600;
     border:none; padding:8px 16px; border-radius:9px; cursor:pointer; font-size:14px; box-shadow:var(--glow); transition:.2s; }
   .btn:hover { filter:brightness(1.12); transform:translateY(-1px); }
   .btn.ghost { background:rgba(255,255,255,.04); border:1px solid var(--line); color:var(--text); box-shadow:none; }
-  .btn.ghost:hover { border-color:var(--accent); }
   .btn.small { padding:5px 11px; font-size:13px; }
   .btn.gold { background:linear-gradient(135deg,var(--gold),#ff9d4d); color:#3a2700; }
   .btn.danger { background:linear-gradient(135deg,var(--danger),#ff3b6b); color:#fff; }
+
   .panel { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px; margin-bottom:20px;
     backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
     box-shadow:0 8px 30px rgba(4,8,20,.45), inset 0 1px 0 rgba(255,255,255,.04); }
-  .panel h2 { margin-top:0; font-size:16px; letter-spacing:.3px;
-    background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text;
-    background-clip:text; color:transparent; }
+  .section { scroll-margin-top:20px; }
+  .section h2 { margin-top:0; font-size:17px; letter-spacing:.3px;
+    background:linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
   .kpis { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:20px; }
-  @media(max-width:860px){ .kpis{ grid-template-columns:repeat(3,1fr);} }
-  @media(max-width:480px){ .kpis{ grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:900px){ .kpis{ grid-template-columns:repeat(3,1fr);} }
   .kpi { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px; text-align:center;
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); transition:.25s;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.04); }
+    backdrop-filter:blur(10px); transition:.25s; box-shadow:inset 0 1px 0 rgba(255,255,255,.04); }
   .kpi:hover { transform:translateY(-3px); border-color:rgba(56,225,255,.4); box-shadow:var(--glow); }
   .kpi.promo { border-color:rgba(255,207,92,.5); }
   .kpi.promo:hover { box-shadow:0 0 24px rgba(255,207,92,.35); }
-  .kpi-n { font-size:24px; font-weight:700; color:var(--text); text-shadow:0 0 18px rgba(56,225,255,.25); }
+  .kpi-n { font-size:24px; font-weight:700; text-shadow:0 0 18px rgba(56,225,255,.25); }
   .kpi.promo .kpi-n { color:var(--gold); text-shadow:0 0 18px rgba(255,207,92,.4); }
   .kpi-l { font-size:12px; color:var(--muted); margin-top:4px; }
+
   .promo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; margin-top:12px; }
-  .promo-card { background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:12px; transition:.25s;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.04); }
+  .promo-card { background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:12px; transition:.25s; box-shadow:inset 0 1px 0 rgba(255,255,255,.04); }
   .promo-card:hover { transform:translateY(-3px); border-color:rgba(255,207,92,.45); box-shadow:0 0 22px rgba(255,207,92,.28); }
   .promo-card .pc-top { display:flex; justify-content:space-between; align-items:center; gap:8px; }
   .promo-card b { font-size:15px; color:var(--text); }
   .promo-card .rate { color:var(--gold); font-size:13px; text-shadow:0 0 14px rgba(255,207,92,.35); }
-  .promo-card .cr { color:var(--muted); font-size:12px; margin:6px 0 2px; }
+  .promo-card .cr, .promo-card .mg { color:var(--muted); font-size:12px; margin:6px 0 2px; }
   .promo-card .cr b { color:var(--text); }
-  .promo-card .mg { font-size:12px; color:var(--muted); margin:4px 0; word-break:break-all; }
   .promo-card .mg a { color:var(--accent2); }
   .promo-card .mg a:hover { color:var(--accent); text-shadow:0 0 12px rgba(56,225,255,.5); }
   .link-row { display:flex; gap:6px; align-items:center; margin-top:6px; }
   .link-row input { flex:1; font-size:12px; background:rgba(6,9,20,.6); color:var(--muted); }
+
   .tagbar { display:flex; align-items:center; gap:10px; margin:6px 0; }
   .tagbar .name { width:70px; font-size:13px; color:var(--muted); }
   .tagbar .bar { flex:1; height:10px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden; }
-  .tagbar .bar > i { display:block; height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2));
-    box-shadow:0 0 12px rgba(56,225,255,.5); }
+  .tagbar .bar > i { display:block; height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); box-shadow:0 0 12px rgba(56,225,255,.5); }
   .tagbar .cnt { width:34px; text-align:right; font-size:12px; color:var(--muted); }
+
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-  @media(max-width:640px){ .grid2,.grid3{ grid-template-columns:1fr; } }
-  .fgroup { border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:12px; background:var(--panel2);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.04); }
-  .fgroup > .gt { font-size:13px; color:var(--accent2); margin-bottom:10px; font-weight:600; letter-spacing:.3px;
-    text-shadow:0 0 12px rgba(124,92,255,.4); }
+  .grid4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; }
+  @media(max-width:700px){ .grid2,.grid3,.grid4{ grid-template-columns:1fr; } }
+  .fgroup { border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:12px; background:var(--panel2); box-shadow:inset 0 1px 0 rgba(255,255,255,.04); }
+  .fgroup > .gt { font-size:13px; color:var(--accent2); margin-bottom:10px; font-weight:600; letter-spacing:.3px; text-shadow:0 0 12px rgba(124,92,255,.4); }
   label { font-size:13px; color:var(--muted); display:block; margin-bottom:4px; }
   input, select, textarea { width:100%; background:rgba(255,255,255,.05); border:1px solid var(--line);
     color:var(--text); border-radius:8px; padding:8px 10px; font-size:14px; transition:.2s; }
-  input:focus, select:focus, textarea:focus { outline:none; border-color:var(--accent);
-    box-shadow:0 0 0 3px rgba(56,225,255,.15), var(--glow); background:rgba(56,225,255,.05); }
+  input:focus, select:focus, textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(56,225,255,.15), var(--glow); background:rgba(56,225,255,.05); }
   ::placeholder { color:rgba(139,147,176,.6); }
   textarea { min-height:60px; }
+
   .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
   .toolbar input, .toolbar select { width:auto; flex:1; min-width:140px; }
   table { width:100%; border-collapse:collapse; font-size:13px; }
@@ -106,16 +113,12 @@
   .badge.comm { background:rgba(245,177,76,.18); color:var(--gold); border-color:rgba(245,177,76,.4); box-shadow:0 0 12px rgba(245,177,76,.2); }
   .row-actions { display:flex; gap:6px; }
   .hint { color:var(--muted); font-size:12px; }
+
   .toast { position:fixed; top:16px; left:50%; transform:translateX(-50%);
     background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#04121a; font-weight:600;
     padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:.3s; z-index:200; box-shadow:var(--glow); }
   .toast.show { opacity:1; }
-  .news-item { border-bottom:1px solid var(--line); padding:10px 0; transition:.18s; border-radius:6px; }
-  .news-item:hover { background:rgba(56,225,255,.05); padding-left:8px; }
-  .news-title { font-size:14px; }
-  .news-title a { color:var(--text); }
-  .news-title a:hover { color:var(--accent); text-shadow:0 0 12px rgba(56,225,255,.5); }
-  .news-meta { color:var(--muted); font-size:12px; margin-top:3px; }
+
   .login-overlay { position:fixed; inset:0; background:rgba(4,6,14,.85); z-index:999;
     display:flex; align-items:center; justify-content:center; padding:20px; }
   .login-box { background:linear-gradient(180deg, rgba(24,32,54,.96), rgba(14,20,36,.96));
@@ -126,9 +129,14 @@
   .login-box input { margin-top:14px; text-align:center; font-size:16px; }
   .login-box .btn { margin-top:12px; width:100%; padding:10px; font-size:15px; }
   .login-box .err { color:var(--danger); font-size:13px; margin-top:8px; min-height:20px; }
+
+  .news-row { display:flex; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  .news-row > span { flex:1; min-width:150px; font-size:13px; }
+  .news-row > span .hint { display:block; }
 </style>
 </head>
 <body>
+
 <div class="login-overlay" id="loginGate">
   <div class="login-box">
     <h2>🔐 后台登录</h2>
@@ -138,46 +146,114 @@
     <div class="err" id="loginErr"></div>
   </div>
 </div>
-<header>
-  <div>
-    <h1>⚙️ 管理后台 · API Token 大全</h1>
-    <div class="sub">收录管理 · 推广返佣 · 数据概览（仅站长可见）</div>
-  </div>
-  <a class="btn ghost" href="index.html">← 返回展示页</a>
-</header>
 
-<div class="wrap">
+<div class="layout">
+<!-- ====== 侧边栏导航 ====== -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-logo">⚙️ API Token</div>
+  <div class="sb-section">数据</div>
+  <a href="#sec-overview" class="active" data-section="sec-overview"><span class="si">📊</span><span>数据概览</span></a>
+  <a href="#sec-promo" data-section="sec-promo"><span class="si">💰</span><span>推广返佣</span></a>
+  <div class="sb-section">管理</div>
+  <a href="#sec-tokens" data-section="sec-tokens"><span class="si">📋</span><span>Token 管理</span></a>
+  <a href="#sec-scrape" data-section="sec-scrape"><span class="si">🔍</span><span>一键抓取</span></a>
+  <a href="#sec-news" data-section="sec-news"><span class="si">📰</span><span>资讯管理</span></a>
+  <a href="#sec-tags" data-section="sec-tags"><span class="si">🏷️</span><span>标签分布</span></a>
+  <div class="sb-section" style="margin-top:auto;"></div>
+  <a href="../" style="margin-bottom:12px;"><span class="si">🏠</span><span>返回展示页</span></a>
+</nav>
+
+<!-- ====== 主内容区 ====== -->
+<main class="main">
+
+<!-- 数据概览 -->
+<section class="section" id="sec-overview">
+  <h2>📊 数据概览</h2>
   <div class="kpis">
     <div class="kpi"><div class="kpi-n" id="k_total">-</div><div class="kpi-l">收录总数</div></div>
     <div class="kpi"><div class="kpi-n" id="k_free">-</div><div class="kpi-l">免费</div></div>
     <div class="kpi"><div class="kpi-n" id="k_paid">-</div><div class="kpi-l">付费</div></div>
-    <div class="kpi promo"><div class="kpi-n" id="k_comm">-</div><div class="kpi-l">有返佣计划</div></div>
+    <div class="kpi promo"><div class="kpi-n" id="k_comm">-</div><div class="kpi-l">有返佣</div></div>
     <div class="kpi"><div class="kpi-n" id="k_rating">-</div><div class="kpi-l">平均评分</div></div>
-    <div class="kpi"><div class="kpi-n" id="k_value">-</div><div class="kpi-l">平均性价比</div></div>
+    <div class="kpi"><div class="kpi-n" id="k_value">-</div><div class="kpi-l">性价比</div></div>
+  </div>
+</section>
+
+<!-- 推广返佣 -->
+<section class="section" id="sec-promo">
+  <h2>💰 重点推广（平台返佣给我）</h2>
+  <p class="hint" style="margin-top:0;">有返佣计划的平台：你去推广它的 API，平台返你佣金。<b style="color:var(--gold)">优先推返佣高、评分高</b>的。</p>
+  <div class="panel"><div id="promoList" class="promo-grid"></div></div>
+</section>
+
+<!-- Token 管理 -->
+<section class="section" id="sec-tokens">
+  <h2>📋 Token 管理</h2>
+
+  <!-- 新增表单 -->
+  <div class="panel">
+    <h3 id="formTitle" style="margin-top:0;font-size:15px;color:var(--accent);">➕ 新增 API Token</h3>
+    <div class="fgroup"><div class="gt">基础信息</div>
+      <div class="grid4">
+        <div><label>名称 *</label><input id="f_name" placeholder="如 OpenAI GPT-4o"/></div>
+        <div><label>类型</label><select id="f_type"><option value="free">免费</option><option value="paid">付费</option></select></div>
+        <div><label>官网链接</label><input id="f_url" placeholder="https://"/></div>
+        <div><label>标签(逗号分隔)</label><input id="f_tags" placeholder="写代码, 画图"/></div>
+      </div>
+      <div style="margin-top:10px;"><label>简介</label><textarea id="f_description" placeholder="一句话介绍"></textarea></div>
+    </div>
+    <div class="fgroup"><div class="gt">额度 / 价格 / 擅长</div>
+      <div class="grid3">
+        <div><label>🆓 免费额度</label><input id="f_freeQuota" placeholder="如 每月 60 次"/></div>
+        <div><label>💎 付费标准</label><input id="f_priceStandard" placeholder="如 $0.0025/1K输入"/></div>
+        <div><label>限制说明</label><input id="f_limits" placeholder="速率/功能/合规等"/></div>
+      </div>
+      <div class="grid3" style="margin-top:10px;">
+        <div><label>评分(0-5)</label><input id="f_rating" type="number" step="0.1" min="0" max="5" value="4"/></div>
+        <div><label>性价比(0-5)</label><input id="f_valueScore" type="number" step="0.1" min="0" max="5" value="4"/></div>
+        <div><label>核心优势</label><input id="f_strengths" placeholder="如 生态成熟"/></div>
+      </div>
+      <div style="margin-top:10px;"><label>擅长领域详解</label><textarea id="f_expertise" placeholder="如 多模态理解、代码生成…"></textarea></div>
+    </div>
+    <div class="fgroup"><div class="gt">推广与返佣（仅站长可见）</div>
+      <div class="grid4">
+        <div><label>是否有返佣</label><select id="f_commission"><option value="false">无</option><option value="true">有</option></select></div>
+        <div><label>返佣比例/金额</label><input id="f_commissionRate" placeholder="如 25%"/></div>
+        <div><label>推广链接</label><input id="f_commissionUrl" placeholder="https://.../?ref="/></div>
+        <div><label>返佣管理后台</label><input id="f_affiliateDashboard" placeholder="https://..."/></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:6px;">
+      <button class="btn" onclick="submitForm()">💾 保存</button>
+      <button class="btn ghost" onclick="resetForm()">🔄 重置</button>
+    </div>
   </div>
 
-  <!-- 重点推广专区 -->
+  <!-- Token 列表 -->
   <div class="panel">
-    <h2>🎯 重点推广专区（平台返佣给我）</h2>
-    <p class="hint" style="margin-top:0;">下列平台<b style="color:var(--gold)">有返佣计划</b>：你去推广它的 API，平台会返你佣金（返多少见每条）。<b>优先主推返佣高、评分高</b>的平台。点击「返佣管理地址」可登录平台后台查看数据与提现。</p>
-    <div id="promoList" class="promo-grid"></div>
+    <div class="toolbar">
+      <input id="q" placeholder="🔍 搜索名称/标签…" oninput="renderList()"/>
+      <select id="f_filter" onchange="renderList()"><option value="">全部</option><option value="free">免费</option><option value="paid">付费</option></select>
+      <select id="sort" onchange="renderList()"><option value="rating">按评分</option><option value="valueScore">按性价比</option><option value="name">按名称</option></select>
+    </div>
+    <table id="tbl"><thead><tr><th>名称</th><th>类型</th><th>评分</th><th>性价比</th><th>返佣</th><th>操作</th></tr></thead><tbody></tbody></table>
   </div>
+</section>
 
+<!-- 一键抓取 -->
+<section class="section" id="sec-scrape">
+  <h2>🔍 一键抓取</h2>
   <div class="panel">
-    <h2>🏷️ 擅长领域分布</h2>
-    <div id="tagDist"></div>
+    <p class="hint" style="margin-top:0;">粘贴 API Token 官网链接，自动提取名称/描述/价格/标签，回填上方 Token 表单。</p>
+    <div style="display:flex;gap:8px;"><input id="f_scrapeUrl" placeholder="https://platform.example.com/pricing"/><button class="btn gold" onclick="doScrape()">抓取并回填 ↗</button></div>
   </div>
+</section>
 
+<!-- 资讯管理 -->
+<section class="section" id="sec-news">
+  <h2>📰 资讯管理</h2>
   <div class="panel">
-    <h2>📰 最新动态（API / 模型资讯，自动索引）</h2>
-    <p class="hint" style="margin-top:0;">自动抓取公开新闻源，第一时间掌握哪家出新模型、推免费/付费 API、调定价。点击条目跳转原文。</p>
-    <div id="newsDash"></div>
-  </div>
-
-  <!-- 资讯管理 -->
-  <div class="panel">
-    <h2>📰 首页资讯管理</h2>
-    <p class="hint" style="margin-top:0;">在此添加/编辑的资讯将展示在前端"免费榜"上方的资讯模块中。</p>
+    <p class="hint" style="margin-top:0;">编辑后展示在前端轮播模块中。不填图片则自动生成封面。</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
       <input id="snTitle" placeholder="标题" style="flex:1;min-width:140px;"/>
       <input id="snSummary" placeholder="摘要" style="flex:2;min-width:180px;"/>
@@ -187,96 +263,44 @@
     </div>
     <div id="siteNewsList"></div>
   </div>
+</section>
 
-  <!-- 新增/编辑表单 -->
-  <div class="panel">
-    <h2 id="formTitle">➕ 新增 API Token</h2>
-    <div class="fgroup">
-      <div class="gt">基础信息</div>
-      <div class="grid2">
-      <div style="grid-column:1/-1;"><label>🔗 一键抓取：粘贴该 API Token 官网链接，自动提取名称/描述/价格等，回填表单</label>
-      <div style="display:flex;gap:6px;"><input id="f_scrapeUrl" placeholder="https://platform.example.com/pricing" /><button class="btn small gold" onclick="doScrape()">🔍 一键抓取</button></div></div>
-        <div><label>名称 *</label><input id="f_name" placeholder="如 OpenAI GPT-4o" /></div>
-        <div><label>类型 *</label>
-          <select id="f_type"><option value="free">免费</option><option value="paid">付费</option></select></div>
-        <div><label>官网链接</label><input id="f_url" placeholder="https://" /></div>
-        <div><label>擅长标签（逗号分隔，用于前端导航）</label><input id="f_tags" placeholder="写代码, 画图, 视频" /></div>
-      </div>
-      <div style="margin-top:10px;"><label>一句话简介</label><textarea id="f_description" placeholder="一句话介绍该 API 的特点"></textarea></div>
-    </div>
+<!-- 标签分布 -->
+<section class="section" id="sec-tags">
+  <h2>🏷️ 标签分布</h2>
+  <div class="panel"><div id="tagDist"></div></div>
+</section>
 
-    <div class="fgroup">
-      <div class="gt">价格 / 额度 / 限制 / 擅长</div>
-      <div class="grid2">
-        <div><label>🆓 免费额度（免费 API 必填）</label><input id="f_freeQuota" placeholder="如 每月 60 次请求 / 15 万 tokens" /></div>
-        <div><label>💎 付费标准（付费 API 必填）</label><input id="f_priceStandard" placeholder="如 输入 $0.0025/1K、输出 $0.01/1K" /></div>
-      </div>
-      <div style="margin-top:10px;"><label>⚠️ 限制说明（速率/功能/合规等）</label><textarea id="f_limits" placeholder="如 免费档不支持批量、速率 15 RPM、需绑卡"></textarea></div>
-      <div class="grid3" style="margin-top:10px;">
-        <div><label>评分（0-5）</label><input id="f_rating" type="number" step="0.1" min="0" max="5" value="4" /></div>
-        <div><label>性价比（0-5，越高越值）</label><input id="f_valueScore" type="number" step="0.1" min="0" max="5" value="4" /></div>
-        <div><label>核心优势（短）</label><input id="f_strengths" placeholder="生态成熟、全能" /></div>
-      </div>
-      <div style="margin-top:10px;"><label>擅长领域详解（详细描述，前端展示）</label><textarea id="f_expertise" placeholder="如 多模态理解、长上下文摘要、代码生成…"></textarea></div>
-    </div>
-
-    <div class="fgroup">
-      <div class="gt">推广与返佣（仅站长可见）</div>
-      <div class="grid2">
-        <div><label>是否有返佣计划</label>
-          <select id="f_commission"><option value="false">无</option><option value="true">有</option></select></div>
-        <div><label>返多少（返佣比例/金额）</label><input id="f_commissionRate" placeholder="如 返佣 25% / $0.5/注册" /></div>
-        <div><label>访客推广链接（带你的 ref，发给用户点击）</label><input id="f_commissionUrl" placeholder="https://.../?ref=你的ID" /></div>
-        <div><label>返佣管理地址（你登录平台后台查看/提现）</label><input id="f_affiliateDashboard" placeholder="https://平台域名/affiliates" /></div>
-      </div>
-    </div>
-
-    <div style="display:flex; gap:10px; margin-top:6px;">
-      <button class="btn" onclick="submitForm()">保存</button>
-      <button class="btn ghost" onclick="resetForm()">重置</button>
-    </div>
-  </div>
-
-  <div class="panel">
-    <h2>📋 全部 Token 列表</h2>
-    <div class="toolbar">
-      <input id="q" placeholder="搜索名称 / 标签…" oninput="renderList()" />
-      <select id="f_filter" onchange="renderList()">
-        <option value="">全部类型</option><option value="free">免费</option><option value="paid">付费</option>
-      </select>
-      <select id="sort" onchange="renderList()">
-        <option value="rating">按评分</option><option value="valueScore">按性价比</option><option value="name">按名称</option>
-      </select>
-    </div>
-    <table id="tbl">
-      <thead><tr><th>名称</th><th>类型</th><th>评分</th><th>性价比</th><th>返佣</th><th>操作</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
+</main>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// API 基地址：本地(localhost)用相对路径；部署到 GitHub Pages 时改为 Cloudflare Worker 地址
-// ⚠️ 你的 Cloudflare Worker 地址（如果不是这个，改成你 Workers 后台看到的真实地址）
+// ⚠️ 你的 Cloudflare Worker 地址
 const API_BASE = (location.hostname === "localhost" || location.hostname.startsWith("127.")) ? "" : "https://api-token.825370356.workers.dev";
 let adminKey = sessionStorage.getItem("adminKey") || "";
 if (adminKey) document.getElementById("loginGate").style.display = "none";
+
 async function doLogin(){
   const pw = val("loginPw");
   try {
     const r = await fetch(API_BASE + "/api/admin/verify", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw})});
     const d = await r.json();
-    if (d.ok) { adminKey = pw; sessionStorage.setItem("adminKey", pw); document.getElementById("loginGate").style.display = "none"; loadAll(); renderNews(); renderSiteNewsList(); }
+    if (d.ok) { adminKey = pw; sessionStorage.setItem("adminKey", pw); document.getElementById("loginGate").style.display = "none"; loadAll(); renderSiteNewsList(); }
     else { document.getElementById("loginErr").textContent = d.error || "密码错误"; }
   } catch(e) { document.getElementById("loginErr").textContent = "连接失败"; }
 }
 function authHeaders(){ return adminKey ? {"x-admin-key": adminKey} : {}; }
-let editingId = null;
-let TOKENS = [];
-let STATS = null;
 
+// ====== 侧边栏导航 ======
+document.querySelectorAll(".sidebar a").forEach(a => { a.addEventListener("click",function(e){
+  document.querySelectorAll(".sidebar a").forEach(x=>x.classList.remove("active"));
+  this.classList.add("active");
+}); });
+
+// ====== 工具函数 ======
+let editingId = null, TOKENS = [], STATS = null;
 function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1800); }
 function val(id){ return document.getElementById(id).value; }
 function set(id,v){ document.getElementById(id).value = v ?? ""; }
@@ -285,23 +309,8 @@ async function loadAll(){
   try {
     const [t, s] = await Promise.all([fetch(API_BASE + "/api/tokens"), fetch(API_BASE + "/api/stats")]);
     TOKENS = await t.json(); STATS = await s.json();
-    renderKPI(); renderPromo(); renderTags(); renderList(); renderSiteNewsList();
-  } catch(e){
-    document.getElementById("promoList").innerHTML = '<span class="hint">无法连接后端（预览模式）</span>';
-  }
-  renderNews();
-}
-
-async function renderNews(){
-  try {
-    const d = await (await fetch(API_BASE + "/api/news")).json();
-    const box = document.getElementById("newsDash");
-    if(!d.items || !d.items.length){ box.innerHTML = '<span class="hint">暂无</span>'; return; }
-    box.innerHTML = d.items.slice(0, 8).map(n => `<div class="news-item">
-      <div class="news-title"><a href="${n.link}" target="_blank">${n.title}</a></div>
-      <div class="news-meta"><span>${n.source||""}</span> · <span>${n.pubDate ? new Date(n.pubDate).toLocaleString("zh-CN") : "—"}</span></div>
-    </div>`).join("");
-  } catch(e){ document.getElementById("newsDash").innerHTML = '<span class="hint">加载失败</span>'; }
+    renderKPI(); renderPromo(); renderTags(); renderList();
+  } catch(e){ document.getElementById("promoList").innerHTML = '<span class="hint">无法连接后端</span>'; }
 }
 
 function renderKPI(){
@@ -316,194 +325,128 @@ function renderKPI(){
 
 function renderPromo(){
   const box = document.getElementById("promoList");
-  if(!STATS || !STATS.promo_tokens || !STATS.promo_tokens.length){
-    box.innerHTML = '<span class="hint">暂无标记返佣计划的平台（在表单「推广与返佣」中开启并填写）</span>'; return;
-  }
-  box.innerHTML = STATS.promo_tokens.map(t => `
-    <div class="promo-card">
-      <div class="pc-top"><b>${t.name}</b><span class="rate">★ ${t.rating}</span></div>
-      <div class="cr"><b>平台返我：</b>${t.commissionRate||"—"}</div>
-      <div class="mg"><b>返佣管理地址：</b><a href="${t.affiliateDashboard||'#'}" target="_blank">${t.affiliateDashboard||'—'} ↗</a></div>
-      <div class="cr">访客推广链接（发给用户）：</div>
-      <div class="link-row">
-        <input id="link-${t.id}" value="${t.commissionUrl||""}" readonly />
-        <button class="btn small gold" onclick="copyLink('${t.id}')">复制</button>
-      </div>
-    </div>`).join("");
+  if(!STATS || !STATS.promo_tokens || !STATS.promo_tokens.length){ box.innerHTML='<span class="hint">暂无标记返佣的平台</span>'; return; }
+  box.innerHTML = STATS.promo_tokens.map(t => `<div class="promo-card">
+    <div class="pc-top"><b>${t.name}</b><span class="rate">★ ${t.rating}</span></div>
+    <div class="cr"><b>平台返我：</b>${t.commissionRate||"—"}</div>
+    <div class="mg"><b>管理地址：</b><a href="${t.affiliateDashboard||'#'}" target="_blank">${t.affiliateDashboard||'—'} ↗</a></div>
+    <div class="link-row"><input id="link-${t.id}" value="${t.commissionUrl||''}" readonly/><button class="btn small gold" onclick="copyLink('${t.id}')">复制</button></div>
+  </div>`).join("");
+}
+
+async function copyLink(id){
+  const inp = document.getElementById("link-"+id); const text = inp ? inp.value : "";
+  try { await navigator.clipboard.writeText(text); toast("已复制推广链接"); }
+  catch(e){ inp.select(); document.execCommand("copy"); toast("已复制推广链接"); }
 }
 
 function renderTags(){
   const box = document.getElementById("tagDist");
   if(!STATS || !STATS.tag_counts) return;
   const max = Math.max(...Object.values(STATS.tag_counts), 1);
-  box.innerHTML = Object.entries(STATS.tag_counts).map(([k,v]) => `
-    <div class="tagbar"><div class="name">${k}</div>
-      <div class="bar"><i style="width:${v/max*100}%"></i></div>
-      <div class="cnt">${v}</div></div>`).join("");
+  box.innerHTML = Object.entries(STATS.tag_counts).map(([k,v]) => `<div class="tagbar"><div class="name">${k}</div><div class="bar"><i style="width:${v/max*100}%"></i></div><div class="cnt">${v}</div></div>`).join("");
 }
 
 function renderList(){
-  const q = (val("q")||"").trim().toLowerCase();
-  const ft = val("f_filter");
-  const sort = val("sort");
+  const q = (val("q")||"").trim().toLowerCase(), ft = val("f_filter"), sort = val("sort");
   let list = TOKENS.slice();
   if(ft) list = list.filter(t => t.type === ft);
   if(q) list = list.filter(t => (t.name||"").toLowerCase().includes(q) || (t.tags||[]).join(",").toLowerCase().includes(q));
   list.sort((a,b)=> sort==="name" ? a.name.localeCompare(b.name) : (b[sort]||0) - (a[sort]||0));
   const tb = document.querySelector("#tbl tbody");
-  if(!list.length){ tb.innerHTML = '<tr><td colspan="6" class="hint">无匹配结果</td></tr>'; return; }
+  if(!list.length){ tb.innerHTML = '<tr><td colspan="6" class="hint">无匹配</td></tr>'; return; }
   tb.innerHTML = list.map(t => `<tr>
-    <td>${t.name}</td>
-    <td><span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span></td>
-    <td>${t.rating ?? "-"}</td>
-    <td>${t.valueScore ?? "-"}</td>
-    <td>${t.commission ? '<span class="badge comm">💰 有</span>' : "-"}</td>
-    <td><div class="row-actions">
-      <button class="btn small" onclick="editItem('${t.id}')">编辑</button>
-      <button class="btn small danger" onclick="delItem('${t.id}')">删除</button>
-    </div></td>
+    <td>${t.name}</td><td><span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span></td>
+    <td>${t.rating??"-"}</td><td>${t.valueScore??"-"}</td>
+    <td>${t.commission?'<span class="badge comm">💰 有</span>':"-"}</td>
+    <td><div class="row-actions"><button class="btn small" onclick="editItem('${t.id}')">编辑</button><button class="btn small danger" onclick="delItem('${t.id}')">删除</button></div></td>
   </tr>`).join("");
 }
 
-async function copyLink(id){
-  const inp = document.getElementById("link-"+id);
-  const text = inp ? inp.value : "";
-  try { await navigator.clipboard.writeText(text); toast("已复制推广链接"); }
-  catch(e){ inp.select(); document.execCommand("copy"); toast("已复制推广链接"); }
-}
-
 function resetForm(){
-  editingId = null;
-  document.getElementById("formTitle").textContent = "➕ 新增 API Token";
-  ["f_name","f_url","f_tags","f_description","f_freeQuota","f_priceStandard","f_limits","f_strengths","f_expertise",
-   "f_commissionRate","f_commissionUrl","f_affiliateDashboard"].forEach(i=>set(i,""));
-  set("f_type","free"); set("f_commission","false");
-  set("f_rating","4"); set("f_valueScore","4");
+  editingId = null; document.getElementById("formTitle").textContent = "➕ 新增 API Token";
+  ["f_name","f_url","f_tags","f_description","f_freeQuota","f_priceStandard","f_limits","f_strengths","f_expertise","f_commissionRate","f_commissionUrl","f_affiliateDashboard"].forEach(i=>set(i,""));
+  set("f_type","free"); set("f_commission","false"); set("f_rating","4"); set("f_valueScore","4");
 }
 
 async function submitForm(){
   const name = val("f_name").trim();
   if(!name){ toast("请填写名称"); return; }
-  const payload = {
-    name, type: val("f_type"), url: val("f_url"), description: val("f_description"),
-    tags: val("f_tags").split(",").map(s=>s.trim()).filter(Boolean),
-    priceText: val("f_priceStandard"),
-    priceValue: 0,
-    rating: parseFloat(val("f_rating")) || 0,
-    valueScore: parseFloat(val("f_valueScore")) || 0,
-    freeQuota: val("f_freeQuota"),
-    limits: val("f_limits"),
-    priceStandard: val("f_priceStandard"),
-    expertise: val("f_expertise"),
-    commission: val("f_commission") === "true",
-    commissionRate: val("f_commissionRate"),
-    commissionUrl: val("f_commissionUrl"),
-    affiliateDashboard: val("f_affiliateDashboard"),
-    strengths: val("f_strengths")
-  };
+  const payload = { name, type:val("f_type"), url:val("f_url"), description:val("f_description"), tags:val("f_tags").split(",").map(s=>s.trim()).filter(Boolean), priceText:val("f_priceStandard"), priceValue:0, rating:parseFloat(val("f_rating"))||0, valueScore:parseFloat(val("f_valueScore"))||0, freeQuota:val("f_freeQuota"), limits:val("f_limits"), priceStandard:val("f_priceStandard"), expertise:val("f_expertise"), commission:val("f_commission")==="true", commissionRate:val("f_commissionRate"), commissionUrl:val("f_commissionUrl"), affiliateDashboard:val("f_affiliateDashboard"), strengths:val("f_strengths") };
   try {
     let r;
-    if(editingId){
-      r = await fetch(API_BASE + "/api/tokens/"+editingId, {method:"PUT", headers:Object.assign({"Content-Type":"application/json"},authHeaders()), body:JSON.stringify(payload)});
-    } else {
-      r = await fetch(API_BASE + "/api/tokens", {method:"POST", headers:Object.assign({"Content-Type":"application/json"},authHeaders()), body:JSON.stringify(payload)});
-    }
-    if(!r.ok) throw new Error("save failed");
-    toast(editingId ? "已更新" : "已新增");
-    resetForm(); await loadAll();
-  } catch(e){ toast("保存失败（请确认后端已启动）"); }
+    if(editingId) r = await fetch(API_BASE+"/api/tokens/"+editingId,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify(payload)});
+    else r = await fetch(API_BASE+"/api/tokens",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify(payload)});
+    if(!r.ok) throw new Error("fail");
+    toast(editingId?"已更新":"已新增"); resetForm(); await loadAll();
+  } catch(e){ toast("保存失败"); }
 }
 
 async function editItem(id){
-  let t;
-  try { t = await (await fetch(API_BASE + "/api/tokens/"+id)).json(); }
-  catch(e){ toast("无法连接后端"); return; }
-  editingId = id;
-  document.getElementById("formTitle").textContent = "✏️ 编辑：" + t.name;
+  let t; try { t = await (await fetch(API_BASE+"/api/tokens/"+id)).json(); } catch(e){ toast("无法连接后端"); return; }
+  editingId = id; document.getElementById("formTitle").textContent = "✏️ 编辑："+t.name;
   set("f_name",t.name); set("f_type",t.type); set("f_url",t.url); set("f_description",t.description);
-  set("f_tags",(t.tags||[]).join(", "));
-  set("f_freeQuota",t.freeQuota); set("f_priceStandard",t.priceStandard); set("f_limits",t.limits);
-  set("f_rating",t.rating); set("f_valueScore",t.valueScore); set("f_strengths",t.strengths); set("f_expertise",t.expertise);
-  set("f_commission", t.commission ? "true":"false");
-  set("f_commissionRate",t.commissionRate); set("f_commissionUrl",t.commissionUrl); set("f_affiliateDashboard",t.affiliateDashboard);
-  window.scrollTo({top:0, behavior:"smooth"});
+  set("f_tags",(t.tags||[]).join(", ")); set("f_freeQuota",t.freeQuota); set("f_priceStandard",t.priceStandard);
+  set("f_limits",t.limits); set("f_rating",t.rating); set("f_valueScore",t.valueScore);
+  set("f_strengths",t.strengths); set("f_expertise",t.expertise);
+  set("f_commission",t.commission?"true":"false"); set("f_commissionRate",t.commissionRate);
+  set("f_commissionUrl",t.commissionUrl); set("f_affiliateDashboard",t.affiliateDashboard);
+  document.getElementById("sec-tokens").scrollIntoView({behavior:"smooth"});
 }
 
-async function delItem(id){
-  if(!confirm("确认删除该 API Token？")) return;
-  try {
-    const r = await fetch(API_BASE + "/api/tokens/"+id, {method:"DELETE", headers:authHeaders()});
-    if(!r.ok) throw new Error("del failed");
-    toast("已删除"); await loadAll();
-  } catch(e){ toast("删除失败"); }
+async function delItem(id){ if(!confirm("确认删除？")) return;
+  try { const r = await fetch(API_BASE+"/api/tokens/"+id,{method:"DELETE",headers:authHeaders()}); if(!r.ok) throw new Error("fail"); toast("已删除"); await loadAll(); }
+  catch(e){ toast("删除失败"); }
 }
 
-// ---- 资讯管理 ----
+// ====== 资讯管理 ======
 let siteNewsList = [], snEditId = null;
 async function renderSiteNewsList(){
-  try {
-    siteNewsList = await (await fetch(API_BASE + "/api/site-news")).json();
-  } catch(e) { siteNewsList = []; }
+  try { siteNewsList = await (await fetch(API_BASE+"/api/site-news")).json(); } catch(e){ siteNewsList = []; }
   const box = document.getElementById("siteNewsList");
-  if (!siteNewsList.length) { box.innerHTML = '<span class="hint">暂无</span>'; return; }
-  box.innerHTML = siteNewsList.map(n => `<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);">
-    <span style="flex:1;font-size:13px;"><b>${n.title}</b><br><span class="hint">${(n.summary||"").slice(0,60)} · ${n.updatedAt||""}</span></span>
-    <button class="btn small" onclick="editSiteNews('${n.id}')">编辑</button>
-    <button class="btn small danger" onclick="delSiteNews('${n.id}')">删除</button>
-  </div>`).join("");
+  if (!siteNewsList.length) { box.innerHTML='<span class="hint">暂无</span>'; return; }
+  box.innerHTML = siteNewsList.map(n => `<div class="news-row"><span><b>${n.title}</b><br><span class="hint">${(n.summary||"").slice(0,60)} · ${n.updatedAt||""}</span></span><button class="btn small" onclick="editSiteNews('${n.id}')">编辑</button><button class="btn small danger" onclick="delSiteNews('${n.id}')">删除</button></div>`).join("");
 }
 async function saveSiteNews(){
   const payload = { title:val("snTitle"), summary:val("snSummary"), link:val("snLink"), image:val("snImage") };
   if (!payload.title) { toast("请填写标题"); return; }
   try {
     let r;
-    if (snEditId) {
-      r = await fetch(API_BASE + "/api/site-news/"+snEditId, {method:"PUT", headers:Object.assign({"Content-Type":"application/json"},authHeaders()), body:JSON.stringify(payload)});
-    } else {
-      r = await fetch(API_BASE + "/api/site-news", {method:"POST", headers:Object.assign({"Content-Type":"application/json"},authHeaders()), body:JSON.stringify(payload)});
-    }
-    if (!r.ok) throw new Error("fail");
-    toast(snEditId?"已更新":"已新增"); snEditId=null;
-    document.getElementById("snSaveBtn").textContent="➕ 保存";
-    ["snTitle","snSummary","snLink","snImage"].forEach(i=>set(i,""));
-    renderSiteNewsList();
+    if(snEditId) r = await fetch(API_BASE+"/api/site-news/"+snEditId,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify(payload)});
+    else r = await fetch(API_BASE+"/api/site-news",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify(payload)});
+    if(!r.ok) throw new Error("fail");
+    toast(snEditId?"已更新":"已新增"); snEditId=null; document.getElementById("snSaveBtn").textContent="➕ 保存";
+    ["snTitle","snSummary","snLink","snImage"].forEach(i=>set(i,"")); renderSiteNewsList();
   } catch(e){ toast("保存失败"); }
 }
 function editSiteNews(id){
   const n = siteNewsList.find(x=>x.id===id); if(!n) return;
   snEditId=id; set("snTitle",n.title); set("snSummary",n.summary); set("snLink",n.link); set("snImage",n.image||"");
-  document.getElementById("snSaveBtn").textContent="✏️ 更新";
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById("snSaveBtn").textContent="✏️ 更新"; document.getElementById("sec-news").scrollIntoView({behavior:"smooth"});
 }
 async function delSiteNews(id){
   if(!confirm("确认删除？")) return;
-  try {
-    const r = await fetch(API_BASE+"/api/site-news/"+id, {method:"DELETE", headers:authHeaders()});
-    if(!r.ok) throw new Error("del fail");
-    toast("已删除"); renderSiteNewsList();
-  } catch(e){ toast("删除失败"); }
+  try { const r = await fetch(API_BASE+"/api/site-news/"+id,{method:"DELETE",headers:authHeaders()}); if(!r.ok) throw new Error("fail"); toast("已删除"); renderSiteNewsList(); }
+  catch(e){ toast("删除失败"); }
 }
 
-// ---- 一键抓取 ----
+// ====== 一键抓取 ======
 async function doScrape(){
-  const url = val("f_scrapeUrl").trim();
-  if (!url) { toast("请粘贴API Token官网链接"); return; }
+  const url = val("f_scrapeUrl").trim(); if (!url) { toast("请粘贴链接"); return; }
   try {
     toast("抓取中…");
-    const r = await fetch(API_BASE + "/api/scrape", {method:"POST", headers:Object.assign({"Content-Type":"application/json"},authHeaders()), body:JSON.stringify({url})});
+    const r = await fetch(API_BASE+"/api/scrape",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify({url})});
     const d = await r.json();
-    if (d.error) { toast(d.error); return; }
-    if (d.name) set("f_name", d.name);
-    if (d.description) set("f_description", d.description);
-    if (d.freeQuota) set("f_freeQuota", d.freeQuota);
-    if (d.priceStandard) set("f_priceStandard", d.priceStandard);
-    if (d.tags && d.tags.length) set("f_tags", d.tags.join(", "));
-    toast("已抓取，请补充剩余字段后保存");
-  } catch(e) { toast("抓取失败"); }
+    if(d.error){ toast(d.error); return; }
+    if(d.name) set("f_name", d.name); if(d.description) set("f_description", d.description);
+    if(d.freeQuota) set("f_freeQuota", d.freeQuota); if(d.priceStandard) set("f_priceStandard", d.priceStandard);
+    if(d.tags&&d.tags.length) set("f_tags", d.tags.join(", "));
+    document.getElementById("sec-tokens").scrollIntoView({behavior:"smooth"});
+    toast("已抓取，补充后保存");
+  } catch(e){ toast("抓取失败"); }
 }
 
-resetForm();
-loadAll();
+resetForm(); loadAll();
 </script>
 </body>
 </html>

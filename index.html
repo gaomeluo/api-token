@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>API Token 大全 · 免费/付费排行榜与对比</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338e1ff'/%3E%3Cstop offset='100%25' stop-color='%237c5cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Cpolygon points='15,7 7,16 15,25 10,16' fill='url(%23g)'/%3E%3Cpolygon points='17,7 25,16 17,25 22,16' fill='url(%23g)'/%3E%3C/svg%3E" />
 <style>
   :root {
     --bg: #060914; --panel: rgba(22,30,52,.55); --panel2: rgba(34,44,72,.6); --text: #e8ecf8;
@@ -27,11 +28,15 @@
     -webkit-mask-image: radial-gradient(circle at 50% 25%, #000 25%, transparent 80%);
     mask-image: radial-gradient(circle at 50% 25%, #000 25%, transparent 80%); }
   a { color: var(--accent); text-decoration: none; }
-  header { padding: 20px 28px; border-bottom: 1px solid var(--line);
+  header { padding: 10px 28px; border-bottom: none;
     display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-    background: rgba(10,14,26,.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: rgba(10,14,26,.55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     position: sticky; top: 0; z-index: 30; }
-  header h1 { margin: 0; font-size: 23px; letter-spacing: .5px;
+  header::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--gold), var(--accent2), var(--accent));
+    background-size: 200% 100%; animation: navGlow 3s ease-in-out infinite; }
+  @keyframes navGlow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  header h1 { margin: 0; font-size: 21px; letter-spacing: .5px;
     background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text;
     background-clip: text; color: transparent; }
   header .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
@@ -137,11 +142,20 @@
   .featured-img-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; transition: opacity .5s ease; opacity: 1; }
   .featured-img-box img.hiding { opacity: 0; }
   .featured-img-box::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(6,9,20,.7)); pointer-events: none; z-index: 1; }
+  .feat-fallback { position: absolute; inset: 0; z-index: 0; display: none; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #0a1a3a 0%, #1a0a2e 40%, #0a0a1a 100%); }
+  .feat-fallback::before { content:""; position:absolute; inset:0;
+    background: radial-gradient(circle at 20% 30%, rgba(56,225,255,.25), transparent 50%),
+                radial-gradient(circle at 80% 60%, rgba(124,92,255,.2), transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(255,207,92,.12), transparent 50%); }
+  .feat-fallback span { position:relative; z-index:1; font-size: 20px; font-weight: 700; color: rgba(255,255,255,.92);
+    text-align: center; padding: 24px; text-shadow: 0 2px 12px rgba(0,0,0,.6);
+    background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .featured-dots { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 3; }
   .featured-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.25); cursor: pointer; transition: .25s; }
   .featured-dots span.active { background: var(--accent); box-shadow: 0 0 14px var(--accent); transform: scale(1.3); }
   .featured-text { flex: 1; padding: 32px 36px; display: flex; flex-direction: column; justify-content: center; position: relative; }
-  .featured-text .ft-tag { font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 12px; }
+  .featured-text .ft-tag { font-size: 14px; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 14px; font-weight: 600; }
   .featured-text h2 { margin: 0 0 16px; font-size: 26px; line-height: 1.35; font-weight: 700; background: linear-gradient(135deg, #e0ecff, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .featured-text .ft-summary { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .featured-text .ft-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; padding: 11px 26px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #04121a; font-weight: 600; text-decoration: none; box-shadow: var(--glow); align-self: flex-start; transition: .2s; }
@@ -165,6 +179,7 @@
     <div class="featured-inner">
       <div class="featured-img-box">
         <img id="featImg" src="" alt="" />
+        <div class="feat-fallback" id="featFallback"><span></span></div>
         <div class="featured-dots" id="featDots"></div>
       </div>
       <div class="featured-text">
@@ -875,8 +890,15 @@ function renderNewsSlide(animate){
   if (!siteNews.length) return;
   const n = siteNews[newsIdx];
   const img = document.getElementById("featImg");
-  if (animate) { img.classList.add("hiding"); setTimeout(()=>{ img.src = n.image || ""; img.classList.remove("hiding"); }, 350); }
-  else { img.src = n.image || ""; }
+  const fb = document.getElementById("featFallback");
+  if (n.image) {
+    fb.style.display = "none"; img.style.display = "";
+    if (animate) { img.classList.add("hiding"); setTimeout(()=>{ img.src = n.image; img.classList.remove("hiding"); }, 350); }
+    else { img.src = n.image; }
+  } else {
+    img.style.display = "none"; fb.style.display = "flex";
+    fb.querySelector("span").textContent = n.title;
+  }
   document.getElementById("featTitle").textContent = n.title;
   document.getElementById("featSummary").textContent = n.summary || "";
   document.getElementById("featLink").href = n.link || "#";
