@@ -328,9 +328,10 @@ function renderPromo(){
   if(!STATS || !STATS.promo_tokens || !STATS.promo_tokens.length){ box.innerHTML='<span class="hint">暂无标记返佣的平台</span>'; return; }
   box.innerHTML = STATS.promo_tokens.map(t => `<div class="promo-card">
     <div class="pc-top"><b>${t.name}</b><span class="rate">★ ${t.rating}</span></div>
-    <div class="cr"><b>平台返我：</b>${t.commissionRate||"—"}</div>
-    <div class="mg"><b>管理地址：</b><a href="${t.affiliateDashboard||'#'}" target="_blank">${t.affiliateDashboard||'—'} ↗</a></div>
-    <div class="link-row"><input id="link-${t.id}" value="${t.commissionUrl||''}" readonly/><button class="btn small gold" onclick="copyLink('${t.id}')">复制</button></div>
+    <div class="cr"><b>返佣：</b>${t.commissionRate||"—"}</div>
+    <div class="mg">🌐 <a href="${t.commissionUrl||'#'}" target="_blank">推广返利页面 ↗</a></div>
+    <div class="mg">⚙️ <a href="${t.affiliateDashboard||'#'}" target="_blank">返佣管理后台 ↗</a></div>
+    <div class="link-row"><input id="link-${t.id}" value="${t.commissionUrl||''}" readonly/><button class="btn small gold" onclick="copyLink('${t.id}')">复制推广链接</button></div>
   </div>`).join("");
 }
 
