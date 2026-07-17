@@ -21,12 +21,13 @@
       radial-gradient(800px 600px at 50% 120%, rgba(56,225,255,.08), transparent 60%),
       linear-gradient(180deg, #070b16, #05070f);
     background-attachment: fixed; }
-  body::before { content:""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  body::before { content:""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background-image: linear-gradient(rgba(120,140,200,.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(120,140,200,.05) 1px, transparent 1px);
     background-size: 44px 44px;
     -webkit-mask-image: radial-gradient(circle at 50% 25%, #000 25%, transparent 80%);
     mask-image: radial-gradient(circle at 50% 25%, #000 25%, transparent 80%); }
+  @media(max-width:768px){ body::before { position: absolute; z-index: 0; } }
   a { color: var(--accent); text-decoration: none; }
   header { padding: 10px 28px; border-bottom: none;
     display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
@@ -47,8 +48,9 @@
   .btn.ghost { background: rgba(255,255,255,.04); border: 1px solid var(--line); color: var(--text); box-shadow: none; }
   .btn.ghost:hover { border-color: var(--accent); }
   .btn.small { padding: 5px 11px; font-size: 13px; }
-  select { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--line);
-    border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  select { background: rgba(16,22,40,.95); color: var(--text); border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px 10px; font-size: 13px; color-scheme: dark; }
+  select option { background: #111827; color: #e8ecf8; }
   .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 28px 120px; }
   .tabs { display: flex; gap: 8px; margin: 18px 0; align-items: center; flex-wrap: wrap; }
   .tab { padding: 9px 18px; border-radius: 999px; background: rgba(255,255,255,.04); color: var(--muted);
