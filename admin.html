@@ -38,7 +38,7 @@
   .sidebar a:hover { color:var(--text); background:rgba(56,225,255,.05); }
   .sidebar a.active { color:var(--accent); border-left-color:var(--accent); background:rgba(56,225,255,.08); }
   .sidebar a .si { font-size:16px; width:22px; text-align:center; }
-  .main { margin-left:210px; flex:1; padding:24px 32px 80px; max-width:calc(100vw - 210px); }
+  .main { margin-left:210px; flex:1; padding:24px 32px 80px; max-width:calc(100vw - 210px); position: relative; z-index: 1; }
   @media(max-width:768px){ .sidebar { width:56px; } .sidebar .sb-logo, .sidebar .sb-section, .sidebar a span { display:none; }
     .sidebar a { justify-content:center; padding:12px 0; } .sidebar a .si { font-size:20px; }
     .main { margin-left:56px; max-width:calc(100vw - 56px); padding:16px; } }
