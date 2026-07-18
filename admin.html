@@ -1,445 +1,273 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>管理后台 · API Token 大全</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231677ff'/%3E%3Cstop offset='100%25' stop-color='%232979ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Cpolygon points='15,7 7,16 15,25 10,16' fill='url(%23g)'/%3E%3Cpolygon points='17,7 25,16 17,25 22,16' fill='url(%23g)'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%231677ff' stroke-width='2.5'/%3E%3Cpolygon points='14,7 7,16 14,25 9,16' fill='%231677ff'/%3E%3Cpolygon points='18,7 25,16 18,25 23,16' fill='%231677ff'/%3E%3C/svg%3E" />
 <style>
-  :root { --bg:#f5f7fb; --bg2:#eef2ff; --panel:#ffffff; --panel2:#f8fafc; --text:#1a1a1a;
-    --muted:#6b7280; --muted2:#9ca3af; --line:#e5e7eb; --line2:#f0f1f4;
-    --primary:#1677ff; --primary2:#2979ff; --primary-light:#e6f1ff;
-    --accent:#06b6d4; --gold:#f59e0b; --orange:#ff7a45; --green:#10b981;
-    --red:#ef4444; --shadow:0 1px 3px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
-    --shadow-hover:0 4px 12px rgba(22,119,255,.12), 0 8px 32px rgba(22,119,255,.08); }
+  :root { --bg:#f5f7fb; --panel:#fff; --panel2:#f8fafc; --text:#1a1a1a; --muted:#6b7280; --muted2:#9ca3af; --line:#e5e7eb;
+    --primary:#1677ff; --primary2:#2979ff; --primary-light:#e6f1ff; --gold:#f59e0b; --red:#ef4444;
+    --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04); }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
-    color: var(--text); line-height: 1.6; background: var(--bg); min-height: 100vh; }
-  a { color: var(--primary); text-decoration: none; }
+  body { margin:0; font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; color:var(--text); line-height:1.6; background:var(--bg); min-height:100vh; }
+  a { color:var(--primary); text-decoration:none; }
+  .layout { display:flex; min-height:100vh; }
+  .sidebar { width:215px; flex-shrink:0; background:#fff; border-right:1px solid var(--line); position:fixed; top:0; left:0; bottom:0; z-index:40; display:flex; flex-direction:column; overflow-y:auto; }
+  .sb-logo { padding:14px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--line); }
+  .sb-logo svg { width:32px; height:32px; flex-shrink:0; }
+  .sb-logo span { font-size:15px; font-weight:700; }
+  .sb-g { padding:12px 16px 4px; font-size:11px; font-weight:600; color:var(--muted2); letter-spacing:1px; }
+  .sb-nav { display:flex; flex-direction:column; gap:1px; padding:2px 8px; }
+  .sb-nav a { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; font-size:13px; color:var(--muted); transition:.12s; }
+  .sb-nav a:hover,.sb-nav a.active { color:var(--primary); background:var(--primary-light); }
+  .sb-nav a.active { font-weight:600; }
+  .sb-nav a .si { font-size:16px; width:22px; text-align:center; }
+  .sb-ft { margin-top:auto; padding:10px 16px; border-top:1px solid var(--line); font-size:11px; }
 
-  /* Layout */
-  .layout { display: flex; min-height: 100vh; }
-  .sidebar { width: 220px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--line);
-    position: fixed; top: 0; left: 0; bottom: 0; z-index: 40; display: flex; flex-direction: column;
-    overflow-y: auto; }
-  .sidebar .sb-logo { padding: 18px 20px; font-size: 16px; font-weight: 700;
-    border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; color: var(--text); }
-  .sidebar .sb-logo .lg { width: 30px; height: 30px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--primary), var(--primary2));
-    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; }
-  .sidebar .sb-section { padding: 14px 20px 6px; font-size: 11px; color: var(--muted2); text-transform: uppercase; letter-spacing: 1.5px; }
-  .sidebar a { display: flex; align-items: center; gap: 10px; padding: 10px 20px; font-size: 14px; color: var(--muted);
-    transition: .12s; border-left: 3px solid transparent; }
-  .sidebar a:hover { color: var(--primary); background: var(--primary-light); }
-  .sidebar a.active { color: var(--primary); border-left-color: var(--primary); background: var(--primary-light); font-weight: 500; }
-  .sidebar a .si { font-size: 16px; width: 22px; text-align: center; }
-  .main { margin-left: 220px; flex: 1; padding: 28px 36px 80px; max-width: calc(100vw - 220px); position: relative; z-index: 1; }
-  @media(max-width:768px){ .sidebar { width: 56px; } .sidebar .sb-logo span, .sidebar .sb-section, .sidebar a span:not(.si) { display: none; }
-    .sidebar a { justify-content: center; padding: 12px 0; } .main { margin-left: 56px; max-width: calc(100vw - 56px); padding: 16px; } }
+  .main { margin-left:215px; flex:1; padding:24px 32px 80px; max-width:calc(100vw - 215px); position:relative; z-index:1; }
+  @media(max-width:768px){ .sidebar { width:50px; } .sb-logo span,.sb-g,.sb-nav a span:not(.si),.sb-ft span { display:none; } .sb-nav a { justify-content:center; padding:10px 0; } .sb-nav a .si { font-size:18px; } .main { margin-left:50px; max-width:calc(100vw - 50px); padding:16px; } }
 
-  .btn { display: inline-flex; align-items: center; gap: 4px; padding: 7px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: .15s; border: 1px solid transparent; }
-  .btn-pri { background: linear-gradient(135deg, var(--primary), var(--primary2)); color: #fff; }
-  .btn-pri:hover { filter: brightness(1.08); box-shadow: 0 4px 12px rgba(22,119,255,.3); }
-  .btn-ghost { background: #fff; color: var(--muted); border: 1px solid var(--line); }
-  .btn-ghost:hover { color: var(--primary); border-color: var(--primary); }
-  .btn-small { padding: 4px 12px; font-size: 13px; }
-  .btn-danger { background: #fff; color: var(--red); border: 1px solid #fecaca; }
-  .btn-danger:hover { background: #fef2f2; }
-  .btn-gold { background: linear-gradient(135deg, var(--gold), #fbbf24); color: #fff; }
+  .btn { display:inline-flex; align-items:center; gap:4px; padding:7px 16px; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer; transition:.15s; border:1px solid transparent; }
+  .btn-pri { background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; }
+  .btn-pri:hover { filter:brightness(1.08); box-shadow:0 4px 12px rgba(22,119,255,.3); }
+  .btn-ghost { background:#fff; color:var(--muted); border:1px solid var(--line); }
+  .btn-ghost:hover { color:var(--primary); border-color:var(--primary); }
+  .btn-small { padding:4px 10px; font-size:12px; }
+  .btn-danger { background:#fff; color:var(--red); border:1px solid #fecaca; }
+  .btn-danger:hover { background:#fef2f2; }
+  .btn-gold { background:linear-gradient(135deg,var(--gold),#fbbf24); color:#fff; }
+  .btn-sm { padding:3px 8px; font-size:11px; }
 
-  .panel { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
-  .section { scroll-margin-top: 20px; }
-  .section h2 { margin: 0 0 16px; font-size: 18px; font-weight: 700; color: var(--text);
-    display: flex; align-items: center; gap: 8px; }
-  .section h2::before { content: ""; width: 4px; height: 18px; border-radius: 2px; background: linear-gradient(180deg, var(--primary), var(--primary2)); }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 22px; margin-bottom:18px; box-shadow:var(--shadow); }
+  .section { scroll-margin-top:20px; }
+  .section h2 { margin:0 0 14px; font-size:17px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .section h2::before { content:""; width:3px; height:16px; border-radius:2px; background:linear-gradient(180deg,var(--primary),var(--primary2)); }
 
-  .kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-bottom: 20px; }
-  @media(max-width:1000px){ .kpis { grid-template-columns: repeat(3, 1fr); } }
-  @media(max-width:560px){ .kpis { grid-template-columns: repeat(2, 1fr); } }
-  .kpi { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; text-align: center; transition: .2s; box-shadow: var(--shadow); }
-  .kpi:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
-  .kpi.promo { border-color: #fde68a; }
-  .kpi-n { font-size: 24px; font-weight: 700; color: var(--text); }
-  .kpi.promo .kpi-n { color: var(--gold); }
-  .kpi-l { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .kpis { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:18px; }
+  @media(max-width:1000px){ .kpis { grid-template-columns:repeat(3,1fr); } }
+  .kpi { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; text-align:center; transition:.2s; box-shadow:var(--shadow); }
+  .kpi:hover { transform:translateY(-2px); }
+  .kpi.promo { border-color:#fde68a; }
+  .kpi-n { font-size:22px; font-weight:700; }
+  .kpi.promo .kpi-n { color:var(--gold); }
+  .kpi-l { font-size:11px; color:var(--muted); margin-top:3px; }
 
-  .promo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
-  .promo-card { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 14px; transition: .2s; }
-  .promo-card:hover { border-color: var(--gold); box-shadow: 0 4px 16px rgba(245,158,11,.1); }
-  .pc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .promo-card b { font-size: 15px; }
-  .promo-card .rate { color: var(--gold); font-size: 13px; font-weight: 600; }
-  .promo-card .cr, .promo-card .mg { font-size: 12px; color: var(--muted); margin: 4px 0; }
-  .promo-card .cr b { color: var(--text); }
-  .promo-card .mg a { color: var(--primary); }
-  .link-row { display: flex; gap: 6px; align-items: center; margin-top: 8px; }
-  .link-row input { flex: 1; font-size: 12px; }
+  .promo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:12px; }
+  .promo-card { background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:12px; transition:.2s; }
+  .promo-card:hover { border-color:var(--gold); }
+  .pc-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .promo-card b { font-size:14px; }
+  .promo-card .rate { color:var(--gold); font-size:12px; font-weight:600; }
+  .promo-card .cr,.promo-card .mg { font-size:11px; color:var(--muted); margin:3px 0; }
+  .promo-card .mg a { color:var(--primary); }
+  .link-row { display:flex; gap:6px; align-items:center; margin-top:6px; }
+  .link-row input { flex:1; font-size:11px; }
 
-  .tagbar { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
-  .tagbar .name { width: 80px; font-size: 13px; color: var(--muted); }
-  .tagbar .bar { flex: 1; height: 10px; background: var(--panel2); border-radius: 5px; overflow: hidden; }
-  .tagbar .bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+  .tagbar { display:flex; align-items:center; gap:10px; margin:5px 0; }
+  .tagbar .name { width:80px; font-size:12px; color:var(--muted); }
+  .tagbar .bar { flex:1; height:8px; background:var(--panel2); border-radius:4px; overflow:hidden; }
+  .tagbar .bar>i { display:block; height:100%; background:linear-gradient(90deg,var(--primary),var(--primary2)); }
 
-  .fgroup { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; background: var(--panel2); }
-  .fgroup > .gt { font-size: 13px; color: var(--primary); margin-bottom: 10px; font-weight: 600; }
-  label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 4px; }
-  input, select, textarea { width: 100%; background: #fff; border: 1px solid var(--line);
-    color: var(--text); border-radius: 8px; padding: 8px 10px; font-size: 13px; transition: .15s; }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(22,119,255,.1); }
-  ::placeholder { color: var(--muted2); }
-  textarea { min-height: 60px; }
-  select { color-scheme: light;
-    -webkit-appearance: none; appearance: none;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 10px center; background-size: 10px;
-    padding-right: 30px; }
+  .fgroup { border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; background:var(--panel2); }
+  .fgroup>.gt { font-size:12px; color:var(--primary); margin-bottom:8px; font-weight:600; }
+  label { font-size:11px; color:var(--muted); display:block; margin-bottom:3px; }
+  input,select,textarea { width:100%; background:#fff; border:1px solid var(--line); color:var(--text); border-radius:7px; padding:7px 10px; font-size:13px; transition:.15s; }
+  input:focus,select:focus,textarea:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(22,119,255,.08); }
+  select { color-scheme:light; -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; background-size:10px; padding-right:30px; }
+  textarea { min-height:56px; }
 
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
-  @media(max-width:760px){ .grid2,.grid3,.grid4 { grid-template-columns: 1fr; } }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .grid4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; }
+  @media(max-width:760px){ .grid2,.grid3,.grid4 { grid-template-columns:1fr; } }
 
-  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-  .toolbar input, .toolbar select { width: auto; flex: 1; min-width: 140px; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th, td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; max-width: 280px; word-break: break-word; }
-  th { background: var(--panel2); color: var(--muted); font-weight: 600; }
-  tbody tr { transition: .12s; }
-  tbody tr:hover { background: var(--primary-light); }
-  .badge { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
-  .badge.free { background: #d1fae5; color: #047857; }
-  .badge.paid { background: #fef3c7; color: #b45309; }
-  .badge.comm { background: #ffe4e6; color: #be123c; }
-  .row-actions { display: flex; gap: 6px; }
-  .hint { color: var(--muted); font-size: 12px; }
+  .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+  .toolbar input,.toolbar select { width:auto; flex:1; min-width:140px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th,td { border-bottom:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; max-width:260px; word-break:break-word; }
+  th { background:var(--panel2); color:var(--muted); font-weight:600; }
+  tbody tr:hover { background:var(--primary-light); }
+  .badge { font-size:10px; padding:1px 6px; border-radius:3px; }
+  .badge.free { background:#d1fae5; color:#047857; } .badge.paid { background:#fef3c7; color:#b45309; } .badge.comm { background:#ffe4e6; color:#be123c; }
+  .row-actions { display:flex; gap:4px; }
+  .hint { color:var(--muted); font-size:11px; }
 
-  .toast { position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
-    background: var(--text); color: #fff; padding: 10px 20px; border-radius: 8px;
-    font-size: 14px; opacity: 0; transition: .3s; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,.15); }
-  .toast.show { opacity: 1; }
+  .toast { position:fixed; top:20px; left:50%; transform:translateX(-50%); background:var(--text); color:#fff; padding:8px 18px; border-radius:8px; font-size:13px; opacity:0; transition:.3s; z-index:200; }
+  .toast.show { opacity:1; }
 
-  .login-overlay { position: fixed; inset: 0; background: rgba(245,247,251,.95); z-index: 999;
-    display: flex; align-items: center; justify-content: center; padding: 20px; }
-  .login-box { background: #fff; border-radius: 18px; padding: 36px 40px; max-width: 380px; width: 100%;
-    text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.12), 0 0 0 1px var(--line); }
-  .login-box .lg { width: 60px; height: 60px; border-radius: 14px; margin: 0 auto 16px;
-    background: linear-gradient(135deg, var(--primary), var(--primary2));
-    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 28px; }
-  .login-box h2 { margin: 0 0 8px; font-size: 22px; font-weight: 700; }
-  .login-box .hint { margin: 0 0 20px; }
-  .login-box input { margin-bottom: 12px; text-align: center; font-size: 15px; padding: 12px; }
-  .login-box .btn { width: 100%; padding: 11px; font-size: 15px; }
-  .login-box .err { color: var(--red); font-size: 13px; margin-top: 8px; min-height: 20px; }
-
-  .news-row { display: flex; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
-  .news-row > span { flex: 1; min-width: 150px; font-size: 13px; }
-  .news-row > span .hint { display: block; }
+  .login-overlay { position:fixed; inset:0; background:rgba(245,247,251,.95); z-index:999; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .login-box { background:#fff; border-radius:16px; padding:34px 38px; max-width:360px; width:100%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.12); }
+  .login-box svg { width:50px; height:50px; margin:0 auto 14px; display:block; }
+  .login-box h2 { margin:0 0 6px; font-size:20px; }
+  .login-box input { margin:10px 0; text-align:center; font-size:15px; padding:11px; }
+  .login-box .btn { width:100%; padding:10px; }
+  .login-box .err { color:var(--red); font-size:12px; margin-top:6px; min-height:18px; }
 </style>
 </head>
 <body>
-
-<div class="login-overlay" id="loginGate">
-  <div class="login-box">
-    <div class="lg">⚙️</div>
-    <h2>管理后台</h2>
-    <p class="hint">请输入管理员密码</p>
-    <input type="password" id="loginPw" placeholder="密码" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <button class="btn btn-pri" onclick="doLogin()">登录</button>
-    <div class="err" id="loginErr"></div>
-  </div>
-</div>
+<div class="login-overlay" id="lg"><div class="login-box">
+  <svg viewBox="0 0 34 34"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1677ff"/><stop offset="100%" stop-color="#2979ff"/></linearGradient></defs><circle cx="17" cy="17" r="15" fill="none" stroke="url(#g2)" stroke-width="2.6"/><polygon points="14.5,7.5 7,17 14.5,26.5 9.5,17" fill="url(#g2)"/><polygon points="19.5,7.5 27,17 19.5,26.5 24.5,17" fill="url(#g2)"/></svg>
+  <h2>管理后台</h2><p class="hint">请输入管理员密码</p>
+  <input type="password" id="pw" placeholder="密码" onkeydown="if(event.key==='Enter')dl()"/>
+  <button class="btn btn-pri" onclick="dl()">登录</button><div class="err" id="le"></div>
+</div></div>
 
 <div class="layout">
-<!-- ===== 侧边栏 ===== -->
-<nav class="sidebar" id="sidebar">
-  <div class="sb-logo"><div class="lg">【】</div><span>API Token</span></div>
-  <div class="sb-section">数据</div>
-  <a href="#sec-overview" class="active" data-section="sec-overview"><span class="si">📊</span><span>数据概览</span></a>
-  <a href="#sec-promo" data-section="sec-promo"><span class="si">💰</span><span>推广返佣</span></a>
-  <div class="sb-section">管理</div>
-  <a href="#sec-tokens" data-section="sec-tokens"><span class="si">📋</span><span>Token 管理</span></a>
-  <a href="#sec-scrape" data-section="sec-scrape"><span class="si">🔍</span><span>一键抓取</span></a>
-  <a href="#sec-news" data-section="sec-news"><span class="si">📰</span><span>资讯管理</span></a>
-  <a href="#sec-tags" data-section="sec-tags"><span class="si">🏷️</span><span>标签分布</span></a>
-  <a href="../" style="margin-top:auto;margin-bottom:14px;border-top:1px solid var(--line);"><span class="si">🏠</span><span>返回展示页</span></a>
+<nav class="sidebar">
+  <div class="sb-logo"><svg viewBox="0 0 34 34" width="32" height="32"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1677ff"/><stop offset="100%" stop-color="#2979ff"/></linearGradient></defs><circle cx="17" cy="17" r="15" fill="none" stroke="url(#g3)" stroke-width="2.6"/><polygon points="14.5,7.5 7,17 14.5,26.5 9.5,17" fill="url(#g3)"/><polygon points="19.5,7.5 27,17 19.5,26.5 24.5,17" fill="url(#g3)"/></svg><span>API Token</span></div>
+  <div class="sb-g">数据</div>
+  <div class="sb-nav">
+    <a href="#s-overview" class="active"><span class="si">📊</span>数据概览</a>
+    <a href="#s-promo"><span class="si">💰</span>推广返佣</a>
+  </div>
+  <div class="sb-g">管理</div>
+  <div class="sb-nav">
+    <a href="#s-tokens"><span class="si">📋</span>Token 管理</a>
+    <a href="#s-scrape"><span class="si">🔍</span>一键抓取</a>
+    <a href="#s-news"><span class="si">📰</span>资讯管理</a>
+    <a href="#s-tools"><span class="si">🛠️</span>Token 工具</a>
+    <a href="#s-tags"><span class="si">🏷️</span>标签分布</a>
+  </div>
+  <div class="sb-ft"><a href="../" class="active"><span class="si">🏠</span>返回展示页</a></div>
 </nav>
 
-<!-- ===== 主内容区 ===== -->
 <main class="main">
 
-<section class="section" id="sec-overview">
-  <h2>数据概览</h2>
-  <div class="kpis">
-    <div class="kpi"><div class="kpi-n" id="k_total">-</div><div class="kpi-l">收录总数</div></div>
-    <div class="kpi"><div class="kpi-n" id="k_free">-</div><div class="kpi-l">免费</div></div>
-    <div class="kpi"><div class="kpi-n" id="k_paid">-</div><div class="kpi-l">付费</div></div>
-    <div class="kpi promo"><div class="kpi-n" id="k_comm">-</div><div class="kpi-l">有返佣</div></div>
-    <div class="kpi"><div class="kpi-n" id="k_rating">-</div><div class="kpi-l">平均评分</div></div>
-    <div class="kpi"><div class="kpi-n" id="k_value">-</div><div class="kpi-l">性价比</div></div>
+<section class="section" id="s-overview"><h2>数据概览</h2>
+<div class="kpis">
+  <div class="kpi"><div class="kpi-n" id="kt">-</div><div class="kpi-l">收录总数</div></div>
+  <div class="kpi"><div class="kpi-n" id="kf">-</div><div class="kpi-l">免费</div></div>
+  <div class="kpi"><div class="kpi-n" id="kp">-</div><div class="kpi-l">付费</div></div>
+  <div class="kpi promo"><div class="kpi-n" id="kc">-</div><div class="kpi-l">有返佣</div></div>
+  <div class="kpi"><div class="kpi-n" id="kr">-</div><div class="kpi-l">平均评分</div></div>
+  <div class="kpi"><div class="kpi-n" id="kv">-</div><div class="kpi-l">性价比</div></div>
+</div></section>
+
+<section class="section" id="s-promo"><h2>推广返佣</h2><div class="panel"><div id="pr" class="promo-grid"></div></div></section>
+
+<section class="section" id="s-tokens"><h2>Token 管理</h2>
+<div class="panel">
+  <h3 id="ft" style="margin-top:0;font-size:14px;color:var(--primary)">➕ 新增 API Token</h3>
+  <div class="fgroup"><div class="gt">基础信息</div>
+    <div class="grid4">
+      <div><label>名称 *</label><input id="fn" placeholder="OpenAI GPT-4o"/></div>
+      <div><label>类型</label><select id="ftype"><option value="free">免费</option><option value="paid">付费</option></select></div>
+      <div><label>类目</label><select id="fcat"><option>文本模型</option><option>编程模型</option><option>视频模型</option><option>音频模型</option><option>图片模型</option><option>推理模型</option></select></div>
+      <div><label>官网链接</label><input id="fu" placeholder="https://"/></div>
+    </div>
+    <div class="grid3" style="margin-top:10px">
+      <div><label>供应商品牌</label><input id="fbrand" placeholder="如 OpenAI"/></div>
+      <div><label>国家</label><input id="fcountry" placeholder="如 🇺🇸 美国"/></div>
+      <div><label>标签(逗号分隔)</label><input id="ftags" placeholder="写代码, 画图"/></div>
+    </div>
+    <div style="margin-top:10px"><label>简介</label><textarea id="fd" placeholder="一句话介绍"></textarea></div>
   </div>
-</section>
-
-<section class="section" id="sec-promo">
-  <h2>推广返佣（平台返我）</h2>
-  <p class="hint" style="margin-top:0;">下列平台有返佣计划：你去推广它的 API，平台返你佣金。<b style="color:var(--gold)">优先推返佣高、评分高</b>的平台。</p>
-  <div class="panel"><div id="promoList" class="promo-grid"></div></div>
-</section>
-
-<section class="section" id="sec-tokens">
-  <h2>Token 管理</h2>
-  <div class="panel">
-    <h3 id="formTitle" style="margin-top:0;font-size:15px;color:var(--primary);">➕ 新增 API Token</h3>
-    <div class="fgroup"><div class="gt">基础信息</div>
-      <div class="grid4">
-        <div><label>名称 *</label><input id="f_name" placeholder="如 OpenAI GPT-4o"/></div>
-        <div><label>类型</label><select id="f_type"><option value="free">免费</option><option value="paid">付费</option></select></div>
-        <div><label>类目</label><select id="f_category"><option value="文本模型">文本模型</option><option value="编程模型">编程模型</option><option value="视频模型">视频模型</option><option value="音频模型">音频模型</option><option value="图片模型">图片模型</option><option value="推理模型">推理模型</option></select></div>
-        <div><label>官网链接</label><input id="f_url" placeholder="https://"/></div>
-        <div><label>标签(逗号分隔)</label><input id="f_tags" placeholder="写代码, 画图"/></div>
-      </div>
-      <div style="margin-top:10px;"><label>简介</label><textarea id="f_description" placeholder="一句话介绍"></textarea></div>
+  <div class="fgroup"><div class="gt">额度/价格/擅长</div>
+    <div class="grid3">
+      <div><label>🆓 免费额度</label><input id="ffq" placeholder="如 每月 60 次"/></div>
+      <div><label>💎 付费标准</label><input id="fps" placeholder="如 $0.0025/1K"/></div>
+      <div><label>限制说明</label><input id="flim" placeholder="速率/功能等"/></div>
     </div>
-    <div class="fgroup"><div class="gt">额度 / 价格 / 擅长</div>
-      <div class="grid3">
-        <div><label>🆓 免费额度</label><input id="f_freeQuota" placeholder="如 每月 60 次"/></div>
-        <div><label>💎 付费标准</label><input id="f_priceStandard" placeholder="如 $0.0025/1K输入"/></div>
-        <div><label>限制说明</label><input id="f_limits" placeholder="速率/功能/合规等"/></div>
-      </div>
-      <div class="grid3" style="margin-top:10px;">
-        <div><label>评分(0-5)</label><input id="f_rating" type="number" step="0.1" min="0" max="5" value="4"/></div>
-        <div><label>性价比(0-5)</label><input id="f_valueScore" type="number" step="0.1" min="0" max="5" value="4"/></div>
-        <div><label>核心优势</label><input id="f_strengths" placeholder="如 生态成熟"/></div>
-      </div>
-      <div style="margin-top:10px;"><label>擅长领域详解</label><textarea id="f_expertise" placeholder="如 多模态理解、代码生成…"></textarea></div>
+    <div class="grid3" style="margin-top:10px">
+      <div><label>评分</label><input id="frt" type="number" step="0.1" value="4"/></div>
+      <div><label>性价比</label><input id="fvs" type="number" step="0.1" value="4"/></div>
+      <div><label>核心优势</label><input id="fst" placeholder="如 生态成熟"/></div>
     </div>
-    <div class="fgroup"><div class="gt">推广与返佣（仅站长可见）</div>
-      <div class="grid4">
-        <div><label>是否有返佣</label><select id="f_commission"><option value="false">无</option><option value="true">有</option></select></div>
-        <div><label>返佣比例/金额</label><input id="f_commissionRate" placeholder="如 25%"/></div>
-        <div><label>推广链接</label><input id="f_commissionUrl" placeholder="https://.../?ref="/></div>
-        <div><label>返佣管理后台</label><input id="f_affiliateDashboard" placeholder="https://..."/></div>
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:6px;">
-      <button class="btn btn-pri" onclick="submitForm()">💾 保存</button>
-      <button class="btn btn-ghost" onclick="resetForm()">🔄 重置</button>
+    <div style="margin-top:10px"><label>擅长领域详解</label><textarea id="fexp" placeholder="多模态理解..."></textarea></div>
+  </div>
+  <div class="fgroup"><div class="gt">推广返佣</div>
+    <div class="grid4">
+      <div><label>有返佣?</label><select id="fcomm"><option value="false">无</option><option value="true">有</option></select></div>
+      <div><label>返佣比例</label><input id="fcr" placeholder="25%"/></div>
+      <div><label>推广链接</label><input id="fcu" placeholder="https://?ref="/></div>
+      <div><label>管理后台</label><input id="fad" placeholder="https://"/></div>
     </div>
   </div>
-  <div class="panel">
-    <div class="toolbar">
-      <input id="q" placeholder="🔍 搜索名称/标签…" oninput="renderList()" style="min-width:200px;"/>
-      <select id="f_filter" onchange="renderList()"><option value="">全部</option><option value="free">免费</option><option value="paid">付费</option></select>
-      <select id="sort" onchange="renderList()"><option value="rating">按评分</option><option value="valueScore">按性价比</option><option value="name">按名称</option></select>
-    </div>
-    <table id="tbl"><thead><tr><th>名称</th><th>类型</th><th>评分</th><th>性价比</th><th>返佣</th><th>操作</th></tr></thead><tbody></tbody></table>
+  <div style="display:flex;gap:10px;margin-top:6px">
+    <button class="btn btn-pri" onclick="sf()">💾 保存</button><button class="btn btn-ghost" onclick="rf()">🔄 重置</button>
   </div>
-</section>
-
-<section class="section" id="sec-scrape">
-  <h2>一键抓取</h2>
-  <div class="panel">
-    <p class="hint" style="margin-top:0;">粘贴 API Token 官网链接，自动提取名称/描述/价格/标签，回填上方 Token 表单。</p>
-    <div style="display:flex;gap:8px;">
-      <input id="f_scrapeUrl" placeholder="https://platform.example.com/pricing"/>
-      <button class="btn btn-gold" onclick="doScrape()">🔍 抓取并回填</button>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="sec-news">
-  <h2>资讯管理</h2>
-  <div class="panel">
-    <p class="hint" style="margin-top:0;">编辑后展示在前端"推荐 API Token"模块中。不填图片则自动生成封面。</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-      <input id="snTitle" placeholder="标题" style="flex:1;min-width:140px;"/>
-      <input id="snSummary" placeholder="摘要" style="flex:2;min-width:180px;"/>
-      <input id="snLink" placeholder="链接" style="flex:2;min-width:180px;"/>
-      <input id="snImage" placeholder="缩略图URL(可选)" style="flex:2;min-width:180px;"/>
-      <button class="btn btn-pri btn-small" id="snSaveBtn" onclick="saveSiteNews()">➕ 保存</button>
-    </div>
-    <div id="siteNewsList"></div>
-  </div>
-</section>
-
-<section class="section" id="sec-tags">
-  <h2>标签分布</h2>
-  <div class="panel"><div id="tagDist"></div></div>
-</section>
-
-</main>
 </div>
+<div class="panel">
+  <div class="toolbar">
+    <input id="q" placeholder="🔍 搜索..." oninput="rl()" style="min-width:180px"/>
+    <select id="ff" onchange="rl()"><option value="">全部</option><option value="free">免费</option><option value="paid">付费</option></select>
+    <select id="so" onchange="rl()"><option value="rating">按评分</option><option value="valueScore">按性价比</option><option value="name">按名称</option></select>
+  </div>
+  <table id="tb"><thead><tr><th>名称</th><th>类型</th><th>评分</th><th>性价比</th><th>返佣</th><th>操作</th></tr></thead><tbody></tbody></table>
+</div></section>
 
-<div class="toast" id="toast"></div>
+<section class="section" id="s-scrape"><h2>一键抓取</h2>
+<div class="panel"><p class="hint">粘贴 API Token 官网链接，自动提取名称/描述/价格，回填上方表单。</p>
+  <div style="display:flex;gap:8px"><input id="fsu" placeholder="https://platform.example.com/pricing"/><button class="btn btn-gold" onclick="ds()">🔍 抓取并回填</button></div>
+</div></section>
+
+<section class="section" id="s-news"><h2>资讯管理</h2>
+<div class="panel"><p class="hint">编辑后展示在前端轮播"推荐 API Token"。不填图片自动生成封面。</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+    <input id="snt" placeholder="标题" style="flex:1;min-width:140px"/><input id="sns" placeholder="摘要" style="flex:2;min-width:180px"/>
+    <input id="snl" placeholder="链接" style="flex:2;min-width:180px"/><input id="sni" placeholder="缩略图URL(可选)" style="flex:2;min-width:180px"/>
+    <button class="btn btn-pri btn-small" id="snb" onclick="ss()">➕ 保存</button>
+  </div><div id="snl2"></div>
+</div></section>
+
+<section class="section" id="s-tools"><h2>Token 工具</h2>
+<div class="panel"><p class="hint">管理前端"Token 工具"栏目下的 AI 智能体和 AI 编程工具。添加后前端自动展示。</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+    <select id="tc" style="width:auto"><option value="AI智能体">AI智能体</option><option value="AI编程工具">AI编程工具</option></select>
+    <input id="tn" placeholder="工具名称" style="flex:1;min-width:120px"/>
+    <input id="td" placeholder="简要描述" style="flex:2;min-width:180px"/>
+    <input id="tu" placeholder="官网链接" style="flex:2;min-width:180px"/>
+    <button class="btn btn-pri btn-small" id="tbb" onclick="st()">➕ 保存</button>
+  </div><div id="tl"></div>
+</div></section>
+
+<section class="section" id="s-tags"><h2>标签分布</h2><div class="panel"><div id="tdg"></div></div></section>
+
+</main></div>
+<div class="toast" id="to"></div>
 
 <script>
-// ⚠️ 改为你的 Cloudflare Worker 地址
-const API_BASE = (location.hostname === "localhost" || location.hostname.startsWith("127.")) ? "" : "https://api-token.825370356.workers.dev";
-let adminKey = sessionStorage.getItem("adminKey") || "";
-if (adminKey) document.getElementById("loginGate").style.display = "none";
+const API=(location.hostname==="localhost"||location.hostname.startsWith("127."))?"":"https://api-token.825370356.workers.dev";
+let ak=sessionStorage.getItem("ak")||"";if(ak)document.getElementById("lg").style.display="none";
+async function dl(){const p=document.getElementById("pw").value;try{const r=await fetch(API+"/api/admin/verify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:p})});const d=await r.json();if(d.ok){ak=p;sessionStorage.setItem("ak",p);document.getElementById("lg").style.display="none";la();rsn();}else document.getElementById("le").textContent=d.error||"密码错误";}catch(e){document.getElementById("le").textContent="连接失败";}}
+function ah(){return ak?{"x-admin-key":ak}:{};}
 
-async function doLogin(){
-  const pw = val("loginPw");
-  try {
-    const r = await fetch(API_BASE + "/api/admin/verify", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw})});
-    const d = await r.json();
-    if (d.ok) { adminKey = pw; sessionStorage.setItem("adminKey", pw); document.getElementById("loginGate").style.display = "none"; loadAll(); renderSiteNewsList(); }
-    else { document.getElementById("loginErr").textContent = d.error || "密码错误"; }
-  } catch(e) { document.getElementById("loginErr").textContent = "连接失败"; }
-}
-function authHeaders(){ return adminKey ? {"x-admin-key": adminKey} : {}; }
+document.querySelectorAll(".sidebar a").forEach(a=>a.addEventListener("click",function(){document.querySelectorAll(".sidebar a").forEach(x=>x.classList.remove("active"));this.classList.add("active");}));
 
-document.querySelectorAll(".sidebar a").forEach(a => { a.addEventListener("click",function(){
-  document.querySelectorAll(".sidebar a").forEach(x=>x.classList.remove("active"));
-  this.classList.add("active");
-}); });
+let ei=null,TOKENS=[],STATS=null;
+function to(msg){const t=document.getElementById("to");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800);}
+function v(id){return document.getElementById(id).value;}
+function s(id,val){document.getElementById(id).value=val??"";}
 
-let editingId = null, TOKENS = [], STATS = null;
-function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1800); }
-function val(id){ return document.getElementById(id).value; }
-function set(id,v){ document.getElementById(id).value = v ?? ""; }
+async function la(){try{const[t,st]=await Promise.all([fetch(API+"/api/tokens"),fetch(API+"/api/stats")]);TOKENS=await t.json();STATS=await st.json();rk();rp();rtg();rl();rsn();rt();}catch(e){document.getElementById("pr").innerHTML='<span class="hint">无法连接后端</span>';}}
+function rk(){if(!STATS)return;document.getElementById("kt").textContent=STATS.total;document.getElementById("kf").textContent=STATS.free_count;document.getElementById("kp").textContent=STATS.paid_count;document.getElementById("kc").textContent=STATS.commission_count;document.getElementById("kr").textContent=STATS.avg_rating;document.getElementById("kv").textContent=STATS.avg_value;}
+function rp(){const b=document.getElementById("pr");if(!STATS||!STATS.promo_tokens||!STATS.promo_tokens.length){b.innerHTML='<span class="hint">暂无返佣</span>';return;}b.innerHTML=STATS.promo_tokens.map(t=>`<div class="promo-card"><div class="pc-top"><b>${t.name}</b><span class="rate">★${t.rating}</span></div><div class="cr"><b>返佣：</b>${t.commissionRate||"—"}</div><div class="mg">🌐 <a href="${t.commissionUrl||'#'}" target="_blank">推广返利页面 ↗</a></div><div class="mg">⚙️ <a href="${t.affiliateDashboard||'#'}" target="_blank">返佣管理后台 ↗</a></div><div class="link-row"><input id="lk-${t.id}" value="${t.commissionUrl||''}" readonly/><button class="btn btn-gold btn-small" onclick="cp('${t.id}')">复制</button></div></div>`).join("");}
+async function cp(id){const inp=document.getElementById("lk-"+id);try{await navigator.clipboard.writeText(inp.value);to("已复制");}catch(e){inp.select();document.execCommand("copy");to("已复制");}}
+function rtg(){const b=document.getElementById("tdg");if(!STATS||!STATS.tag_counts)return;const mx=Math.max(...Object.values(STATS.tag_counts),1);b.innerHTML=Object.entries(STATS.tag_counts).map(([k,v])=>`<div class="tagbar"><div class="name">${k}</div><div class="bar"><i style="width:${v/mx*100}%"></i></div></div>`).join("");}
+function rl(){const q=(v("q")||"").trim().toLowerCase(),ft=v("ff"),so=v("so");let list=TOKENS.slice();if(ft)list=list.filter(t=>t.type===ft);if(q)list=list.filter(t=>(t.name||"").toLowerCase().includes(q)||(t.tags||[]).join(",").toLowerCase().includes(q));list.sort((a,b)=>so==="name"?a.name.localeCompare(b.name):(b[so]||0)-(a[so]||0));const tb=document.querySelector("#tb tbody");if(!list.length){tb.innerHTML='<tr><td colspan="6" class="hint">无匹配</td></tr>';return;}tb.innerHTML=list.map(t=>`<tr><td>${t.name}</td><td><span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span></td><td>${t.rating??"-"}</td><td>${t.valueScore??"-"}</td><td>${t.commission?'<span class="badge comm">💰有</span>':"-"}</td><td><div class="row-actions"><button class="btn btn-pri btn-sm" onclick="ei2('${t.id}')">编辑</button><button class="btn btn-danger btn-sm" onclick="di('${t.id}')">删除</button></div></td></tr>`).join("");}
+function rf(){ei=null;document.getElementById("ft").textContent="➕ 新增 API Token";["fn","fu","ftags","fd","ffq","fps","flim","fst","fexp","fcr","fcu","fad","fbrand","fcountry"].forEach(i=>s(i,""));s("ftype","free");s("fcomm","false");s("frt","4");s("fvs","4");s("fcat","文本模型");}
+async function sf(){const nm=v("fn").trim();if(!nm){to("请填写名称");return;}const p={name:nm,type:v("ftype"),url:v("fu"),description:v("fd"),tags:v("ftags").split(",").map(x=>x.trim()).filter(Boolean),priceText:v("fps"),priceValue:0,rating:parseFloat(v("frt"))||0,valueScore:parseFloat(v("fvs"))||0,freeQuota:v("ffq"),limits:v("flim"),priceStandard:v("fps"),expertise:v("fexp"),commission:v("fcomm")==="true",commissionRate:v("fcr"),commissionUrl:v("fcu"),affiliateDashboard:v("fad"),strengths:v("fst"),category:v("fcat"),brand:v("fbrand"),country:v("fcountry")};try{let r;if(ei)r=await fetch(API+"/api/tokens/"+ei,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},ah()),body:JSON.stringify(p)});else r=await fetch(API+"/api/tokens",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},ah()),body:JSON.stringify(p)});if(!r.ok)throw new Error("fail");to(ei?"已更新":"已新增");rf();await la();}catch(e){to("保存失败");}}
+async function ei2(id){let t;try{t=await(await fetch(API+"/api/tokens/"+id)).json();}catch(e){to("无法连接");return;}ei=id;document.getElementById("ft").textContent="✏️ 编辑："+t.name;s("fn",t.name);s("ftype",t.type);s("fu",t.url);s("fd",t.description);s("ftags",(t.tags||[]).join(", "));s("ffq",t.freeQuota);s("fps",t.priceStandard);s("flim",t.limits);s("frt",t.rating);s("fvs",t.valueScore);s("fst",t.strengths);s("fexp",t.expertise);s("fcomm",t.commission?"true":"false");s("fcr",t.commissionRate);s("fcu",t.commissionUrl);s("fad",t.affiliateDashboard);s("fcat",t.category||"文本模型");s("fbrand",t.brand||"");s("fcountry",t.country||"");document.getElementById("s-tokens").scrollIntoView({behavior:"smooth"});}
+async function di(id){if(!confirm("确认删除？"))return;try{const r=await fetch(API+"/api/tokens/"+id,{method:"DELETE",headers:ah()});if(!r.ok)throw new Error("fail");to("已删除");await la();}catch(e){to("删除失败");}}
 
-async function loadAll(){
-  try {
-    const [t, s] = await Promise.all([fetch(API_BASE + "/api/tokens"), fetch(API_BASE + "/api/stats")]);
-    TOKENS = await t.json(); STATS = await s.json();
-    renderKPI(); renderPromo(); renderTags(); renderList(); renderSiteNewsList();
-  } catch(e){ document.getElementById("promoList").innerHTML = '<span class="hint">无法连接后端</span>'; }
-}
+// 资讯管理
+let snl=[],sei=null;
+async function rsn(){try{snl=await(await fetch(API+"/api/site-news")).json();}catch(e){snl=[];}const b=document.getElementById("snl2");if(!snl.length){b.innerHTML='<span class="hint">暂无</span>';return;}b.innerHTML=snl.map(n=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)"><span style="flex:1;font-size:12px"><b>${n.title}</b><br><span class="hint">${(n.summary||"").slice(0,50)} · ${n.updatedAt||""}</span></span><button class="btn btn-pri btn-sm" onclick="esn('${n.id}')">编辑</button><button class="btn btn-danger btn-sm" onclick="dsn('${n.id}')">删除</button></div>`).join("");}
+async function ss(){const p={title:v("snt"),summary:v("sns"),link:v("snl"),image:v("sni")};if(!p.title){to("请填标题");return;}try{let r;if(sei)r=await fetch(API+"/api/site-news/"+sei,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},ah()),body:JSON.stringify(p)});else r=await fetch(API+"/api/site-news",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},ah()),body:JSON.stringify(p)});if(!r.ok)throw new Error("fail");to(sei?"已更新":"已新增");sei=null;document.getElementById("snb").textContent="➕ 保存";["snt","sns","snl","sni"].forEach(i=>s(i,""));rsn();}catch(e){to("保存失败");}}
+function esn(id){const n=snl.find(x=>x.id===id);if(!n)return;sei=id;s("snt",n.title);s("sns",n.summary);s("snl",n.link);s("sni",n.image||"");document.getElementById("snb").textContent="✏️ 更新";document.getElementById("s-news").scrollIntoView({behavior:"smooth"});}
+async function dsn(id){if(!confirm("确认删除？"))return;try{const r=await fetch(API+"/api/site-news/"+id,{method:"DELETE",headers:ah()});if(!r.ok)throw new Error("fail");to("已删除");rsn();}catch(e){to("删除失败");}}
 
-function renderKPI(){
-  if(!STATS) return;
-  document.getElementById("k_total").textContent = STATS.total;
-  document.getElementById("k_free").textContent = STATS.free_count;
-  document.getElementById("k_paid").textContent = STATS.paid_count;
-  document.getElementById("k_comm").textContent = STATS.commission_count;
-  document.getElementById("k_rating").textContent = STATS.avg_rating;
-  document.getElementById("k_value").textContent = STATS.avg_value;
-}
+// Token 工具管理
+let tls=[],tei=null;
+async function rt(){try{tls=await(await fetch(API+"/api/tools")).json();}catch(e){tls=[];}const b=document.getElementById("tl");if(!tls.length){b.innerHTML='<span class="hint">暂无工具（需更新 Worker 到最新版支持 /api/tools）</span>';return;}b.innerHTML=tls.map(t=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)"><span style="flex:1;font-size:12px"><b>${t.cat} · ${t.name}</b><br><span class="hint">${t.desc} → ${t.url}</span></span><button class="btn btn-pri btn-sm" onclick="et2('${t.id}')">编辑</button><button class="btn btn-danger btn-sm" onclick="dt2('${t.id}')">删除</button></div>`).join("");}
+async function st(){const p={cat:v("tc"),name:v("tn"),desc:v("td"),url:v("tu")};if(!p.name){to("请填名称");return;}try{let r;if(tei)r=await fetch(API+"/api/tools/"+tei,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},ah()),body:JSON.stringify(p)});else r=await fetch(API+"/api/tools",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},ah()),body:JSON.stringify(p)});if(!r.ok)throw new Error("fail");to(tei?"已更新":"已新增");tei=null;document.getElementById("tbb").textContent="➕ 保存";["tn","td","tu"].forEach(i=>s(i,""));rt();}catch(e){to("保存失败"+e.message);}}
+function et2(id){const t=tls.find(x=>x.id===id);if(!t)return;tei=id;s("tc",t.cat||"AI智能体");s("tn",t.name);s("td",t.desc);s("tu",t.url);document.getElementById("tbb").textContent="✏️ 更新";document.getElementById("s-tools").scrollIntoView({behavior:"smooth"});}
+async function dt2(id){if(!confirm("确认删除？"))return;try{const r=await fetch(API+"/api/tools/"+id,{method:"DELETE",headers:ah()});if(!r.ok)throw new Error("fail");to("已删除");rt();}catch(e){to("删除失败");}}
 
-function renderPromo(){
-  const box = document.getElementById("promoList");
-  if(!STATS || !STATS.promo_tokens || !STATS.promo_tokens.length){ box.innerHTML='<span class="hint">暂无标记返佣的平台</span>'; return; }
-  box.innerHTML = STATS.promo_tokens.map(t => `<div class="promo-card">
-    <div class="pc-top"><b>${t.name}</b><span class="rate">★ ${t.rating}</span></div>
-    <div class="cr"><b>返佣：</b>${t.commissionRate||"—"}</div>
-    <div class="mg">🌐 <a href="${t.commissionUrl||'#'}" target="_blank">推广返利页面 ↗</a></div>
-    <div class="mg">⚙️ <a href="${t.affiliateDashboard||'#'}" target="_blank">返佣管理后台 ↗</a></div>
-    <div class="link-row"><input id="link-${t.id}" value="${t.commissionUrl||''}" readonly/><button class="btn btn-gold btn-small" onclick="copyLink('${t.id}')">复制</button></div>
-  </div>`).join("");
-}
+// 一键抓取
+async function ds(){const u=v("fsu").trim();if(!u){to("请粘贴链接");return;}try{to("抓取中…");const r=await fetch(API+"/api/scrape",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},ah()),body:JSON.stringify({url:u})});const d=await r.json();if(d.error){to(d.error);return;}if(d.name)s("fn",d.name);if(d.description)s("fd",d.description);if(d.freeQuota)s("ffq",d.freeQuota);if(d.priceStandard)s("fps",d.priceStandard);if(d.tags&&d.tags.length)s("ftags",d.tags.join(", "));document.getElementById("s-tokens").scrollIntoView({behavior:"smooth"});to("已抓取，请补充后保存");}catch(e){to("抓取失败");}}
 
-async function copyLink(id){
-  const inp = document.getElementById("link-"+id); const text = inp ? inp.value : "";
-  try { await navigator.clipboard.writeText(text); toast("已复制推广链接"); }
-  catch(e){ inp.select(); document.execCommand("copy"); toast("已复制推广链接"); }
-}
-
-function renderTags(){
-  const box = document.getElementById("tagDist");
-  if(!STATS || !STATS.tag_counts) return;
-  const max = Math.max(...Object.values(STATS.tag_counts), 1);
-  box.innerHTML = Object.entries(STATS.tag_counts).map(([k,v]) => `<div class="tagbar"><div class="name">${k}</div><div class="bar"><i style="width:${v/max*100}%"></i></div><div class="cnt">${v}</div></div>`).join("");
-}
-
-function renderList(){
-  const q = (val("q")||"").trim().toLowerCase(), ft = val("f_filter"), sort = val("sort");
-  let list = TOKENS.slice();
-  if(ft) list = list.filter(t => t.type === ft);
-  if(q) list = list.filter(t => (t.name||"").toLowerCase().includes(q) || (t.tags||[]).join(",").toLowerCase().includes(q));
-  list.sort((a,b)=> sort==="name" ? a.name.localeCompare(b.name) : (b[sort]||0) - (a[sort]||0));
-  const tb = document.querySelector("#tbl tbody");
-  if(!list.length){ tb.innerHTML = '<tr><td colspan="6" class="hint">无匹配</td></tr>'; return; }
-  tb.innerHTML = list.map(t => `<tr>
-    <td>${t.name}</td><td><span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span></td>
-    <td>${t.rating??"-"}</td><td>${t.valueScore??"-"}</td>
-    <td>${t.commission?'<span class="badge comm">💰 有</span>':"-"}</td>
-    <td><div class="row-actions"><button class="btn btn-pri btn-small" onclick="editItem('${t.id}')">编辑</button><button class="btn btn-danger btn-small" onclick="delItem('${t.id}')">删除</button></div></td>
-  </tr>`).join("");
-}
-
-function resetForm(){
-  editingId = null; document.getElementById("formTitle").textContent = "➕ 新增 API Token";
-  ["f_name","f_url","f_tags","f_description","f_freeQuota","f_priceStandard","f_limits","f_strengths","f_expertise","f_commissionRate","f_commissionUrl","f_affiliateDashboard"].forEach(i=>set(i,""));
-  set("f_type","free"); set("f_commission","false"); set("f_rating","4"); set("f_valueScore","4"); set("f_category","文本模型");
-}
-
-async function submitForm(){
-  const name = val("f_name").trim();
-  if(!name){ toast("请填写名称"); return; }
-  const payload = { name, type:val("f_type"), url:val("f_url"), description:val("f_description"), tags:val("f_tags").split(",").map(s=>s.trim()).filter(Boolean), priceText:val("f_priceStandard"), priceValue:0, rating:parseFloat(val("f_rating"))||0, valueScore:parseFloat(val("f_valueScore"))||0, freeQuota:val("f_freeQuota"), limits:val("f_limits"), priceStandard:val("f_priceStandard"), expertise:val("f_expertise"), commission:val("f_commission")==="true", commissionRate:val("f_commissionRate"), commissionUrl:val("f_commissionUrl"), affiliateDashboard:val("f_affiliateDashboard"), strengths:val("f_strengths"), category:val("f_category") };
-  try {
-    let r;
-    if(editingId) r = await fetch(API_BASE+"/api/tokens/"+editingId,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify(payload)});
-    else r = await fetch(API_BASE+"/api/tokens",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify(payload)});
-    if(!r.ok) throw new Error("fail");
-    toast(editingId?"已更新":"已新增"); resetForm(); await loadAll();
-  } catch(e){ toast("保存失败"); }
-}
-
-async function editItem(id){
-  let t; try { t = await (await fetch(API_BASE+"/api/tokens/"+id)).json(); } catch(e){ toast("无法连接后端"); return; }
-  editingId = id; document.getElementById("formTitle").textContent = "✏️ 编辑："+t.name;
-  set("f_name",t.name); set("f_type",t.type); set("f_url",t.url); set("f_description",t.description);
-  set("f_tags",(t.tags||[]).join(", ")); set("f_freeQuota",t.freeQuota); set("f_priceStandard",t.priceStandard);
-  set("f_limits",t.limits); set("f_rating",t.rating); set("f_valueScore",t.valueScore);
-  set("f_strengths",t.strengths); set("f_expertise",t.expertise);
-  set("f_commission",t.commission?"true":"false"); set("f_commissionRate",t.commissionRate);
-  set("f_commissionUrl",t.commissionUrl); set("f_affiliateDashboard",t.affiliateDashboard);
-  set("f_category",t.category||"文本模型");
-  document.getElementById("sec-tokens").scrollIntoView({behavior:"smooth"});
-}
-
-async function delItem(id){ if(!confirm("确认删除？")) return;
-  try { const r = await fetch(API_BASE+"/api/tokens/"+id,{method:"DELETE",headers:authHeaders()}); if(!r.ok) throw new Error("fail"); toast("已删除"); await loadAll(); }
-  catch(e){ toast("删除失败"); }
-}
-
-let siteNewsList = [], snEditId = null;
-async function renderSiteNewsList(){
-  try { siteNewsList = await (await fetch(API_BASE+"/api/site-news")).json(); } catch(e){ siteNewsList = []; }
-  const box = document.getElementById("siteNewsList");
-  if (!siteNewsList.length) { box.innerHTML='<span class="hint">暂无</span>'; return; }
-  box.innerHTML = siteNewsList.map(n => `<div class="news-row"><span><b>${n.title}</b><br><span class="hint">${(n.summary||"").slice(0,60)} · ${n.updatedAt||""}</span></span><button class="btn btn-pri btn-small" onclick="editSiteNews('${n.id}')">编辑</button><button class="btn btn-danger btn-small" onclick="delSiteNews('${n.id}')">删除</button></div>`).join("");
-}
-async function saveSiteNews(){
-  const payload = { title:val("snTitle"), summary:val("snSummary"), link:val("snLink"), image:val("snImage") };
-  if (!payload.title) { toast("请填写标题"); return; }
-  try {
-    let r;
-    if(snEditId) r = await fetch(API_BASE+"/api/site-news/"+snEditId,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify(payload)});
-    else r = await fetch(API_BASE+"/api/site-news",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify(payload)});
-    if(!r.ok) throw new Error("fail");
-    toast(snEditId?"已更新":"已新增"); snEditId=null; document.getElementById("snSaveBtn").textContent="➕ 保存";
-    ["snTitle","snSummary","snLink","snImage"].forEach(i=>set(i,"")); renderSiteNewsList();
-  } catch(e){ toast("保存失败"); }
-}
-function editSiteNews(id){
-  const n = siteNewsList.find(x=>x.id===id); if(!n) return;
-  snEditId=id; set("snTitle",n.title); set("snSummary",n.summary); set("snLink",n.link); set("snImage",n.image||"");
-  document.getElementById("snSaveBtn").textContent="✏️ 更新"; document.getElementById("sec-news").scrollIntoView({behavior:"smooth"});
-}
-async function delSiteNews(id){
-  if(!confirm("确认删除？")) return;
-  try { const r = await fetch(API_BASE+"/api/site-news/"+id,{method:"DELETE",headers:authHeaders()}); if(!r.ok) throw new Error("fail"); toast("已删除"); renderSiteNewsList(); }
-  catch(e){ toast("删除失败"); }
-}
-
-async function doScrape(){
-  const url = val("f_scrapeUrl").trim(); if (!url) { toast("请粘贴链接"); return; }
-  try {
-    toast("抓取中…");
-    const r = await fetch(API_BASE+"/api/scrape",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},authHeaders()),body:JSON.stringify({url})});
-    const d = await r.json();
-    if(d.error){ toast(d.error); return; }
-    if(d.name) set("f_name", d.name); if(d.description) set("f_description", d.description);
-    if(d.freeQuota) set("f_freeQuota", d.freeQuota); if(d.priceStandard) set("f_priceStandard", d.priceStandard);
-    if(d.tags&&d.tags.length) set("f_tags", d.tags.join(", "));
-    document.getElementById("sec-tokens").scrollIntoView({behavior:"smooth"});
-    toast("已抓取，补充后保存");
-  } catch(e){ toast("抓取失败"); }
-}
-
-resetForm(); loadAll();
+rf();la();
 </script>
 </body>
 </html>
