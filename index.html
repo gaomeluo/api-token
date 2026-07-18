@@ -163,19 +163,19 @@ async function load(){
 }
 
 function buildSidebar(){
-  let h=`<a href="#" class="${!curCat&&!curTool?'active':''}" data-cat="" data-tool="" onclick="pickCat(null);pickTool(null);return false"><span class="si">📦</span><span>全部模型</span><span class="n">${ALL.length}</span></a>`;
+  let h=`<a href="#" class="${!curCat&&!curTool?'active':''}" data-cat="" data-tool=""><span class="si">📦</span><span>全部模型</span><span class="n">${ALL.length}</span></a>`;
   for(const c of CATS){
     const n = ALL.filter(t=>{
       if(t.category===c) return true;
       const mp={"文本模型":["对话","长文本","翻译","中文"],"编程模型":["写代码"],"视频模型":["视频","视频生成","数字人","3D"],"音频模型":["语音","语音合成","TTS","语音识别","ASR","语音克隆","音乐"],"图片模型":["画图","图像生成","图像编辑","品牌设计","游戏资产","商用"],"推理模型":["推理","搜索","开源","高速","本地","embeddings"]};
       return (mp[c]||[]).some(k=>(t.tags||[]).includes(k));
     }).length;
-    h += `<a href="#" class="${c===curCat?'active':''}" data-cat="${c}" data-tool="" onclick="pickCat('${c}');pickTool(null);return false"><span class="si">${CI[c]}</span><span>${c}</span><span class="n">${n}</span></a>`;
+    h += `<a href="#" class="${c===curCat?'active':''}" data-cat="${c}" data-tool=""><span class="si">${CI[c]}</span><span>${c}</span><span class="n">${n}</span></a>`;
   }
   $("sideNav").innerHTML = h;
 
-  let th=`<a href="#" class="small ${curTool==='AI智能体'?'active':''}" data-tool="AI智能体" data-cat="" onclick="pickTool('AI智能体');pickCat(null);return false"><span class="si">🤖</span><span>AI智能体</span><span class="n">30</span></a>`;
-  th+=`<a href="#" class="small ${curTool==='AI编程工具'?'active':''}" data-tool="AI编程工具" data-cat="" onclick="pickTool('AI编程工具');pickCat(null);return false"><span class="si">💻</span><span>AI编程工具</span><span class="n">30</span></a>`;
+  let th=`<a href="#" class="small ${curTool==='AI智能体'?'active':''}" data-tool="AI智能体" data-cat=""><span class="si">🤖</span><span>AI智能体</span><span class="n">30</span></a>`;
+  th+=`<a href="#" class="small ${curTool==='AI编程工具'?'active':''}" data-tool="AI编程工具" data-cat=""><span class="si">💻</span><span>AI编程工具</span><span class="n">30</span></a>`;
   $("toolNav").innerHTML = th;
 }
 
@@ -258,7 +258,22 @@ function gn(x){newsIdx=x;clearInterval(newsTimer);rns(true);newsTimer=setInterva
 function pv(){gn((newsIdx-1+siteNews.length)%siteNews.length);}
 function nx(){gn((newsIdx+1)%siteNews.length);}
 
-loadSiteNews();load();
+document.addEventListener("DOMContentLoaded",()=>{
+  // 侧边栏事件委托（不再依赖 onclick 属性）
+  document.getElementById("sideNav").addEventListener("click", function(e){
+    const a = e.target.closest("a"); if (!a) return;
+    e.preventDefault();
+    const cat = a.dataset.cat;
+    pickCat(cat || null); pickTool(null);
+  });
+  document.getElementById("toolNav").addEventListener("click", function(e){
+    const a = e.target.closest("a"); if (!a) return;
+    e.preventDefault();
+    const tool = a.dataset.tool;
+    pickTool(tool || null); pickCat(null);
+  });
+  loadSiteNews(); load();
+});
 </script>
 </body>
 </html>
