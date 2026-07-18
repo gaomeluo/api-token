@@ -1,934 +1,264 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>API Token 大全 · 免费/付费排行榜与对比</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338e1ff'/%3E%3Cstop offset='100%25' stop-color='%237c5cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Cpolygon points='15,7 7,16 15,25 10,16' fill='url(%23g)'/%3E%3Cpolygon points='17,7 25,16 17,25 22,16' fill='url(%23g)'/%3E%3C/svg%3E" />
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>API Token 大全</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231677ff'/%3E%3Cstop offset='100%25' stop-color='%232979ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Cpolygon points='14,7 7,16 14,25 9,16' fill='url(%23g)'/%3E%3Cpolygon points='18,7 25,16 18,25 23,16' fill='url(%23g)'/%3E%3C/svg%3E" />
 <style>
-  :root {
-    --bg: #060914; --panel: rgba(22,30,52,.55); --panel2: rgba(34,44,72,.6); --text: #e8ecf8;
-    --muted: #8b93b0; --accent: #38e1ff; --accent2: #7c5cff; --gold: #ffcf5c;
-    --danger: #ff5c7c; --line: rgba(120,140,200,.18);
-    --glow: 0 0 24px rgba(56,225,255,.35); --glow2: 0 0 24px rgba(124,92,255,.35);
-  }
+  :root { --bg:#f5f7fb; --panel:#fff; --panel2:#f8fafc; --text:#1a1a1a; --muted:#6b7280; --muted2:#9ca3af; --line:#e5e7eb;
+    --primary:#1677ff; --primary2:#2979ff; --primary-light:#e6f1ff; --gold:#f59e0b;
+    --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04); --shadow-hover:0 4px 12px rgba(22,119,255,.12); }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: "Inter", -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    color: var(--text); line-height: 1.6; min-height: 100vh;
-    background:
-      radial-gradient(900px 520px at 10% -10%, rgba(56,225,255,.16), transparent 60%),
-      radial-gradient(900px 520px at 100% 0%, rgba(124,92,255,.16), transparent 60%),
-      radial-gradient(800px 600px at 50% 120%, rgba(56,225,255,.08), transparent 60%),
-      linear-gradient(180deg, #070b16, #05070f);
-    background-attachment: fixed; }
-  body::before { content:""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image: linear-gradient(rgba(120,140,200,.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(120,140,200,.05) 1px, transparent 1px);
-    background-size: 44px 44px;
-    -webkit-mask-image: radial-gradient(circle at 50% 25%, #000 25%, transparent 80%);
-    mask-image: radial-gradient(circle at 50% 25%, #000 25%, transparent 80%); }
-  @media(max-width:768px){ body::before { position: absolute; z-index: 0; } }
-  a { color: var(--accent); text-decoration: none; }
-  header { padding: 10px 28px; border-bottom: none;
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-    background: rgba(10,14,26,.55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    position: sticky; top: 0; z-index: 30; }
-  header::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--gold), var(--accent2), var(--accent));
-    background-size: 200% 100%; animation: navGlow 3s ease-in-out infinite; }
-  @keyframes navGlow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-  header h1 { margin: 0; font-size: 21px; letter-spacing: .5px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text;
-    background-clip: text; color: transparent; }
-  header .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
-  .btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #04121a; font-weight: 600;
-    border: none; padding: 8px 16px; border-radius: 9px; cursor: pointer; font-size: 14px;
-    box-shadow: var(--glow); transition: .2s; }
-  .btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
-  .btn.ghost { background: rgba(255,255,255,.04); border: 1px solid var(--line); color: var(--text); box-shadow: none; }
-  .btn.ghost:hover { border-color: var(--accent); }
-  .btn.small { padding: 5px 11px; font-size: 13px; }
-  select { background: rgba(16,22,40,.95); color: var(--text); border: 1px solid var(--line);
-    border-radius: 8px; padding: 6px 10px; font-size: 13px; color-scheme: dark; }
-  select option { background: #111827; color: #e8ecf8; }
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 28px 120px; position: relative; z-index: 1; }
-  .tabs { display: flex; gap: 8px; margin: 18px 0; align-items: center; flex-wrap: wrap; }
-  .tab { padding: 9px 18px; border-radius: 999px; background: rgba(255,255,255,.04); color: var(--muted);
-    cursor: pointer; font-size: 14px; border: 1px solid var(--line); backdrop-filter: blur(6px); transition: .2s; }
-  .tab:hover { color: var(--text); border-color: var(--accent); }
-  .tab.active { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #04121a;
-    font-weight: 600; border-color: transparent; box-shadow: var(--glow); }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-  .tag { padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.04); color: var(--muted);
-    cursor: pointer; font-size: 13px; border: 1px solid var(--line); transition: .2s; }
-  .tag:hover { color: var(--text); border-color: var(--accent); }
-  .tag.active { background: linear-gradient(135deg, var(--accent2), var(--accent)); color: #04121a;
-    border-color: transparent; font-weight: 600; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-  .card { background: linear-gradient(180deg, rgba(30,40,66,.6), rgba(16,22,40,.5)); border: 1px solid var(--line);
-    border-radius: 16px; padding: 16px; position: relative; display: flex; flex-direction: column; gap: 10px;
-    overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04); transition: .25s; }
-  .card::before { content: ""; position: absolute; inset: 0; border-radius: 16px; padding: 1px;
-    background: linear-gradient(135deg, rgba(56,225,255,.55), rgba(124,92,255,.25));
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: .25s; pointer-events: none; }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,.5), var(--glow); }
-  .card:hover::before { opacity: 1; }
-  .rank { position: absolute; top: 14px; left: 14px; z-index: 3; width: 42px; height: 42px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #04121a;
-    background: linear-gradient(135deg, var(--accent), var(--accent2)); line-height: 1;
-    box-shadow: 0 0 14px rgba(56,225,255,.4), inset 0 1px 2px rgba(255,255,255,.5); text-shadow: 0 1px 0 rgba(255,255,255,.25); }
-  .rank.gold { background: linear-gradient(135deg, #ffe07a, #ffb13d);
-    box-shadow: 0 0 16px rgba(255,207,92,.55), inset 0 1px 2px rgba(255,255,255,.6); }
-  .rank.silver { background: linear-gradient(135deg, #eef2fc, #aab4cf);
-    box-shadow: 0 0 14px rgba(200,210,235,.5), inset 0 1px 2px rgba(255,255,255,.7); }
-  .rank.bronze { background: linear-gradient(135deg, #ffcf99, #d98a4a);
-    box-shadow: 0 0 14px rgba(230,170,110,.5), inset 0 1px 2px rgba(255,255,255,.6); }
-  .card h3 { margin: 0; font-size: 17px; padding-left: 60px; padding-right: 84px; min-height: 42px;
-    display: flex; align-items: center; }
-  .badges { display: flex; gap: 6px; flex-wrap: wrap; }
-  .badges.topright { position: absolute; top: 14px; right: 14px; z-index: 3; }
-  .badge { font-size: 12px; padding: 2px 9px; border-radius: 6px; border: 1px solid transparent; }
-  .badge.free { background: rgba(56,225,255,.14); color: var(--accent); border-color: rgba(56,225,255,.35); }
-  .badge.paid { background: rgba(124,92,255,.16); color: #b9a6ff; border-color: rgba(124,92,255,.4); }
-  .badge.comm { background: rgba(255,207,92,.16); color: var(--gold); border-color: rgba(255,207,92,.4); }
-  .stars { color: var(--gold); font-size: 14px; text-shadow: 0 0 8px rgba(255,207,92,.5); }
-  .value-row { font-size: 13px; color: var(--muted); }
-  .value-bar { height: 6px; background: var(--panel2); border-radius: 4px; overflow: hidden; margin-top: 3px; }
-  .value-bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--panel2); color: var(--muted); }
-  .desc { font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical; overflow: hidden; }
-  .card-actions { display: flex; gap: 8px; align-items: center; margin-top: auto; }
-  .check { margin-left: auto; font-size: 13px; color: var(--muted); cursor: pointer; }
-  /* 对比浮条 */
-  .compare-bar { position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(12,16,30,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    border-top: 1px solid var(--line); padding: 12px 28px; display: none; align-items: center;
-    gap: 12px; z-index: 50; box-shadow: 0 -8px 30px rgba(0,0,0,.4); }
-  .compare-bar.show { display: flex; }
-  .compare-bar .names { color: var(--muted); font-size: 13px; flex: 1; }
-  /* modal */
-  .overlay { position: fixed; inset: 0; background: rgba(4,6,14,.7); backdrop-filter: blur(4px);
-    display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
-  .overlay.show { display: flex; }
-  .modal { background: linear-gradient(180deg, rgba(24,32,54,.96), rgba(14,20,36,.96));
-    border: 1px solid var(--line); border-radius: 16px; max-width: 760px; width: 100%;
-    max-height: 86vh; overflow: auto; padding: 24px;
-    box-shadow: 0 24px 70px rgba(0,0,0,.6), var(--glow2); }
-  .modal h2 { margin-top: 0; background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text; background-clip: text; color: transparent; }
-  table.cmp { width: 100%; border-collapse: collapse; font-size: 13px; }
-  table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 8px 10px; text-align: left;
-    vertical-align: top; max-width: 260px; word-break: break-word; }
-  table.cmp th { background: rgba(124,92,255,.14); color: #cdbcff; }
-  table.cmp tr:nth-child(even) td { background: rgba(255,255,255,.02); }
-  .close { float: right; cursor: pointer; color: var(--muted); font-size: 20px; }
-  .hint { color: var(--muted); font-size: 12px; }
-  .qlist { font-size: 12px; margin-top: 8px; line-height: 1.5; }
-  .qlist ul { margin: 4px 0 0; padding-left: 18px; }
-  .qlist li { margin: 2px 0; }
-  .cmplist { margin: 4px 0; padding-left: 18px; }
-  .cmplist li { margin: 3px 0; }
-  .news-item { border-bottom: 1px solid var(--line); padding: 12px 0; }
-  .news-title { font-size: 15px; }
-  .news-title a { color: var(--text); }
-  .news-meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
-  /* 大气资讯轮播模块 */
-  .featured-wrap { margin-bottom: 28px; background: linear-gradient(135deg, rgba(20,30,60,.7), rgba(12,18,36,.85)); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 12px 44px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04); }
-  .featured-inner { display: flex; gap: 0; min-height: 340px; }
-  @media(max-width:700px){ .featured-inner { flex-direction: column; min-height: auto; } }
-  .featured-img-box { flex: 0 0 50%; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(14,20,40,.9), rgba(8,12,24,.95)); min-height: 280px; }
-  .featured-img-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; transition: opacity .5s ease; opacity: 1; }
-  .featured-img-box img.hiding { opacity: 0; }
-  .featured-img-box::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(6,9,20,.7)); pointer-events: none; z-index: 1; }
-  .feat-fallback { position: absolute; inset: 0; z-index: 0; display: none; align-items: center; justify-content: center; overflow: hidden;
-    background: linear-gradient(160deg, #060e1f 0%, #0d1530 35%, #160a2a 65%, #0a0a1a 100%); }
-  .feat-fallback::before { content:""; position:absolute; inset:0;
-    background: radial-gradient(ellipse at 25% 20%, rgba(56,225,255,.3) 0%, transparent 45%),
-                radial-gradient(ellipse at 75% 60%, rgba(124,92,255,.25) 0%, transparent 40%),
-                radial-gradient(ellipse at 50% 90%, rgba(255,207,92,.15) 0%, transparent 35%);
-    animation: fbPulse 4s ease-in-out infinite alternate; }
-  @keyframes fbPulse { 0% { opacity: .8; transform: scale(1); } 100% { opacity: 1; transform: scale(1.04); } }
-  .feat-fallback::after { content:""; position:absolute; inset:15%; border: 1px solid rgba(56,225,255,.06); border-radius: 16px;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(56,225,255,.03) 2px, rgba(56,225,255,.03) 4px); }
-  .feat-fallback span { position:relative; z-index:2; font-size: 21px; font-weight: 800; text-align: center; padding: 28px;
-    background: linear-gradient(135deg, #e0ecff 0%, var(--accent) 50%, var(--accent2) 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    text-shadow: none; max-width: 90%; line-height: 1.4; letter-spacing: 0.5px; }
-  .featured-dots { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 3; }
-  .featured-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.25); cursor: pointer; transition: .25s; }
-  .featured-dots span.active { background: var(--accent); box-shadow: 0 0 14px var(--accent); transform: scale(1.3); }
-  .featured-text { flex: 1; padding: 24px 28px; display: flex; flex-direction: column; position: relative; }
-  .featured-text .ft-tag { font-size: 15px; color: var(--accent); letter-spacing: 2px; margin-bottom: 10px; font-weight: 700; }
-  .feat-list { list-style: none; padding: 0; margin: 0 0 12px; flex: 1; overflow-y: auto; max-height: 260px; }
-  .feat-item { padding: 10px 12px; border-left: 3px solid transparent; cursor: pointer; transition: .18s; margin-bottom: 2px; border-radius: 0 8px 8px 0; }
-  .feat-item:hover, .feat-item.active { border-left-color: var(--accent); background: rgba(56,225,255,.06); }
-  .feat-item a { color: var(--text); font-size: 15px; font-weight: 600; display: block; text-decoration: none; }
-  .feat-item:hover a, .feat-item.active a { color: var(--accent); }
-  .feat-item .feat-item-sum { font-size: 12px; color: var(--muted); margin-top: 3px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-  .feat-item .feat-badge { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 4px; background: rgba(56,225,255,.15); color: var(--accent); margin-left: 6px; vertical-align: middle; }
-  .featured-pill { position: absolute; top: 24px; right: 28px; font-size: 11px; padding: 3px 10px; border-radius: 999px; background: rgba(56,225,255,.12); color: var(--accent); border: 1px solid rgba(56,225,255,.3); }
-  .featured-text .ft-arrow { display: flex; gap: 12px; position: absolute; top: 20px; right: 76px; }
-  .featured-text .ft-arrow button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--text); cursor: pointer; font-size: 18px; transition: .22s; display: flex; align-items: center; justify-content: center; }
-  .featured-text .ft-arrow button:hover { border-color: var(--accent); color: var(--accent); box-shadow: var(--glow); }
+  body { margin:0; font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+    color:var(--text); line-height:1.6; background:var(--bg); min-height:100vh; }
+  a { color:var(--primary); text-decoration:none; }
+
+  .layout { display:flex; min-height:100vh; }
+  .sidebar { width:215px; flex-shrink:0; background:#fff; border-right:1px solid var(--line);
+    position:fixed; top:0; left:0; bottom:0; z-index:50; display:flex; flex-direction:column; overflow-y:auto; }
+  .sb-logo { padding:14px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--line); }
+  .sb-logo .lg { width:34px; height:34px; flex-shrink:0; }
+  .sb-logo span { font-size:15px; font-weight:700; color:var(--text); }
+  .sb-g { padding:12px 16px 4px; font-size:11px; font-weight:600; color:var(--muted2); letter-spacing:1px; text-transform:uppercase; }
+  .sb-nav { display:flex; flex-direction:column; gap:1px; padding:2px 8px; }
+  .sb-nav a { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; font-size:13px; color:var(--muted); transition:.12s; }
+  .sb-nav a:hover { color:var(--primary); background:var(--primary-light); }
+  .sb-nav a.active { color:var(--primary); font-weight:600; background:var(--primary-light); }
+  .sb-nav a .n { margin-left:auto; font-size:11px; color:var(--muted2); min-width:20px; text-align:right; }
+  .sb-nav a.active .n { color:var(--primary); }
+  .sb-nav a.small { font-size:12px; padding:5px 12px 5px 28px; }
+  .sb-ft { margin-top:auto; padding:10px 16px; font-size:11px; color:var(--muted2); border-top:1px solid var(--line); }
+
+  .main { margin-left:215px; flex:1; min-width:0; }
+  @media(max-width:760px){ .sidebar { width:50px; } .sb-logo span,.sb-g,.sb-nav a span:not(.si),.sb-nav a .n,.sb-ft { display:none; }
+    .sb-nav a { justify-content:center; padding:10px 0; } .main { margin-left:50px; } }
+
+  .content { padding:18px 24px 80px; max-width:1260px; }
+
+  /* Carousel */
+  .featured-wrap { background:#fff; border-radius:14px; padding:16px 20px; display:flex; gap:16px; margin-bottom:18px;
+    border:1px solid var(--line); box-shadow:var(--shadow); min-height:200px; }
+  @media(max-width:700px){ .featured-wrap { flex-direction:column; } }
+  .feat-img { flex:0 0 44%; border-radius:10px; overflow:hidden; position:relative;
+    background:linear-gradient(135deg,#1e3a8a,#3730a3,#0c4a6e); min-height:200px; }
+  .feat-img img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; transition:opacity .5s; }
+  .feat-img img.hiding { opacity:0; }
+  .feat-fb { position:absolute; inset:0; display:none; align-items:center; justify-content:center; padding:24px; }
+  .feat-fb::before { content:""; position:absolute; inset:0;
+    background:radial-gradient(ellipse at 30% 30%,rgba(56,189,248,.4),transparent 50%),
+               radial-gradient(ellipse at 70% 70%,rgba(167,139,250,.3),transparent 50%); }
+  .feat-fb span { position:relative; z-index:2; font-size:17px; font-weight:700; color:#fff; text-align:center; }
+  .feat-dots { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); display:flex; gap:4px; z-index:3; }
+  .feat-dots span { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.4); cursor:pointer; transition:.2s; }
+  .feat-dots span.active { width:16px; border-radius:3px; background:#fff; }
+  .feat-text { flex:1; display:flex; flex-direction:column; min-width:0; }
+  .ft-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .ft-tag { font-size:15px; font-weight:700; display:flex; align-items:center; gap:6px; }
+  .ft-tag::before { content:""; width:3px; height:14px; border-radius:2px; background:linear-gradient(180deg,var(--primary),var(--primary2)); }
+  .ft-arrow button { width:26px; height:26px; border-radius:6px; border:1px solid var(--line);
+    background:#fff; color:var(--muted); cursor:pointer; font-size:14px; transition:.15s; display:inline-flex; align-items:center; justify-content:center; }
+  .ft-arrow button:hover { border-color:var(--primary); color:var(--primary); }
+  .feat-list { list-style:none; padding:0; margin:0; flex:1; overflow-y:auto; }
+  .feat-list li { padding:6px 10px; border-radius:6px; cursor:pointer; transition:.1s; margin-bottom:1px; }
+  .feat-list li:hover,.feat-list li.on { background:var(--primary-light); }
+  .feat-list li a { color:var(--text); font-size:13px; font-weight:500; display:flex; align-items:center; gap:5px; }
+  .feat-list li:hover a,.feat-list li.on a { color:var(--primary); }
+  .f-badge { font-size:10px; padding:1px 5px; border-radius:3px; background:linear-gradient(90deg,#ff7a45,var(--gold)); color:#fff; font-weight:600; flex-shrink:0; }
+  .feat-list li .s { font-size:11px; color:var(--muted); margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  /* Tabs moved below carousel */
+  .tbar { display:flex; gap:12px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  .tbar-tabs { display:flex; gap:3px; padding:2px; background:var(--bg); border-radius:7px; }
+  .tbar-tab { padding:4px 14px; border-radius:5px; font-size:12px; color:var(--muted); cursor:pointer; transition:.12s; }
+  .tbar-tab:hover { color:var(--primary); }
+  .tbar-tab.active { background:#fff; color:var(--primary); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+  .tbar-stat { margin-left:auto; font-size:12px; color:var(--muted); }
+  .search-bar { display:flex; gap:8px; align-items:center; margin-bottom:14px; }
+  .search-box { flex:1; position:relative; }
+  .search-box input { width:100%; padding:9px 14px 9px 34px; border:1px solid var(--line); border-radius:9px; background:#fff; font-size:13px; transition:.15s; }
+  .search-box input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(22,119,255,.06); }
+  .search-box::before { content:"🔍"; position:absolute; left:10px; top:50%; transform:translateY(-50%); font-size:13px; }
+  .subtitle { font-size:12px; color:var(--muted); margin-bottom:12px; }
+
+  /* Model cards */
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+  @media(max-width:900px){ .grid { grid-template-columns:1fr; } }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:15px; display:flex; gap:12px; transition:.15s; position:relative; box-shadow:var(--shadow); }
+  .card:hover { transform:translateY(-1px); box-shadow:var(--shadow-hover); border-color:rgba(22,119,255,.2); }
+  .ci { width:44px; height:44px; flex-shrink:0; border-radius:8px; overflow:hidden; background:var(--bg); display:flex; align-items:center; justify-content:center; }
+  .ci img { width:100%; height:100%; object-fit:contain; padding:4px; }
+  .ci .fb { font-size:18px; font-weight:800; color:var(--primary); }
+  .cb { flex:1; min-width:0; display:flex; flex-direction:column; }
+  .cn { font-size:15px; font-weight:700; display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+  .badge { font-size:10px; padding:1px 6px; border-radius:3px; font-weight:500; }
+  .badge.free { background:#d1fae5; color:#047857; } .badge.paid { background:#fef3c7; color:#b45309; }
+  .badge.vendor { background:var(--primary-light); color:var(--primary); }
+  .badge.country { background:var(--panel2); color:var(--muted); border:1px solid var(--line); }
+  .ct { display:flex; flex-wrap:wrap; gap:3px; margin:4px 0; }
+  .chip { font-size:11px; padding:1px 6px; border-radius:3px; background:var(--bg); color:var(--muted); }
+  .cd { font-size:12px; color:var(--muted); line-height:1.4; margin:2px 0 4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .ql { background:var(--panel2); border-radius:6px; padding:5px 8px; font-size:11px; margin:3px 0; }
+  .ql b { color:var(--primary); }
+  .ql ul { margin:2px 0 0; padding-left:14px; }
+  .cf { display:flex; gap:6px; align-items:center; margin-top:auto; padding-top:4px; }
+  .btn { display:inline-flex; align-items:center; gap:3px; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:.12s; border:none; }
+  .btn-pri { background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; }
+  .btn-pri:hover { filter:brightness(1.08); box-shadow:0 3px 10px rgba(22,119,255,.25); }
+  .btn-ghost { background:#fff; color:var(--muted); border:1px solid var(--line); }
+  .btn-ghost:hover { color:var(--primary); border-color:var(--primary); }
+
+  /* Tool cards (compact left-right, ai-bot.cn style) */
+  .tool-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  @media(max-width:900px){ .tool-grid { grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:500px){ .tool-grid { grid-template-columns:1fr; } }
+  .tcard { background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px; display:flex; gap:10px; align-items:center; transition:.15s; box-shadow:var(--shadow); }
+  .tcard:hover { transform:translateY(-1px); box-shadow:var(--shadow-hover); }
+  .tcard .ti { width:40px; height:40px; flex-shrink:0; border-radius:8px; overflow:hidden; background:var(--bg); display:flex; align-items:center; justify-content:center; }
+  .tcard .ti img { width:100%; height:100%; object-fit:contain; padding:3px; }
+  .tcard .ti .fb { font-size:16px; font-weight:700; color:var(--primary); }
+  .tcard .tb { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+  .tcard .tb b { font-size:14px; font-weight:600; }
+  .tcard .tb .td { font-size:11px; color:var(--muted); line-height:1.3; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
+  .tcard .tb .tcat { font-size:10px; color:var(--primary); }
+  .tcard .btn { flex-shrink:0; padding:3px 8px; font-size:11px; }
 </style>
 </head>
 <body>
-<header>
-  <div>
-    <h1>🔌 API Token 大全</h1>
-    <div class="sub">国内外免费 / 付费 API 一站式收录 · 性价比对比 · 擅长领域导航</div>
-  </div>
-</header>
+<div class="layout">
+<nav class="sidebar">
+  <a href="/" class="sb-logo" style="text-decoration:none;">
+    <svg class="lg" viewBox="0 0 34 34"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1677ff"/><stop offset="100%" stop-color="#2979ff"/></linearGradient></defs><circle cx="17" cy="17" r="15" fill="none" stroke="url(#g2)" stroke-width="2.6"/><polygon points="14.5,7.5 7,17 14.5,26.5 9.5,17" fill="url(#g2)"/><polygon points="19.5,7.5 27,17 19.5,26.5 24.5,17" fill="url(#g2)"/></svg>
+    <span>API Token 大全</span>
+  </a>
+  <div class="sb-g">模型分类</div>
+  <div class="sb-nav" id="sideNav"></div>
+  <div class="sb-g">Token 工具</div>
+  <div class="sb-nav" id="toolNav"></div>
+  <div class="sb-ft"><span id="sideStat">加载中…</span></div>
+</nav>
 
-<div class="wrap">
-  <section class="featured-wrap" id="newsSection" style="display:none">
-    <div class="featured-inner">
-      <div class="featured-img-box">
-        <img id="featImg" src="" alt="" onerror="this.style.display='none';document.getElementById('featFallback').style.display='flex'" />
-        <div class="feat-fallback" id="featFallback"><span></span></div>
-        <div class="featured-dots" id="featDots"></div>
-      </div>
-      <div class="featured-text">
-        <div class="ft-tag">🔥 推荐 API Token</div>
-        <ul class="feat-list" id="featList"></ul>
-        <a class="btn small" id="featLink" href="#" target="_blank">查看详情 →</a>
-        <div class="ft-arrow"><button onclick="prevNews()">‹</button><button onclick="nextNews()">›</button></div>
-        <div class="featured-pill" id="featCount"></div>
-      </div>
-    </div>
-  </section>
-  <div class="tabs">
-    <div class="tab active" data-type="free" onclick="switchType('free')">🆓 免费榜</div>
-    <div class="tab" data-type="paid" onclick="switchType('paid')">💎 付费榜</div>
-    <div style="margin-left:auto;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;">
-      排序
-      <select id="sortSel" onchange="applySort()" style="width:auto;padding:4px 8px;font-size:13px;">
-        <option value="rating">评分最高</option>
-        <option value="valueScore">性价比最高</option>
-        <option value="addedAt">最新收录</option>
-        <option value="priceAsc">价格升序</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="tags" id="tags"></div>
-
-  <div id="listMeta" class="hint" style="margin-bottom:10px;"></div>
-  <div class="grid" id="grid"></div>
-</div>
-
-<div class="compare-bar" id="compareBar">
-  <span class="names" id="compareNames"></span>
-  <button class="btn small" onclick="openCompare()">对比 (≥2)</button>
-  <button class="btn small ghost" onclick="clearCompare()">清空</button>
-</div>
-
-<!-- 详情 modal -->
-<div class="overlay" id="detailOverlay" onclick="if(event.target===this)closeDetail()">
-  <div class="modal" id="detailModal"></div>
-</div>
-
-<!-- 对比 modal -->
-<div class="overlay" id="cmpOverlay" onclick="if(event.target===this)closeCompare()">
-  <div class="modal" id="cmpModal"></div>
+<main class="main">
+  <div class="content" id="c"></div>
+</main>
 </div>
 
 <script>
-// API 基地址：本地(localhost)用相对路径；部署到 GitHub Pages 时改为 Cloudflare Worker 地址
-// ⚠️ 你的 Cloudflare Worker 地址（如果不是这个，改成你 Workers 后台看到的真实地址）
-const API_BASE = (location.hostname === "localhost" || location.hostname.startsWith("127.")) ? "" : "https://api-token.825370356.workers.dev";
-// 内置示例数据（联网/连后端失败时回退，保证预览可交互）
-const FALLBACK = [
-  {
-    "id": "gemini",
-    "name": "Google Gemini",
-    "type": "free",
-    "url": "https://aistudio.google.com/",
-    "description": "谷歌多模态大模型，提供免费额度，支持文本/图像/代码，长上下文能力强。",
-    "tags": [
-      "写代码",
-      "长文本",
-      "多模态",
-      "推理"
-    ],
-    "rating": 4.6,
-    "valueScore": 4.8,
-    "addedAt": "2025-01-12",
-    "freeQuota": "Gemini 1.5 Flash 免费档：15 RPM、150 万 TPM、100 万 tokens/分钟；1.5 Pro 免费档 2 RPM / 32K TPM",
-    "freeQuotaList": [
-      "Gemini 1.5 Flash：15 RPM、150 万 TPM、100 万 tokens/分钟",
-      "Gemini 1.5 Pro：2 RPM、32K TPM",
-      "Gemini 2.0 Flash（实验版）：有限免费额度"
-    ],
-    "limits": "免费档不支持批量(Batch)与调优；速率限制较严；需绑定付款方式才解锁更高免费配额；单次输出有长度上限",
-    "priceStandard": "按 tokens：1.5 Flash 输入 $0.000075/1K、输出 $0.0003/1K；1.5 Pro 输入 $0.00125/1K、输出 $0.005/1K（≤128K 上下文）",
-    "priceList": [
-      "Gemini 1.5 Flash：输入 $0.000075/1K、输出 $0.0003/1K",
-      "Gemini 1.5 Pro：输入 $0.00125/1K、输出 $0.005/1K（≤128K 上下文）",
-      "Gemini 2.0 Flash：输入 $0.0001/1K、输出 $0.0004/1K"
-    ],
-    "expertise": "多模态理解（图文混合输入）、长上下文摘要与问答、代码生成与解释、中英文通用；适合个人开发者与原型验证，免费额度即可覆盖大量轻量场景。",
-    "strengths": "多模态、长上下文、免费额度友好",
-    "priceValue": 0.0003
-  },
-  {
-    "id": "deepseek",
-    "name": "DeepSeek",
-    "type": "free",
-    "url": "https://platform.deepseek.com/",
-    "description": "国产推理模型，代码与数学能力突出，API 价格极低，注册有免费额度。",
-    "tags": [
-      "写代码",
-      "推理",
-      "中文"
-    ],
-    "rating": 4.5,
-    "valueScore": 4.9,
-    "addedAt": "2025-02-03",
-    "freeQuota": "注册即送 500 万 tokens 体验额度；deepseek-chat 有免费调用档",
-    "freeQuotaList": [
-      "注册赠送：500 万 tokens 体验额度",
-      "deepseek-chat：有免费调用档（高峰期可能限流）",
-      "deepseek-reasoner：新用户赠送少量思考额度"
-    ],
-    "limits": "免费额度有有效期；高峰期可能限流；深度思考(reasoner)模式响应较慢；不支持部分高级微调",
-    "priceStandard": "deepseek-chat 输入 $0.00027/1K、输出 $0.0011/1K；deepseek-reasoner 输入 $0.00055/1K、输出 $0.0022/1K（命中缓存更便宜）",
-    "priceList": [
-      "deepseek-chat：输入 $0.00027/1K、输出 $0.0011/1K",
-      "deepseek-reasoner：输入 $0.00055/1K、输出 $0.0022/1K",
-      "缓存命中：输入可低至 $0.000014/1K"
-    ],
-    "expertise": "数学推理、代码生成与调试、中文长文写作、逻辑分析；以极低成本提供接近顶尖模型的推理能力，适合成本敏感型应用。",
-    "strengths": "极致性价比、强推理与代码",
-    "priceValue": 0.0007
-  },
-  {
-    "id": "qwen",
-    "name": "通义千问 Qwen",
-    "type": "free",
-    "url": "https://dashscope.console.aliyun.com/",
-    "description": "阿里通义千问，开源模型生态丰富，提供免费额度与长文本版本。",
-    "tags": [
-      "写代码",
-      "长文本",
-      "中文",
-      "多模态"
-    ],
-    "rating": 4.4,
-    "valueScore": 4.7,
-    "addedAt": "2025-01-28",
-    "freeQuota": "DashScope 新用户免费额度；qwen-turbo/plus 有免费调用档与额度包",
-    "freeQuotaList": [
-      "DashScope 新用户：赠送免费额度包",
-      "qwen-turbo：有免费调用档",
-      "qwen-plus：限时免费额度（按活动）"
-    ],
-    "limits": "免费额度按模型与周期限制；部分高级模型仅付费；免费版并发较低",
-    "priceStandard": "qwen-turbo ¥0.0003/1K、qwen-plus ¥0.0008/1K、qwen-max ¥0.002/1K（输入/输出接近，按 token 计）",
-    "priceList": [
-      "qwen-turbo：¥0.0003/1K",
-      "qwen-plus：¥0.0008/1K",
-      "qwen-max：¥0.002/1K",
-      "qwen2.5-72b（开源自部署）：免费"
-    ],
-    "expertise": "中文理解与生成、开源模型本地部署(Qwen2.5 全系列)、长文本处理、Agent 工具调用；国内合规，适合国内业务集成。",
-    "strengths": "开源生态、中文与长文本",
-    "priceValue": 0.0005
-  },
-  {
-    "id": "ernie",
-    "name": "文心一言 ERNIE",
-    "type": "free",
-    "url": "https://console.bce.baidu.com/",
-    "description": "百度文心大模型，中文理解强，支持文生图，提供免费体验额度。",
-    "tags": [
-      "中文",
-      "画图",
-      "文档"
-    ],
-    "rating": 4.2,
-    "valueScore": 4.0,
-    "addedAt": "2025-01-20",
-    "freeQuota": "文心一言体验版有免费对话额度；千帆平台新用户赠送试用额度",
-    "freeQuotaList": [
-      "文心一言体验版：免费对话额度",
-      "千帆平台：新用户赠送试用 tokens",
-      "部分轻量模型：限时免费"
-    ],
-    "limits": "免费模型能力有限；企业级需付费；速率受限；部分高级能力仅付费开放",
-    "priceStandard": "ERNIE 4.0 按调用计费约 ¥0.012/次起；视觉/语音按量计费",
-    "priceList": [
-      "ERNIE 4.0：约 ¥0.012/次起",
-      "ERNIE 4.0 长文本：按 token 阶梯计费",
-      "视觉/语音能力：按量计费"
-    ],
-    "expertise": "中文语义理解、文生图、百度生态集成、文档生成；适合中文内容生成与国内企业场景。",
-    "strengths": "中文理解、文生图",
-    "priceValue": 0.002
-  },
-  {
-    "id": "groq",
-    "name": "Groq (LPU 推理)",
-    "type": "free",
-    "url": "https://console.groq.com/",
-    "description": "基于 LPU 的极速推理服务，免费额度可用 llama/mixtral 等开源模型。",
-    "tags": [
-      "写代码",
-      "推理"
-    ],
-    "rating": 4.3,
-    "valueScore": 4.6,
-    "addedAt": "2025-02-15",
-    "freeQuota": "开发者免费额度：Llama3/Mixtral/Gemma 等开源模型免费调用（有速率上限）",
-    "freeQuotaList": [
-      "Llama 3.1 70B：开发者免费额度（约 30 RPM）",
-      "Mixtral 8x7B：免费额度可用",
-      "Gemma 2：免费额度可用"
-    ],
-    "limits": "免费档每分钟请求数有限(约 30 RPM)；仅推理不含训练；模型为固定开源版本；不提供微调",
-    "priceStandard": "付费极便宜：Llama3.1 70B 约 $0.00059/1K 输入、$0.00079/1K 输出",
-    "priceList": [
-      "Llama 3.1 70B：输入 $0.00059/1K、输出 $0.00079/1K",
-      "Mixtral 8x7B：输入 $0.00024/1K、输出 $0.00079/1K"
-    ],
-    "expertise": "超低延迟推理、实时对话、代码补全；适合对延迟极度敏感的应用与高并发轻量场景。",
-    "strengths": "超低延迟、免费额度",
-    "priceValue": 0.0007
-  },
-  {
-    "id": "huggingface",
-    "name": "Hugging Face Inference",
-    "type": "free",
-    "url": "https://huggingface.co/models",
-    "description": "海量开源模型托管与推理 API，部分模型免费调用，覆盖画图/语音等。",
-    "tags": [
-      "画图",
-      "语音",
-      "多模态"
-    ],
-    "rating": 4.1,
-    "valueScore": 4.3,
-    "addedAt": "2025-01-08",
-    "freeQuota": "部分 Inference API 模型免费（共享算力）；Spaces 免费托管静态/小模型",
-    "freeQuotaList": [
-      "Inference API：部分模型免费（共享算力）",
-      "Spaces：免费托管静态/小模型 Demo",
-      "Hugging Face Hub：模型/数据集免费下载"
-    ],
-    "limits": "免费推理为共享实例，冷启动慢、速率低；大模型需付费端点；有每日额度",
-    "priceStandard": "Inference Endpoints 按 GPU 时长计费；Pro 订阅解锁更高配额与私有端点",
-    "priceList": [
-      "Inference Endpoints：按 GPU 实例时长计费",
-      "Pro 订阅：解锁更高配额与私有端点",
-      "无服务器端点：按实际推理 GPU 秒计费"
-    ],
-    "expertise": "海量开源模型（画图/语音/多模态）、模型微调托管、社区生态；研究者与快速试验首选。",
-    "strengths": "模型最全、开源免费",
-    "priceValue": 0.0003
-  },
-  {
-    "id": "ollama",
-    "name": "Ollama (本地)",
-    "type": "free",
-    "url": "https://ollama.com/",
-    "description": "本地部署开源大模型，完全免费、数据私有，适合开发者自托管。",
-    "tags": [
-      "写代码",
-      "推理",
-      "中文"
-    ],
-    "rating": 4.0,
-    "valueScore": 4.5,
-    "addedAt": "2025-01-05",
-    "freeQuota": "完全免费，本地运行",
-    "freeQuotaList": [
-      "本体：完全免费、开源",
-      "模型库（Llama/Qwen/DeepSeek 等）：免费拉取",
-      "无调用次数限制（受本机算力限制）"
-    ],
-    "limits": "需本机 GPU/CPU 算力；模型体量受硬件限制；无托管 API；需自行运维",
-    "priceStandard": "无费用（仅硬件成本）",
-    "priceList": [
-      "无 API 费用（仅本地硬件成本）",
-      "可选云托管：按云资源计费"
-    ],
-    "expertise": "本地私有部署、数据不出域、离线可用；适合隐私敏感、合规与自托管场景。",
-    "strengths": "免费、隐私、可本地部署",
-    "priceValue": 0
-  },
-  {
-    "id": "openai",
-    "name": "OpenAI GPT-4o",
-    "type": "paid",
-    "url": "https://platform.openai.com/",
-    "description": "综合能力最强的大模型之一，代码/多模态/工具调用生态成熟，配套 DALL·E 画图、Sora 视频。",
-    "tags": [
-      "写代码",
-      "画图",
-      "视频",
-      "多模态",
-      "文档"
-    ],
-    "rating": 4.8,
-    "valueScore": 4.4,
-    "addedAt": "2025-03-02",
-    "freeQuota": "新账号赠送 $5 试用额度（有期限）",
-    "freeQuotaList": [
-      "新注册账号：赠送 $5 API 试用额度（有期限）",
-      "ChatGPT 免费版：可用 GPT-4o mini（有限次/天）",
-      "无长期免费 API 额度"
-    ],
-    "limits": "免费试用额度过期需付费；有 TPM/RPM 分层限制；高级功能需付费模型",
-    "priceStandard": "GPT-4o 输入 $0.0025/1K、输出 $0.01/1K；GPT-4o mini 输入 $0.00015、输出 $0.0006；DALL·E 3 按图计费；Sora 按视频时长",
-    "priceList": [
-      "GPT-4o：输入 $0.0025/1K、输出 $0.01/1K",
-      "GPT-4o mini：输入 $0.00015/1K、输出 $0.0006/1K",
-      "GPT-4o nano：输入 $0.000005/1K、输出 $0.000015/1K",
-      "DALL·E 3：按图计费（$0.04-0.12/张）",
-      "Sora：按视频时长/分辨率计费"
-    ],
-    "expertise": "通用能力最强、工具/函数调用成熟、代码与多模态全栈、插件与生态最丰富；适合企业级复杂应用与需要稳定 SLA 的生产环境。",
-    "strengths": "生态最成熟、全能、工具链丰富",
-    "priceValue": 0.005
-  },
-  {
-    "id": "claude",
-    "name": "Anthropic Claude",
-    "type": "paid",
-    "url": "https://console.anthropic.com/",
-    "description": "长文本与代码能力优秀，200K 上下文，适合文档分析与安全合规场景。",
-    "tags": [
-      "写代码",
-      "长文本",
-      "推理",
-      "文档"
-    ],
-    "rating": 4.7,
-    "valueScore": 4.3,
-    "addedAt": "2025-03-10",
-    "freeQuota": "claude.ai 免费版可用；API 新账号少量赠送额度",
-    "freeQuotaList": [
-      "claude.ai 免费版：可用 Claude（有限次/天）",
-      "API 新账号：少量赠送额度",
-      "无长期免费 API 额度"
-    ],
-    "limits": "免费版功能受限；API 按用量计费；超长上下文需付费模型",
-    "priceStandard": "Claude 3.5 Sonnet 输入 $0.003/1K、输出 $0.015/1K；Opus 更贵；Haiku 最便宜",
-    "priceList": [
-      "Claude 3.5 Sonnet：输入 $0.003/1K、输出 $0.015/1K",
-      "Claude 3.5 Haiku：输入 $0.0008/1K、输出 $0.004/1K",
-      "Claude 3 Opus：输入 $0.015/1K、输出 $0.075/1K"
-    ],
-    "expertise": "长文档分析、代码审查与生成、合规安全场景、谨慎推理；200K 上下文适合法律/研报等长文处理。",
-    "strengths": "长上下文、代码与文档",
-    "priceValue": 0.008
-  },
-  {
-    "id": "midjourney",
-    "name": "Midjourney",
-    "type": "paid",
-    "url": "https://www.midjourney.com/",
-    "description": "顶级文生图服务，画质与艺术感领先，按月订阅。",
-    "tags": [
-      "画图"
-    ],
-    "rating": 4.7,
-    "valueScore": 4.0,
-    "addedAt": "2025-02-20",
-    "freeQuota": "无免费额度",
-    "freeQuotaList": [
-      "无免费额度",
-      "仅订阅制（无按次免费试用）"
-    ],
-    "limits": "仅订阅制；需 Discord 或网页端；有并发任务数限制；不可商用需高级订阅",
-    "priceStandard": "Basic $10/月(约 3.3h 快速)、Standard $30、Pro $60、Mega $120；按订阅含快速额度",
-    "priceList": [
-      "Basic：$10/月（约 3.3h 快速额度）",
-      "Standard：$30/月（15h 快速 + 无限慢速）",
-      "Pro：$60/月（30h 快速 + 隐身模式）",
-      "Mega：$120/月（60h 快速）"
-    ],
-    "expertise": "文生图质量与艺术感顶级、风格化、概念设计与海报创作；适合设计、艺术与营销视觉。",
-    "strengths": "画质天花板、艺术感强",
-    "priceValue": 0.02
-  },
-  {
-    "id": "stability",
-    "name": "Stability AI",
-    "type": "paid",
-    "url": "https://platform.stability.ai/",
-    "description": "开源画图/视频模型代表，Stable Diffusion 生态，提供 API 与 SDXL/视频生成。",
-    "tags": [
-      "画图",
-      "视频",
-      "多模态"
-    ],
-    "rating": 4.3,
-    "valueScore": 4.1,
-    "addedAt": "2025-02-08",
-    "freeQuota": "注册送少量 credits",
-    "freeQuotaList": [
-      "注册赠送：少量免费 credits",
-      "SDXL 1.0：开源权重可本地免费部署"
-    ],
-    "limits": "免费 credits 有限；高级模型与高分辨率需付费；有速率限制",
-    "priceStandard": "按张计费 SDXL ~$0.02-0.04/张；视频按秒；订阅与按量并存",
-    "priceList": [
-      "SDXL 1.0 生成：约 $0.02-0.04/张",
-      "Stable Video Diffusion：按秒计费",
-      "订阅（Creator/Enterprise）：按月含额度"
-    ],
-    "expertise": "开源画图/视频(SDXL、Stable Video)、可控生成、可自部署；适合需要可控与私有化图像生成的团队。",
-    "strengths": "开源可控、画图+视频",
-    "priceValue": 0.02
-  },
-  {
-    "id": "runway",
-    "name": "Runway",
-    "type": "paid",
-    "url": "https://runwayml.com/",
-    "description": "AI 视频生成与编辑领导者，Gen-系列文生视频，适合短视频创作。",
-    "tags": [
-      "视频"
-    ],
-    "rating": 4.5,
-    "valueScore": 3.9,
-    "addedAt": "2025-02-25",
-    "freeQuota": "免费版少量 credits",
-    "freeQuotaList": [
-      "免费版：少量 credits（约 125 额度）",
-      "新用户注册赠送有限额度"
-    ],
-    "limits": "免费额度极低；视频生成消耗 credits 快；部分高级功能仅付费",
-    "priceStandard": "Standard $12/月、Pro $28、Unlimited $76；按 credits 计费",
-    "priceList": [
-      "Standard：$12/月（含 credits）",
-      "Pro：$28/月（更多 credits + 4K）",
-      "Unlimited：$76/月（无限额度）"
-    ],
-    "expertise": "文生视频/图生视频、视频编辑 AI 特效、运动笔刷；适合短视频与影视预演。",
-    "strengths": "视频生成领先",
-    "priceValue": 0.03
-  },
-  {
-    "id": "zhipu",
-    "name": "智谱 GLM-4",
-    "type": "paid",
-    "url": "https://open.bigmodel.cn/",
-    "description": "国产大模型，中文与工具调用强，提供免费额度与付费 API。",
-    "tags": [
-      "写代码",
-      "中文",
-      "文档",
-      "长文本"
-    ],
-    "rating": 4.3,
-    "valueScore": 4.3,
-    "addedAt": "2025-03-18",
-    "freeQuota": "新用户免费额度包",
-    "freeQuotaList": [
-      "新用户：赠送免费额度包",
-      "glm-4-flash：有免费调用档",
-      "部分轻量模型：限时免费"
-    ],
-    "limits": "免费额度限模型/周期；高级模型付费；并发受限",
-    "priceStandard": "glm-4-plus ¥0.0005/1K 起；按模型档位与 token 计费",
-    "priceList": [
-      "glm-4-flash：免费/极低价",
-      "glm-4-plus：¥0.0005/1K 起",
-      "glm-4-air：更低单价（轻量）"
-    ],
-    "expertise": "中文、工具调用、国内合规、长文本；适合国内企业级应用与 Agent。",
-    "strengths": "中文、国产合规",
-    "priceValue": 0.0015
-  },
-  {
-    "id": "kimi",
-    "name": "Moonshot Kimi",
-    "type": "paid",
-    "url": "https://platform.moonshot.cn/",
-    "description": "超长上下文（200万汉字）对话模型，长文档处理与检索增强强。",
-    "tags": [
-      "长文本",
-      "中文",
-      "推理"
-    ],
-    "rating": 4.4,
-    "valueScore": 4.5,
-    "addedAt": "2025-03-25",
-    "freeQuota": "免费版可用；API 新用户赠送额度",
-    "freeQuotaList": [
-      "Kimi 智能助手免费版：可用（有额度/速率限制）",
-      "API 新用户：赠送体验额度"
-    ],
-    "limits": "免费版有额度与速率限制；超长上下文消耗 token 多",
-    "priceStandard": "moonshot-v1 8K/32K/128K 输入 ¥0.0002-0.012/1K、输出 ¥0.0003-0.012/1K",
-    "priceList": [
-      "moonshot-v1-8K：输入 ¥0.0002/1K、输出 ¥0.0003/1K",
-      "moonshot-v1-32K：输入 ¥0.0008/1K、输出 ¥0.001/1K",
-      "moonshot-v1-128K：输入 ¥0.012/1K、输出 ¥0.012/1K"
-    ],
-    "expertise": "超长上下文(200万字)、长文档问答、检索增强(RAG)；适合论文/合同/报告等长文处理。",
-    "strengths": "超长上下文、长文档",
-    "priceValue": 0.001
-  },
-  {
-    "id": "elevenlabs",
-    "name": "ElevenLabs",
-    "type": "paid",
-    "url": "https://elevenlabs.io/",
-    "description": "语音合成与克隆标杆，拟真度高，支持多语言配音。",
-    "tags": [
-      "语音"
-    ],
-    "rating": 4.6,
-    "valueScore": 4.0,
-    "addedAt": "2025-02-12",
-    "freeQuota": "免费版每月 1 万字符",
-    "freeQuotaList": [
-      "Free 版：每月 1 万字符",
-      "部分基础声音免费可用"
-    ],
-    "limits": "免费版声音数少、商用需付费；有字数限制；高级语音克隆仅付费",
-    "priceStandard": "Starter $5/月、Creator $22、Pro $99；按字符/订阅",
-    "priceList": [
-      "Starter：$5/月（3 万字符/月）",
-      "Creator：$22/月（100 万字符/月）",
-      "Pro：$99/月（500 万字符/月 + 商业授权）"
-    ],
-    "expertise": "语音合成拟真、声音克隆、多语言配音；适合有声书、视频配音与客服语音。",
-    "strengths": "语音拟真、克隆",
-    "priceValue": 0.025
-  },
-  {
-    "id": "replicate",
-    "name": "Replicate",
-    "type": "paid",
-    "url": "https://replicate.com/",
-    "description": "一键调用上万开源模型（画图/视频/语音），按秒计费，部署简单。",
-    "tags": [
-      "画图",
-      "视频",
-      "语音",
-      "多模态"
-    ],
-    "rating": 4.4,
-    "valueScore": 4.2,
-    "addedAt": "2025-02-18",
-    "freeQuota": "新用户少量免费 credits",
-    "freeQuotaList": [
-      "新用户：赠送少量免费 credits",
-      "部分开源模型有免费档"
-    ],
-    "limits": "按 GPU 秒计费；冷启动；部分模型需自己部署",
-    "priceStandard": "按模型 GPU 秒计费（如 Llama3 70B ~$0.000575/1K 输出）",
-    "priceList": [
-      "Llama 3.1 70B：约 $0.000575/1K 输出（按 GPU 秒）",
-      "SDXL：约 $0.0025/次（按 GPU 秒）",
-      "自建模型 API：按实例 GPU 秒计费"
-    ],
-    "expertise": "上万开源模型一键调用、画图/视频/语音、易部署 API；适合快速集成与多模型对比。",
-    "strengths": "开源模型最全、易部署",
-    "priceValue": 0.015
-  }
-];
+const API=(location.hostname==="localhost"||location.hostname.startsWith("127."))?"":"https://api-token.825370356.workers.dev";
+const CATS=["文本模型","编程模型","视频模型","音频模型","图片模型","推理模型"];
+const CI={"文本模型":"📝","编程模型":"💻","视频模型":"🎬","音频模型":"🎵","图片模型":"🎨","推理模型":"🧠"};
+// 60 tools from ai-bot.cn
+const TOOLS=[{c:"AI智能体",n:"TRAE Work",d:"字节跳动推出的AI原生工作台",u:"https://www.trae.ai/"},{c:"AI智能体",n:"爱派AiPy",d:"本地Manus、国内能用、内网能用，开源免费",u:"https://aipy.ai/"},{c:"AI智能体",n:"小云雀",d:"字节跳动旗下剪映推出的AI内容创作Agent",u:"https://jianying.com/"},{c:"AI智能体",n:"Seko",d:"首个创编一体的AI视频创作Agent",u:"https://seko.sensetime.com/"},{c:"AI智能体",n:"Atoms",d:"第一支自动构建真实业务的AI团队",u:"https://atoms.ai/"},{c:"AI智能体",n:"码上飞",d:"一句话生成微信小程序、APP、H5网页",u:"https://codefly.ai/"},{c:"AI智能体",n:"堆友Agent",d:"集成大厂专家设计Skill的AI设计智能体",u:"https://duiyou.ai/"},{c:"AI智能体",n:"ArkClaw",d:"火山引擎推出的云端托管版OpenClaw服务",u:"https://www.volcengine.com/"},{c:"AI智能体",n:"AstronClaw",d:"科大讯飞推出的云端部署OpenClaw",u:"https://xingchen.xfyun.cn/"},{c:"AI智能体",n:"讯飞星辰Agent",d:"科大讯飞推出的AI智能体开发平台",u:"https://xingchen.xfyun.cn/"},{c:"AI智能体",n:"WaClaw",d:"阿里绘蛙团队推出的电商垂直AI Agent",u:"https://www.alibaba.com/"},{c:"AI智能体",n:"WorkBuddy",d:"腾讯云推出的AI原生桌面智能体工作台",u:"https://cloud.tencent.com/"},{c:"AI智能体",n:"AutoClaw",d:"智谱推出的国内首个一键安装本地版OpenClaw",u:"https://open.bigmodel.cn/"},{c:"AI智能体",n:"OpenClaw",d:"开源免费的个人AI助手",u:"https://openclaw.ai/"},{c:"AI智能体",n:"Flowith",d:"画布式AI智能体工具",u:"https://flowith.io/"},{c:"AI智能体",n:"Tabbit",d:"美团光年之外推出的AI原生浏览器",u:"https://meituan.com/"},{c:"AI智能体",n:"KroWork",d:"快手推出的桌面端通用AI智能体",u:"https://kuaishou.com/"},{c:"AI智能体",n:"切问学术",d:"FudanNLP团队推出的AI学术智能体",u:"https://fudan.edu.cn/"},{c:"AI智能体",n:"觅游",d:"美团推出的AI原生Agent社区",u:"https://meituan.com/"},{c:"AI智能体",n:"虾345",d:"面向AI Agent生态的综合型导航与信息聚合平台",u:"https://xia345.com/"},{c:"AI智能体",n:"QoderWork",d:"阿里Qoder团队推出的桌面端AI智能体",u:"https://qoder.alibaba.com/"},{c:"AI智能体",n:"LobsterAI",d:"网易推出的全场景办公助手Agent",u:"https://netease.com/"},{c:"AI智能体",n:"Kevvee",d:"全球首个AI出海内容GTM策略Agent",u:"https://kevvee.com/"},{c:"AI智能体",n:"Matrix",d:"超长时间自动化运行的主动式多Agent协作平台",u:"https://matrix.ai/"},{c:"AI智能体",n:"Manus",d:"蝴蝶效应公司推出的首款自主通用AI Agent",u:"https://manus.im/"},{c:"AI智能体",n:"腾讯Marvis",d:"腾讯应用宝团队推出的操作系统级AI助手",u:"https://tencent.com/"},{c:"AI智能体",n:"Hermes Agent",d:"Nous Research开源的自主AI Agent框架",u:"https://nousresearch.com/"},{c:"AI智能体",n:"happycapy",d:"Trickle团队推出的云端AI Agent计算机",u:"https://trickle.so/"},{c:"AI智能体",n:"Genspark",d:"通用AI智能体，一站式AI工作空间",u:"https://www.genspark.ai/"},{c:"AI智能体",n:"OiiOii",d:"全球首个专业动画创作Agent",u:"https://oiioii.ai/"},
+{c:"AI编程工具",n:"TRAE",d:"字节跳动推出的AI IDE编程工具",u:"https://www.trae.ai/"},{c:"AI编程工具",n:"秒哒",d:"无代码AI应用开发平台，一句话做应用",u:"https://miaoda.ai/"},{c:"AI编程工具",n:"码上飞",d:"免费生成小程序/APP/网页",u:"https://codefly.ai/"},{c:"AI编程工具",n:"代码小浣熊",d:"商汤科技推出的免费AI编程助手",u:"https://sensetime.com/"},{c:"AI编程工具",n:"Codex",d:"OpenAI推出的AI编程智能体",u:"https://openai.com/"},{c:"AI编程工具",n:"Claude Code",d:"Anthropic推出的AI编程工具",u:"https://claude.ai/"},{c:"AI编程工具",n:"Qoder",d:"阿里巴巴推出的AI Agentic编程工具",u:"https://qoder.alibaba.com/"},{c:"AI编程工具",n:"OpenCode",d:"开源AI编程工具，Claude Code最佳平替",u:"https://opencode.ai/"},{c:"AI编程工具",n:"Kilo Code",d:"开源的AI编程扩展插件",u:"https://kilocode.ai/"},{c:"AI编程工具",n:"Google Antigravity",d:"谷歌推出的AI IDE编程智能体",u:"https://google.com/"},{c:"AI编程工具",n:"Kiro",d:"亚马逊公司推出的AI IDE",u:"https://aws.amazon.com/"},{c:"AI编程工具",n:"Cursor",d:"AI代码编辑器，快速编程和软件开发",u:"https://cursor.sh/"},{c:"AI编程工具",n:"MiMo Code",d:"小米大模型团队开源的新一代AI编程助手",u:"https://xiaomi.com/"},{c:"AI编程工具",n:"YouWare",d:"一站式AI编程社区与开发平台",u:"https://youware.ai/"},{c:"AI编程工具",n:"Zcode",d:"智谱推出的轻量级AI IDE编程工具",u:"https://open.bigmodel.cn/"},{c:"AI编程工具",n:"CodeBuddy IDE",d:"腾讯推出的全栈开发AI IDE",u:"https://copilot.tencent.com/"},{c:"AI编程工具",n:"Lovable",d:"全栈AI编程工具，一句话构建网站应用",u:"https://lovable.dev/"},{c:"AI编程工具",n:"CatPaw",d:"美团推出的AI IDE编程工具",u:"https://meituan.com/"},{c:"AI编程工具",n:"Augment Code",d:"AI编程辅助工具，专为大型代码库设计",u:"https://augmentcode.com/"},{c:"AI编程工具",n:"AgnesCode",d:"Agnes AI推出的桌面端AI编程工作台",u:"https://agnesc.ai/"},{c:"AI编程工具",n:"MonkeyCode",d:"长亭科技开源的AI编程助手与企业级平台",u:"https://chaitin.cn/"},{c:"AI编程工具",n:"通义灵码",d:"阿里推出的免费AI编程工具，基于通义大模型",u:"https://tongyi.aliyun.com/lingma/"},{c:"AI编程工具",n:"GitHub Copilot",d:"GitHub推出的AI编程工具",u:"https://github.com/features/copilot/"},{c:"AI编程工具",n:"Firebase Studio",d:"谷歌一站式开发全栈应用",u:"https://firebase.google.com/"},{c:"AI编程工具",n:"Windsurf",d:"Codeium公司推出的AI编程工具",u:"https://codeium.com/windsurf/"},{c:"AI编程工具",n:"Bolt.new",d:"StackBlitz推出的全栈AI代码工具",u:"https://bolt.new/"},{c:"AI编程工具",n:"InfCode",d:"词元无限推出的企业级AI编程工具",u:"https://infcode.ai/"},{c:"AI编程工具",n:"CodeFlicker",d:"快手推出的AI原生IDE编程工具",u:"https://kuaishou.com/"},{c:"AI编程工具",n:"Clacky AI",d:"打造L3级的Coding Studio",u:"https://clacky.ai/"},{c:"AI编程工具",n:"Replit Agent",d:"AI初创公司Replit推出的AI编程工具",u:"https://replit.com/"}];
 
-let ALL = [];
-let ALL_TAGS = [];
-let currentType = "free";
-let currentTag = null;
-let compareSet = new Set();
-let currentSort = "rating";
+let ALL=[], curType="free", curCat=null, curTool=null;
+let siteNews=[], newsIdx=0, newsTimer=null;
 
-async function load() {
-  try {
-    const [tRes, tagRes] = await Promise.all([
-      fetch(API_BASE + "/api/tokens"), fetch(API_BASE + "/api/tags")
-    ]);
-    if (!tRes.ok) throw new Error("api fail");
-    ALL = await tRes.json();
-    ALL_TAGS = await tagRes.json();
-  } catch (e) {
-    ALL = FALLBACK;
-    ALL_TAGS = [...new Set(FALLBACK.flatMap(t => t.tags))].sort();
-    console.warn("使用内置示例数据（未连接到后端）");
-  }
-  renderTags();
-  render();
+function $(id){ return document.getElementById(id); }
+
+async function load(){
+  try { const r=await fetch(API+"/api/tokens"); ALL=await r.json(); } catch(e){ ALL=[]; }
+  buildSidebar(); render();
+  $("sideStat").textContent = ALL.length+" 个 API";
+  loadSiteNews();
 }
 
-function renderTags() {
-  const box = document.getElementById("tags");
-  box.innerHTML = "";
-  const mk = (label, val) => {
-    const el = document.createElement("div");
-    el.className = "tag" + (currentTag === val ? " active" : "");
-    el.textContent = label;
-    el.onclick = () => { currentTag = (currentTag === val ? null : val); renderTags(); render(); };
-    return el;
-  };
-  box.appendChild(mk("全部", null));
-  ALL_TAGS.forEach(t => box.appendChild(mk(t, t)));
+function buildSidebar(){
+  let h=`<a href="#" class="${!curCat&&!curTool?'active':''}" data-cat="" data-tool="" onclick="pickCat(null);pickTool(null);return false"><span class="si">📦</span><span>全部模型</span><span class="n">${ALL.length}</span></a>`;
+  for(const c of CATS){
+    const n = ALL.filter(t=>{
+      if(t.category===c) return true;
+      const mp={"文本模型":["对话","长文本","翻译","中文"],"编程模型":["写代码"],"视频模型":["视频","视频生成","数字人","3D"],"音频模型":["语音","语音合成","TTS","语音识别","ASR","语音克隆","音乐"],"图片模型":["画图","图像生成","图像编辑","品牌设计","游戏资产","商用"],"推理模型":["推理","搜索","开源","高速","本地","embeddings"]};
+      return (mp[c]||[]).some(k=>(t.tags||[]).includes(k));
+    }).length;
+    h += `<a href="#" class="${c===curCat?'active':''}" data-cat="${c}" data-tool="" onclick="pickCat('${c}');pickTool(null);return false"><span class="si">${CI[c]}</span><span>${c}</span><span class="n">${n}</span></a>`;
+  }
+  $("sideNav").innerHTML = h;
+
+  let th=`<a href="#" class="small ${curTool==='AI智能体'?'active':''}" data-tool="AI智能体" data-cat="" onclick="pickTool('AI智能体');pickCat(null);return false"><span class="si">🤖</span><span>AI智能体</span><span class="n">30</span></a>`;
+  th+=`<a href="#" class="small ${curTool==='AI编程工具'?'active':''}" data-tool="AI编程工具" data-cat="" onclick="pickTool('AI编程工具');pickCat(null);return false"><span class="si">💻</span><span>AI编程工具</span><span class="n">30</span></a>`;
+  $("toolNav").innerHTML = th;
 }
 
-function filtered() {
-  let list = ALL.filter(t => t.type === currentType);
-  if (currentTag) list = list.filter(t => (t.tags || []).includes(currentTag));
-  const s = currentSort;
-  if (s === "rating") list.sort((a,b)=>b.rating-a.rating);
-  else if (s === "valueScore") list.sort((a,b)=>b.valueScore-a.valueScore);
-  else if (s === "addedAt") list.sort((a,b)=>(b.addedAt||"").localeCompare(a.addedAt||""));
-  else if (s === "priceAsc") list.sort((a,b)=>((a.type==="free"?0:1)-(b.type==="free"?0:1)) || ((a.priceValue||0)-(b.priceValue||0)));
-  else list.sort((a,b)=>b.rating-a.rating);
+function pickCat(c){ curCat=(curCat===c)?null:c; curTool=null; buildSidebar(); render(); }
+function pickTool(t){ curTool=(curTool===t)?null:t; curCat=null; buildSidebar(); render(); }
+
+function switchVM(t){ curType=t; document.querySelectorAll(".tbar-tab").forEach(e=>e.classList.toggle("active",e.dataset.type===t)); render(); }
+
+function filtered(){
+  let list = ALL.filter(t=>t.type===curType);
+  if(curCat){
+    const mp={"文本模型":["对话","长文本","翻译","中文"],"编程模型":["写代码"],"视频模型":["视频","视频生成","数字人","3D"],"音频模型":["语音","语音合成","TTS","语音识别","ASR","语音克隆","音乐"],"图片模型":["画图","图像生成","图像编辑","品牌设计","游戏资产","商用"],"推理模型":["推理","搜索","开源","高速","本地","embeddings"]};
+    const kw=mp[curCat]||[];
+    list = list.filter(t=>t.category===curCat||(t.tags||[]).some(tag=>kw.includes(tag)));
+  }
+  const q=(document.querySelector("#q")?document.querySelector("#q").value:"").trim().toLowerCase();
+  if(q) list=list.filter(t=>(t.name||"").toLowerCase().includes(q)||(t.tags||[]).join(",").toLowerCase().includes(q));
   return list;
 }
+function getFav(u){ try{return `https://www.google.com/s2/favicons?domain=${new URL(u).hostname}&sz=64`;}catch(e){return"";} }
 
-function stars(n) { return "★".repeat(Math.round(n)) + "☆".repeat(5 - Math.round(n)); }
+function render(){
+  const fc=filtered();
+  let h=`<section class="featured-wrap" id="ns" style="display:none">
+    <div class="feat-img"><img id="fi" src="" alt="" onerror="this.style.display='none';document.getElementById('ff').style.display='flex'"/>
+    <div class="feat-fb" id="ff"><span></span></div><div class="feat-dots" id="fd"></div></div>
+    <div class="feat-text"><div class="ft-head"><div class="ft-tag">推荐 API Token</div><div class="ft-arrow"><button onclick="pv()">‹</button><button onclick="nx()">›</button></div></div><ul class="feat-list" id="fl"></ul></div></section>
+    <div class="tbar"><div class="tbar-tabs">
+      <div class="tbar-tab active" data-type="free" onclick="switchVM('free')">🆓 免费</div>
+      <div class="tbar-tab" data-type="paid" onclick="switchVM('paid')">💎 付费</div></div>
+    <span class="tbar-stat"><b style="color:var(--primary)">${ALL.length}</b> 个 API · ${curType==="free"?"免费榜":"付费榜"}</span>
+    </div><div class="search-bar"><div class="search-box"><input id="q" placeholder="搜索 API Token（按名称/标签）" oninput="render()"/></div></div>`;
 
-function render() {
-  const list = filtered();
-  const grid = document.getElementById("grid");
-  const meta = document.getElementById("listMeta");
-  const typeLabel = currentType === "free" ? "免费榜（按评分排序）" : "付费榜（按性价比排序）";
-  meta.textContent = `共 ${list.length} 个 · ${typeLabel}${currentTag ? " · 标签：" + currentTag : ""}`;
-  grid.innerHTML = "";
-  list.forEach((t, i) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    const checked = compareSet.has(t.id) ? "checked" : "";
-    card.innerHTML = `
-      <div class="rank ${i===0?'gold':i===1?'silver':i===2?'bronze':''}">${i + 1}</div>
-      <h3>${t.name}</h3>
-      <div class="badges topright">
-        <span class="badge ${t.type}">${t.type === "free" ? "免费" : "付费"}</span>
-      </div>
-      <div class="stars">${stars(t.rating)} <span class="hint">${t.rating}</span></div>
-      <div class="value-row">性价比 ${t.valueScore}/5
-        <div class="value-bar"><i style="width:${t.valueScore*20}%"></i></div>
-      </div>
-      <div class="chips">${(t.tags||[]).map(x=>`<span class="chip">${x}</span>`).join("")}</div>
-      <div class="desc">${t.description||""}</div>
-      <div class="qlist">
-        <b style="color:${t.type==='free'?'var(--accent2)':'var(--gold)'}">${t.type==='free'?'🆓 免费额度：':'💎 付费详情：'}</b>
-        <ul>${(()=>{ const it=t.type==='free'?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]); return it.map(x=>`<li>${x}</li>`).join(''); })()}</ul>
-      </div>
-      <div class="card-actions">
-        <button class="btn small" onclick="openDetail('${t.id}')">详情</button>
-        <a class="btn small ghost" href="${t.url}" target="_blank">前往 ↗</a>
-        <label class="check"><input type="checkbox" ${checked} onchange="toggleCompare('${t.id}', this.checked)"/> 对比</label>
-      </div>`;
-    grid.appendChild(card);
-  });
-}
-
-function switchType(type) {
-  currentType = type;
-  currentSort = type === "paid" ? "valueScore" : "rating";
-  const sel = document.getElementById("sortSel"); if (sel) sel.value = currentSort;
-  document.querySelectorAll(".tab").forEach(el => el.classList.toggle("active", el.dataset.type === type));
-  render();
-}
-function applySort(){ currentSort = document.getElementById("sortSel").value; render(); }
-
-function openDetail(id) {
-  const t = ALL.find(x => x.id === id);
-  if (!t) return;
-  const m = document.getElementById("detailModal");
-  m.innerHTML = `<span class="close" onclick="closeDetail()">✕</span>
-    <h2>${t.name}</h2>
-    <div class="badges"><span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span></div>
-    <p>${t.description||""}</p>
-    ${t.type==="free"
-      ? `<div class="qlist"><b style="color:var(--accent2)">🆓 免费额度（按模���）：</b><ul>${(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]).map(x=>`<li>${x}</li>`).join('')}</ul></div>`
-      : `<div class="qlist"><b style="color:var(--gold)">💎 付费详情（按模型）：</b><ul>${(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]).map(x=>`<li>${x}</li>`).join('')}</ul></div>`}
-    <p><b>⚠️ 限制：</b>${t.limits||"—"}</p>
-    <p><b>评分：</b><span class="stars">${stars(t.rating)}</span> ${t.rating}/5 ｜ <b>性价比：</b>${t.valueScore}/5</p>
-    <p><b>擅长领域标签：</b>${(t.tags||[]).map(x=>`<span class="chip">${x}</span>`).join(" ")}</p>
-    <p><b>擅长领域详解：</b>${t.expertise||"—"}</p>
-    <p><b>核心优势：</b>${t.strengths||"—"}</p>
-    <p style="margin-top:14px;"><a class="btn" href="${t.url}" target="_blank">前往官网 ↗</a></p>`;
-  document.getElementById("detailOverlay").classList.add("show");
-}
-function closeDetail() { document.getElementById("detailOverlay").classList.remove("show"); }
-
-function toggleCompare(id, on) {
-  if (on) compareSet.add(id); else compareSet.delete(id);
-  const bar = document.getElementById("compareBar");
-  const names = [...compareSet].map(i => (ALL.find(x=>x.id===i)||{}).name).filter(Boolean);
-  document.getElementById("compareNames").textContent = names.length ? "已选：" + names.join("、") : "";
-  bar.classList.toggle("show", compareSet.size > 0);
-}
-function clearCompare() {
-  compareSet.clear();
-  document.getElementById("compareBar").classList.remove("show");
-  render();
-}
-function openCompare() {
-  if (compareSet.size < 2) { alert("请至少选择 2 个进行对比"); return; }
-  const items = [...compareSet].map(i => ALL.find(x => x.id === i)).filter(Boolean);
-  const fields = [["类型","type"],["评分","rating"],["性价比","valueScore"],
-    ["免费额度(按模型)","freeQuotaList"],["付费详情(按模型)","priceList"],["限制","limits"],
-    ["擅长领域标签","tags"],["擅长领域详解","expertise"],["核心优势","strengths"],["官网","url"]];
-  let html = `<span class="close" onclick="closeCompare()">✕</span><h2>🔍 API 对比（${items.length} 项）</h2>
-    <table class="cmp"><tr><th>维度</th>${items.map(i=>`<th>${i.name}</th>`).join("")}</tr>`;
-  fields.forEach(([label, key]) => {
-    html += `<tr><th>${label}</th>`;
-    items.forEach(i => {
-      let v = i[key];
-      if (Array.isArray(v)) v = '<ul class="cmplist">'+v.map(x=>`<li>${x}</li>`).join('')+'</ul>';
-      else if (key === "tags") v = (v||[]).map(x=>`<span class="chip">${x}</span>`).join(" ");
-      else if (key === "url") v = `<a href="${v}" target="_blank">前往 ↗</a>`;
-      else if (key === "type") v = v === "free" ? "免费" : "付费";
-      html += `<td>${v ?? "—"}</td>`;
+  if(curTool){
+    const tools = TOOLS.filter(t=>t.c===curTool);
+    h += `<div class="subtitle">${curTool} · ${tools.length} 个工具</div><div class="tool-grid">`;
+    tools.forEach(t=>{
+      h += `<div class="tcard"><div class="ti"><img src="${getFav(t.u)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${t.n.charAt(0)}</span></div>
+        <div class="tb"><b>${t.n}</b><div class="td">${t.d}</div><div class="tcat">${t.c}</div></div>
+        <a class="btn btn-pri" href="${t.u}" target="_blank">官网</a></div>`;
     });
-    html += `</tr>`;
-  });
-  html += `</table>`;
-  document.getElementById("cmpModal").innerHTML = html;
-  document.getElementById("cmpOverlay").classList.add("show");
-}
-function closeCompare() { document.getElementById("cmpOverlay").classList.remove("show"); }
-
-// 大气资讯轮播（左侧大图 + 右侧标题/摘要/按钮）
-let siteNews = [], newsIdx = 0, newsTimer = null;
-function renderNewsSlide(animate){
-  if (!siteNews.length) return;
-  const n = siteNews[newsIdx];
-  const img = document.getElementById("featImg");
-  const fb = document.getElementById("featFallback");
-  if (n.image) {
-    fb.style.display = "none"; img.style.display = "";
-    if (animate) { img.classList.add("hiding"); setTimeout(()=>{ img.src = n.image; img.classList.remove("hiding"); }, 350); }
-    else { img.src = n.image; }
+    h += `</div>`;
   } else {
-    img.style.display = "none"; fb.style.display = "flex";
-    fb.querySelector("span").textContent = n.title;
+    h += `<div class="subtitle">共 ${fc.length} 个${curCat?" · "+curCat:""} · ${curType==="free"?"免费":"付费"}</div><div class="grid">`;
+    fc.forEach(t=>{
+      const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);
+      h += `<div class="card"><div class="ci"><img src="${getFav(t.url||'')}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${(t.name||"?").trim().charAt(0)}</span></div>
+        <div class="cb"><div class="cn">${t.name}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span>${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}</div>
+        <div class="ct">${(t.tags||[]).slice(0,5).map(x=>`<span class="chip">${x}</span>`).join("")}</div><div class="cd">${t.description||""}</div>
+        ${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.slice(0,2).map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}
+        <div class="cf"><button class="btn btn-pri" onclick="det('${t.id}')">详情</button><a class="btn btn-ghost" href="${t.url}" target="_blank">前往 ↗</a></div></div></div>`;
+    });
+    h += `</div>`;
   }
-  document.getElementById("featCount").textContent = (newsIdx+1)+"/"+siteNews.length;
-  document.getElementById("featLink").href = n.link || "#";
-  // 渲染右侧列表
-  document.getElementById("featList").innerHTML = siteNews.map((it,i) =>
-    `<li class="feat-item${i===newsIdx?' active':''}" onclick="goNews(${i})">
-      <a href="${it.link}" target="_blank">${it.title}<span class="feat-badge">推荐</span></a>
-      <span class="feat-item-sum">${it.summary||''}</span></li>`).join("");
-}
-function goNews(i){ newsIdx = i; clearInterval(newsTimer); renderNewsSlide(true); newsTimer = setInterval(()=>{ newsIdx = (newsIdx + 1) % siteNews.length; renderNewsSlide(true); }, 5000); }
-function prevNews(){ goNews((newsIdx - 1 + siteNews.length) % siteNews.length); }
-function nextNews(){ goNews((newsIdx + 1) % siteNews.length); }
-async function loadSiteNews(){
-  try { siteNews = await (await fetch(API_BASE + "/api/site-news")).json(); } catch(e) { siteNews = []; return; }
-  if (!siteNews.length) return;
-  document.getElementById("newsSection").style.display = "block";
-  renderNewsSlide(false);
-  newsTimer = setInterval(()=>{ newsIdx = (newsIdx + 1) % siteNews.length; renderNewsSlide(true); }, 5000);
+  $("c").innerHTML = h;
+  if(siteNews.length){ $("ns").style.display="flex"; rns(false); }
 }
 
-loadSiteNews();
-load();
+function det(id){
+  const t=ALL.find(x=>x.id===id); if(!t) return;
+  const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);
+  document.body.insertAdjacentHTML("beforeend",`<div style="position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:400;display:flex;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.remove()"><div style="background:#fff;border-radius:14px;max-width:620px;width:100%;max-height:86vh;overflow:auto;padding:22px 26px;"><span style="float:right;cursor:pointer;font-size:20px;color:var(--muted)" onclick="this.closest('[style*=fixed]').remove()">✕</span><h3 style="margin:0 0 12px">${t.name}</h3><div style="margin:6px 0">${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span></div><p style="color:var(--muted)">${t.description||""}</p>${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}<p><b>⚠️ 限制：</b>${t.limits||"—"}</p><p><b>评分：</b>${t.rating}/5 ｜ <b>性价比：</b>${t.valueScore}/5</p>${t.expertise?`<p><b>详解：</b>${t.expertise}</p>`:""}<p style="margin-top:14px;"><a class="btn btn-pri" href="${t.url}" target="_blank">前往官网 ↗</a></p></div></div>`);
+}
+
+// carousel
+async function loadSiteNews(){
+  try{siteNews=await(await fetch(API+"/api/site-news")).json();}catch(e){siteNews=[];return;}
+  if(!siteNews.length) return;
+  $("ns").style.display="flex";rns(false);
+  newsTimer=setInterval(()=>{newsIdx=(newsIdx+1)%siteNews.length;rns(true);},5000);
+}
+function rns(a){
+  if(!siteNews.length)return;const n=siteNews[newsIdx],i=$("fi"),f=$("ff");
+  if(n.image){f.style.display="none";i.style.display="";if(a){i.classList.add("hiding");setTimeout(()=>{i.src=n.image;i.classList.remove("hiding");},350);}else i.src=n.image;}
+  else{i.style.display="none";f.style.display="flex";f.querySelector("span").textContent=n.title;}
+  $("fd").innerHTML=siteNews.map((_,x)=>`<span class="${x===newsIdx?'active':''}" onclick="gn(${x})"></span>`).join("");
+  $("fl").innerHTML=siteNews.map((it,x)=>`<li class="${x===newsIdx?'on':''}" onclick="gn(${x})"><a href="${it.link}" target="_blank">${it.title}<span class="f-badge">推荐</span></a><div class="s">${it.summary||""}</div></li>`).join("");
+}
+function gn(x){newsIdx=x;clearInterval(newsTimer);rns(true);newsTimer=setInterval(()=>{newsIdx=(newsIdx+1)%siteNews.length;rns(true);},5000);}
+function pv(){gn((newsIdx-1+siteNews.length)%siteNews.length);}
+function nx(){gn((newsIdx+1)%siteNews.length);}
+
+loadSiteNews();load();
 </script>
 </body>
 </html>
