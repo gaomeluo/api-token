@@ -181,6 +181,10 @@ function fixIcons(){
   },2000);
 }
 
+// 事件委托：点击侧边栏任意链接
+$("sideNav").addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;e.preventDefault();const c=a.dataset.cat;pickCat(c==="all"?null:c);});
+$("toolNav").addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;e.preventDefault();const t=a.dataset.tool;pickTool(t||null);});
+
 function pickCat(c){curCat=(curCat===c)?null:c;curTool=null;bs();rf();}
 function pickTool(t){if(curTool===t)return;curTool=t;curCat=null;bs();rf();}
 function swt(t){curType=t;document.querySelectorAll(".tbar-tab").forEach(e=>e.classList.toggle("active",e.dataset.type===t));rf();}
