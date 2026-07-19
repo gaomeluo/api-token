@@ -52,10 +52,6 @@ a{color:var(--primary);text-decoration:none}
 .tbar-tab{padding:3px 10px;border-radius:4px;font-size:11px;color:var(--muted);cursor:pointer}
 .tbar-tab.on{background:#fff;color:var(--primary);font-weight:600}
 .tbar-stat{margin-left:auto;font-size:11px;color:var(--muted)}
-.srch{display:flex;gap:6px;margin-bottom:12px}
-.srch input{flex:1;padding:7px 10px 7px 30px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:12px}
-.srch input:focus{outline:none;border-color:var(--primary)}
-.srch{position:relative}.srch::before{content:"🔍";position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:12px}
 .sub{font-size:11px;color:var(--muted);margin-bottom:10px}
 
 /* cards */
@@ -71,7 +67,7 @@ a{color:var(--primary);text-decoration:none}
 .badge{font-size:9px;padding:1px 5px;border-radius:3px}.badge.free{background:#d1fae5;color:#047857}.badge.paid{background:#fef3c7;color:#b45309}.badge.vendor{background:var(--pl);color:var(--primary)}.badge.country{background:#f8fafc;color:var(--muted);border:1px solid var(--line)}
 .ct{display:flex;flex-wrap:wrap;gap:2px;margin:3px 0}.chip{font-size:10px;padding:1px 5px;border-radius:3px;background:var(--bg);color:var(--muted)}
 .cd{font-size:11px;color:var(--muted);line-height:1.4;margin:2px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.ql{background:#f8fafc;border-radius:5px;padding:4px 7px;font-size:10px;margin:2px 0}.ql b{color:var(--primary)}.ql ul{margin:1px 0 0;padding-left:12px}
+.ql{background:#f8fafc;border-radius:5px;padding:5px 8px;font-size:12px;margin:2px 0}.ql b{color:var(--primary)}.ql ul{margin:2px 0 0;padding-left:14px}
 .cf{display:flex;gap:4px;align-items:center;margin-top:auto;padding-top:3px}
 .btn{display:inline-flex;align-items:center;gap:2px;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:500;cursor:pointer;border:none}
 .btn-pri{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff}.btn-pri:hover{filter:brightness(1.06)}
@@ -102,7 +98,7 @@ a{color:var(--primary);text-decoration:none}
       <div class="caro-r"><div class="caro-rh"><b>推荐 API Token</b><div class="caro-arr"><button onclick="pv()">‹</button><button onclick="nx()">›</button></div></div><ul class="caro-list" id="cl"></ul></div>
     </section>
     <div class="tbar" id="tbar"><div class="tbar-tabs"><div class="tbar-tab on" data-type="free" onclick="swt('free')">🆓 免费</div><div class="tbar-tab" data-type="paid" onclick="swt('paid')">💎 付费</div></div><span class="tbar-stat" id="tstat"></span></div>
-    <div class="srch" id="srch"><input id="q" placeholder="搜索 API Token" oninput="rf()"/></div>
+    <div style="text-align:center;margin:0 0 14px;font-size:12px;color:var(--muted);background:linear-gradient(90deg,transparent,#ffedd5 20%,#ffedd5 80%,transparent);padding:6px 0;border-radius:4px">⚠️ 有的网站你可能进不去，推荐一个机场：<a href="https://inurl.top/archives/mojie/" target="_blank" style="color:#e67e22;font-weight:700">传送门</a></div>
     <div class="sub" id="sub"></div>
     <div id="list"></div>
   </div>
@@ -113,7 +109,7 @@ a{color:var(--primary);text-decoration:none}
 const API=(location.hostname==="localhost"||location.hostname.startsWith("127."))?"":"https://api-token.825370356.workers.dev";
 const CATS=["文本模型","编程模型","视频模型","音频模型","图片模型","推理模型"];
 const CI={文本模型:"📝",编程模型:"💻",视频模型:"🎬",音频模型:"🎵",图片模型:"🎨",推理模型:"🧠"};
-const TOOLS=[{c:"AI智能体",n:"Manus",d:"首款自主通用AI Agent",u:"https://manus.im/"},{c:"AI智能体",n:"TRAE Work",d:"字节AI原生工作台",u:"https://www.trae.ai/"},{c:"AI智能体",n:"Genspark",d:"一站式AI工作空间",u:"https://www.genspark.ai/"},{c:"AI智能体",n:"Flowith",d:"画布式AI智能体",u:"https://flowith.io/"},{c:"AI智能体",n:"Seko",d:"创编一体AI视频Agent",u:"https://seko.sensetime.com/"},{c:"AI智能体",n:"OpenClaw",d:"开源免费个人AI助手",u:"https://github.com/openclaw/"},{c:"AI智能体",n:"讯飞星辰Agent",d:"科大讯飞智能体平台",u:"https://xingchen.xfyun.cn/"},{c:"AI智能体",n:"小云雀",d:"字节剪映AI创作Agent",u:"https://jianying.com/"},{c:"AI智能体",n:"爱派AiPy",d:"本土Manus开源免费",u:"https://aipy.ai/"},{c:"AI智能体",n:"Atoms",d:"AI团队构建",u:"https://atoms.ai/"},{c:"AI编程工具",n:"Cursor",d:"AI代码编辑器",u:"https://cursor.sh/"},{c:"AI编程工具",n:"GitHub Copilot",d:"GitHub AI编程",u:"https://github.com/features/copilot/"},{c:"AI编程工具",n:"通义灵码",d:"阿里免费AI编程",u:"https://tongyi.aliyun.com/lingma/"},{c:"AI编程工具",n:"CodeBuddy",d:"腾讯全栈AI IDE",u:"https://copilot.tencent.com/"},{c:"AI编程工具",n:"Windsurf",d:"Codeium AI编程",u:"https://codeium.com/windsurf/"},{c:"AI编程工具",n:"Bolt.new",d:"StackBlitz全栈AI",u:"https://bolt.new/"},{c:"AI编程工具",n:"Claude Code",d:"Anthropic AI编程",u:"https://claude.ai/"},{c:"AI编程工具",n:"Lovable",d:"全栈AI编程建站",u:"https://lovable.dev/"},{c:"AI编程工具",n:"Codex",d:"OpenAI编程智能体",u:"https://openai.com/"},{c:"AI编程工具",n:"Zcode",d:"智谱轻量AI IDE",u:"https://open.bigmodel.cn/"}];
+const TOOLS=[{c:"AI智能体",n:"TRAE Work",d:"字节AI原生工作台",u:"https://ai-bot.cn/sites/79473.html"},{c:"AI智能体",n:"爱派AiPy",d:"本土Manus开源免费",u:"https://ai-bot.cn/sites/63774.html"},{c:"AI智能体",n:"小云雀",d:"字节剪映AI创作Agent",u:"https://ai-bot.cn/sites/72152.html"},{c:"AI智能体",n:"Seko",d:"创编一体AI视频Agent",u:"https://ai-bot.cn/sites/58360.html"},{c:"AI智能体",n:"Atoms",d:"自动构建真实业务的AI团队",u:"https://ai-bot.cn/sites/70016.html"},{c:"AI智能体",n:"码上飞",d:"一句话生成小程序/APP/H5",u:"https://ai-bot.cn/sites/60995.html"},{c:"AI智能体",n:"堆友Agent",d:"大厂设计Skill智能体",u:"https://ai-bot.cn/sites/77488.html"},{c:"AI智能体",n:"ArkClaw",d:"火山引擎云端OpenClaw",u:"https://ai-bot.cn/sites/74340.html"},{c:"AI智能体",n:"AstronClaw",d:"科大讯飞云端OpenClaw",u:"https://ai-bot.cn/sites/73413.html"},{c:"AI智能体",n:"讯飞星辰Agent",d:"科大讯飞AI智能体平台",u:"https://ai-bot.cn/sites/50068.html"},{c:"AI智能体",n:"WaClaw",d:"阿里绘蛙电商垂直Agent",u:"https://ai-bot.cn/sites/81921.html"},{c:"AI智能体",n:"WorkBuddy",d:"腾讯云AI桌面工作台",u:"https://ai-bot.cn/sites/73160.html"},{c:"AI智能体",n:"AutoClaw",d:"智谱一键安装本地OpenClaw",u:"https://ai-bot.cn/sites/73229.html"},{c:"AI智能体",n:"OpenClaw",d:"开源免费个人AI助手",u:"https://ai-bot.cn/sites/70880.html"},{c:"AI智能体",n:"Flowith",d:"画布式AI智能体工具",u:"https://ai-bot.cn/sites/11395.html"},{c:"AI智能体",n:"Tabbit",d:"美团AI原生浏览器",u:"https://ai-bot.cn/sites/72614.html"},{c:"AI智能体",n:"KroWork",d:"快手桌面AI智能体",u:"https://ai-bot.cn/sites/81608.html"},{c:"AI智能体",n:"切问学术",d:"FudanNLP学术智能体",u:"https://ai-bot.cn/sites/72406.html"},{c:"AI智能体",n:"觅游",d:"美团AI Agent社区",u:"https://ai-bot.cn/sites/80528.html"},{c:"AI智能体",n:"虾345",d:"AI Agent综合导航平台",u:"https://ai-bot.cn/sites/80809.html"},{c:"AI智能体",n:"QoderWork",d:"阿里Qoder桌面AI智能体",u:"https://ai-bot.cn/sites/72782.html"},{c:"AI智能体",n:"LobsterAI",d:"网易全场景办公Agent",u:"https://ai-bot.cn/sites/80501.html"},{c:"AI智能体",n:"Kevvee",d:"海外GTM策略Agent",u:"https://ai-bot.cn/sites/80509.html"},{c:"AI智能体",n:"Matrix",d:"多Agent长时协作平台",u:"https://ai-bot.cn/sites/80377.html"},{c:"AI智能体",n:"Manus",d:"首款自主通用AI Agent",u:"https://ai-bot.cn/sites/69322.html"},{c:"AI智能体",n:"腾讯Marvis",d:"腾讯OS级AI助手",u:"https://ai-bot.cn/sites/77977.html"},{c:"AI智能体",n:"Hermes Agent",d:"Nous Research开源Agent",u:"https://ai-bot.cn/sites/78174.html"},{c:"AI智能体",n:"happycapy",d:"Trickle云端AI Agent",u:"https://ai-bot.cn/sites/71899.html"},{c:"AI智能体",n:"Genspark",d:"一站式AI工作空间",u:"https://ai-bot.cn/sites/66341.html"},{c:"AI智能体",n:"OiiOii",d:"专业动画创作Agent",u:"https://ai-bot.cn/sites/66553.html"},{c:"AI编程工具",n:"TRAE",d:"字节AI IDE编程工具",u:"https://ai-bot.cn/sites/65814.html"},{c:"AI编程工具",n:"秒哒",d:"无代码AI应用开发",u:"https://ai-bot.cn/sites/65909.html"},{c:"AI编程工具",n:"码上飞",d:"免费生成小程序/APP",u:"https://ai-bot.cn/sites/60995.html"},{c:"AI编程工具",n:"代码小浣熊",d:"商汤免费AI编程",u:"https://ai-bot.cn/sites/6519.html"},{c:"AI编程工具",n:"Codex",d:"OpenAI编程智能体",u:"https://ai-bot.cn/sites/53.html"},{c:"AI编程工具",n:"Claude Code",d:"Anthropic AI编程",u:"https://ai-bot.cn/sites/56948.html"},{c:"AI编程工具",n:"Qoder",d:"阿里Agentic编程工具",u:"https://ai-bot.cn/sites/60584.html"},{c:"AI编程工具",n:"OpenCode",d:"开源AI编程,Claude平替",u:"https://ai-bot.cn/sites/69806.html"},{c:"AI编程工具",n:"Kilo Code",d:"开源AI编程插件",u:"https://ai-bot.cn/sites/69903.html"},{c:"AI编程工具",n:"Google Antigravity",d:"谷歌AI IDE智能体",u:"https://ai-bot.cn/sites/66843.html"},{c:"AI编程工具",n:"Kiro",d:"亚马逊AI IDE",u:"https://ai-bot.cn/sites/57086.html"},{c:"AI编程工具",n:"Cursor",d:"AI代码编辑器",u:"https://ai-bot.cn/sites/906.html"},{c:"AI编程工具",n:"MiMo Code",d:"小米AI编程助手",u:"https://ai-bot.cn/sites/79441.html"},{c:"AI编程工具",n:"YouWare",d:"一站式AI编程社区",u:"https://ai-bot.cn/sites/70432.html"},{c:"AI编程工具",n:"Zcode",d:"智谱轻量AI IDE",u:"https://ai-bot.cn/sites/69134.html"},{c:"AI编程工具",n:"CodeBuddy IDE",d:"腾讯全栈AI IDE",u:"https://ai-bot.cn/sites/57753.html"},{c:"AI编程工具",n:"Lovable",d:"全栈AI编程建站",u:"https://ai-bot.cn/sites/60798.html"},{c:"AI编程工具",n:"CatPaw",d:"美团AI IDE",u:"https://ai-bot.cn/sites/65836.html"},{c:"AI编程工具",n:"Augment Code",d:"大型代码库AI编程",u:"https://ai-bot.cn/sites/11625.html"},{c:"AI编程工具",n:"AgnesCode",d:"桌面AI编程工作台",u:"https://ai-bot.cn/sites/81764.html"},{c:"AI编程工具",n:"MonkeyCode",d:"长亭科技AI编程",u:"https://ai-bot.cn/sites/70526.html"},{c:"AI编程工具",n:"通义灵码",d:"阿里免费AI编程",u:"https://ai-bot.cn/sites/5269.html"},{c:"AI编程工具",n:"GitHub Copilot",d:"GitHub AI编程",u:"https://ai-bot.cn/sites/45.html"},{c:"AI编程工具",n:"Firebase Studio",d:"谷歌全栈开发",u:"https://ai-bot.cn/firebase-studio/"},{c:"AI编程工具",n:"Windsurf",d:"Codeium AI编程",u:"https://ai-bot.cn/windsurf/"},{c:"AI编程工具",n:"Bolt.new",d:"StackBlitz全栈AI",u:"https://ai-bot.cn/bolt-new/"},{c:"AI编程工具",n:"InfCode",d:"企业级AI编程",u:"https://ai-bot.cn/sites/69316.html"},{c:"AI编程工具",n:"CodeFlicker",d:"快手AI IDE",u:"https://ai-bot.cn/sites/64617.html"},{c:"AI编程工具",n:"Clacky AI",d:"L3级Coding Studio",u:"https://ai-bot.cn/clacky-ai/"},{c:"AI编程工具",n:"Replit Agent",d:"Replit AI编程",u:"https://ai-bot.cn/replit-agent/"},];
 
 let ALL=[],curType="free",curCat=null,curTool=null,news=[],ni=0,nt=null;
 
@@ -145,19 +141,17 @@ function swt(t){curType=t;document.querySelectorAll(".tbar-tab").forEach(e=>e.cl
 function rf(){
   if(curTool){
     let tl=TOOLS.filter(t=>t.c===curTool);
-    $("tbar").style.display="none";$("srch").style.display="none";
+    $("tbar").style.display="none";
     $("sub").textContent=curTool+" · "+tl.length+" 个工具";
     $("list").innerHTML='<div class="tgrid">'+tl.map(t=>'<div class="tcard"><div class="ico"><span class="fb">'+t.n.charAt(0)+'</span></div><div class="tb"><b>'+t.n+'</b><div class="td">'+t.d+'</div></div><a class="btn btn-pri" href="'+t.u+'" target="_blank">官网</a></div>').join("")+'</div>';
     return;
   }
-  $("tbar").style.display=curCat?"none":"";$("srch").style.display="";
+  $("tbar").style.display=curCat?"none":"";
   let list;
   if(curCat){
     let kw={"文本模型":["对话","长文本","翻译","中文"],"编程模型":["写代码"],"视频模型":["视频","视频生成","数字人","3D"],"音频模型":["语音","TTS","语音识别","ASR","语音克隆","音乐"],"图片模型":["画图","图像生成","图像编辑","品牌设计","游戏资产","商用"],"推理模型":["推理","搜索","开源","高速","本地","embeddings"]}[curCat]||[];
     list=ALL.filter(t=>t.category===curCat||(t.tags||[]).some(tg=>kw.includes(tg)));
   }else{list=ALL.filter(t=>t.type===curType);}
-  let q=($("q").value||"").trim().toLowerCase();
-  if(q)list=list.filter(t=>(t.name||"").toLowerCase().includes(q)||(t.tags||[]).join(",").toLowerCase().includes(q));
   $("tstat").innerHTML='<b style="color:var(--primary)">'+ALL.length+'</b> 个 API · '+(curCat||(curType==="free"?"免费榜":"付费榜"));
   $("sub").textContent="共 "+list.length+" 个";
   if(!list.length){$("list").innerHTML='<div style="color:var(--muted);text-align:center;padding:40px">暂无</div>';return;}
@@ -175,7 +169,7 @@ function det(id){
 
 // ====== carousel ======
 async function ln(){try{news=await(await fetch(API+"/api/site-news")).json();}catch(e){news=[];return;}if(!news.length)return;$("caro").classList.remove("hide");rn(false);setTimeout(()=>{if(news.length>1){ni=1;rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true)},8000)}},4000);}
-function rn(a){let n=news[ni],ci=$("ci"),cf=$("cfb");if(n.image){cf.style.display="none";ci.style.display="";if(a){ci.classList.add("hiding");setTimeout(()=>{ci.src=n.image;ci.classList.remove("hiding")},300)}else ci.src=n.image}else{ci.style.display="none";cf.style.display="flex";cf.querySelector("span").textContent=n.title}$("cd").innerHTML=news.map((_,i)=>'<span class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"></span>').join("");$("cl").innerHTML=news.map((it,i)=>'<li class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"><a href="'+it.link+'" target="_blank">'+it.title+'</a><div style="font-size:10px;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(it.summary||"")+'</div></li>').join("");}
+function rn(a){let n=news[ni],ci=$("ci"),cf=$("cfb");if(n.image){cf.style.display="none";ci.style.display="";if(a){ci.classList.add("hiding");setTimeout(()=>{ci.src=n.image;ci.classList.remove("hiding")},300)}else ci.src=n.image}else{ci.style.display="none";cf.style.display="flex";cf.querySelector("span").textContent=n.title}$("cd").innerHTML=news.map((_,i)=>'<span class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"></span>').join("");$("cl").innerHTML=news.map((it,i)=>'<li class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"><a href="'+it.link+'" target="_blank">'+it.title+'</a><div style="font-size:12px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(it.summary||"")+'</div></li>').join("");}
 function gn(x){ni=x;clearInterval(nt);rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true)},8000)}
 function pv(){gn((ni-1+news.length)%news.length)}function nx(){gn((ni+1)%news.length)}
 
