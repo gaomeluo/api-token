@@ -165,6 +165,18 @@ function bs(){
   $("toolNav").innerHTML=`<a data-tool="AI智能体" data-cat="" class="small${curTool==='AI智能体'?' active':''}"><span class="si">🤖</span><span>AI智能体</span><span class="n">30</span></a><a data-tool="AI编程工具" data-cat="" class="small${curTool==='AI编程工具'?' active':''}"><span class="si">💻</span><span>AI编程工具</span><span class="n">30</span></a>`;
 }
 
+// 图标后检：加载失败的换国内源，再失败才用首字母
+function fixIcons(){
+  setTimeout(()=>{
+    document.querySelectorAll(".ti img,.ci img").forEach(img=>{
+      if(!img.complete||img.naturalWidth===0||img.naturalWidth===1){
+        const fb=img.nextElementSibling;
+        if(fb&&fb.classList.contains("fb")) fb.style.display="flex";img.style.display="none";
+      }
+    });
+  },2500);
+}
+
 // 事件委托：点击侧边栏任意链接
 $("sideNav").addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;e.preventDefault();const c=a.dataset.cat;pickCat(c==="all"?null:c);});
 $("toolNav").addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;e.preventDefault();const t=a.dataset.tool;pickTool(t||null);});
@@ -181,7 +193,8 @@ function rf(){
     list=TOOLS.filter(t=>t.c===curTool);
     $("sub").textContent=`${curTool} · ${list.length} 个工具`;
     $("tbar").style.display="none";$("q").parentElement.parentElement.style.display="none";
-    $("list").innerHTML=`<div class="tool-grid">${list.map(t=>`<div class="tcard"><div class="ti"><span class="fb">${t.n.charAt(0)}</span></div><div class="tb"><b>${t.n}</b><div class="td">${t.d}</div></div><a class="btn btn-pri" href="${t.u}" target="_blank">官网</a></div>`).join("")}</div>`;
+    $("list").innerHTML=`<div class="tool-grid">${list.map(t=>`<div class="tcard"><div class="ti"><img src="${getFav(t.u)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${t.n.charAt(0)}</span></div><div class="tb"><b>${t.n}</b><div class="td">${t.d}</div></div><a class="btn btn-pri" href="${t.u}" target="_blank">官网</a></div>`).join("")}</div>`;
+    fixIcons();
     return;
   }
   $("tbar").style.display=curCat?"none":"";$("q").parentElement.parentElement.style.display="";
@@ -195,7 +208,7 @@ function rf(){
   $("tbs").innerHTML=`<b style="color:var(--primary)">${ALL.length}</b> 个 API · ${curCat?curCat:(curType==="free"?"免费榜":"付费榜")}`;
   $("sub").textContent=`共 ${list.length} 个`;
   if(!list.length){$("list").innerHTML='<div style="color:var(--muted);text-align:center;padding:40px">该分类下暂无 token</div>';return;}
-  $("list").innerHTML=`<div class="grid">${list.map(t=>{const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);return`<div class="card"><div class="ci"><img src="${getFav(t.url||'')}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${(t.name||"?").trim().charAt(0)}</span></div><div class="cb"><div class="cn">${t.name}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span>${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}</div><div class="ct">${(t.tags||[]).slice(0,5).map(x=>`<span class="chip">${x}</span>`).join("")}</div><div class="cd">${t.description||""}</div>${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.slice(0,2).map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}<div class="cf"><button class="btn btn-pri" onclick="det('${t.id}')">详情</button><a class="btn btn-ghost" href="${t.url}" target="_blank">前往 ↗</a></div></div></div>`}).join("")}</div>`;
+  $("list").innerHTML=`<div class="grid">${list.map(t=>{const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);return`<div class="card"><div class="ci"><img src="${getFav(t.url||'')}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${(t.name||"?").trim().charAt(0)}</span></div><div class="cb"><div class="cn">${t.name}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span>${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}</div><div class="ct">${(t.tags||[]).slice(0,5).map(x=>`<span class="chip">${x}</span>`).join("")}</div><div class="cd">${t.description||""}</div>${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.slice(0,2).map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}<div class="cf"><button class="btn btn-pri" onclick="det('${t.id}')">详情</button><a class="btn btn-ghost" href="${t.url}" target="_blank">前往 ↗</a></div></div></div>`}).join("")}</div>`;fixIcons();
 }
 
 function det(id){
