@@ -165,16 +165,20 @@ function bs(){
   $("toolNav").innerHTML=`<a data-tool="AI智能体" data-cat="" class="small${curTool==='AI智能体'?' active':''}"><span class="si">🤖</span><span>AI智能体</span><span class="n">30</span></a><a data-tool="AI编程工具" data-cat="" class="small${curTool==='AI编程工具'?' active':''}"><span class="si">💻</span><span>AI编程工具</span><span class="n">30</span></a>`;
 }
 
-// 图标后检：加载失败的换国内源，再失败才用首字母
+// 图标多源重试：DDG → 直连 favicon.ico → Google → 首字母兜底
+let fixIconsRan=false;
 function fixIcons(){
+  if(fixIconsRan)return;fixIconsRan=true;
   setTimeout(()=>{
     document.querySelectorAll(".ti img,.ci img").forEach(img=>{
-      if(!img.complete||img.naturalWidth===0||img.naturalWidth===1){
-        const fb=img.nextElementSibling;
-        if(fb&&fb.classList.contains("fb")) fb.style.display="flex";img.style.display="none";
+      if(!img.complete||img.naturalWidth===0||img.naturalWidth<2){
+        const fb=img.nextElementSibling;if(!img.src||img.src.includes('data:')){if(fb)fb.style.display='flex';img.style.display='none';return;}
+        try{const h=new URL(img.src).hostname;
+          img.onerror=()=>{img.src=`https://${h}/favicon.ico`;img.onerror=()=>{img.src=`https://www.google.com/s2/favicons?domain=${h}&sz=64`;img.onerror=()=>{if(fb)fb.style.display='flex';img.style.display='none';};};};
+        }catch(e){if(fb)fb.style.display='flex';img.style.display='none';}
       }
-    });
-  },2500);
+    });fixIconsRan=false;
+  },3000);
 }
 
 // 事件委托：点击侧边栏任意链接
