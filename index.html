@@ -222,9 +222,9 @@ function det(id){
 }
 
 // 轮播（独立于 render，只更新轮播内部元素）
-async function ln(){try{news=await(await fetch(API+"/api/site-news")).json();}catch(e){news=[];return;}if(!news.length)return;$("ns").classList.remove("hide");rn(false);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true);},5000);}
+async function ln(){try{news=await(await fetch(API+"/api/site-news")).json();}catch(e){news=[];return;}if(!news.length)return;$("ns").classList.remove("hide");rn(false);setTimeout(()=>{if(news.length>1){ni=1%news.length;rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true);},8000);}},4000);}
 function rn(a){const n=news[ni],i=$("fi"),f=$("ff");if(n.image){f.style.display="none";i.style.display="";if(a){i.classList.add("hiding");setTimeout(()=>{i.src=n.image;i.classList.remove("hiding");},350);}else i.src=n.image;}else{i.style.display="none";f.style.display="flex";f.querySelector("span").textContent=n.title;}$("fd").innerHTML=news.map((_,x)=>`<span class="${x===ni?'active':''}" onclick="gn(${x})"></span>`).join("");$("fl").innerHTML=news.map((it,x)=>`<li class="${x===ni?'on':''}" onclick="gn(${x})"><a href="${it.link}" target="_blank">${it.title}<span class="f-badge">推荐</span></a><div class="s">${it.summary||""}</div></li>`).join("");}
-function gn(x){ni=x;clearInterval(nt);rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true);},5000);}
+function gn(x){ni=x;clearInterval(nt);rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true);},8000);}
 function pv(){gn((ni-1+news.length)%news.length);}
 function nx(){gn((ni+1)%news.length);}
 
