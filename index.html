@@ -185,11 +185,15 @@ function pickTool(t){ curTool=(curTool===t)?null:t; curCat=null; buildSidebar();
 function switchVM(t){ curType=t; document.querySelectorAll(".tbar-tab").forEach(e=>e.classList.toggle("active",e.dataset.type===t)); render(); }
 
 function filtered(){
-  let list = ALL.filter(t=>t.type===curType);
+  let list;
   if(curCat){
+    // 分类模式：全部显示该类的 token，不分免费/付费
     const mp={"文本模型":["对话","长文本","翻译","中文"],"编程模型":["写代码"],"视频模型":["视频","视频生成","数字人","3D"],"音频模型":["语音","语音合成","TTS","语音识别","ASR","语音克隆","音乐"],"图片模型":["画图","图像生成","图像编辑","品牌设计","游戏资产","商用"],"推理模型":["推理","搜索","开源","高速","本地","embeddings"]};
     const kw=mp[curCat]||[];
-    list = list.filter(t=>t.category===curCat||(t.tags||[]).some(tag=>kw.includes(tag)));
+    list = ALL.filter(t=>t.category===curCat||(t.tags||[]).some(tag=>kw.includes(tag)));
+  } else {
+    // 全部模型模式：按免费/付费过滤
+    list = ALL.filter(t=>t.type===curType);
   }
   const q=(document.querySelector("#q")?document.querySelector("#q").value:"").trim().toLowerCase();
   if(q) list=list.filter(t=>(t.name||"").toLowerCase().includes(q)||(t.tags||[]).join(",").toLowerCase().includes(q));
@@ -219,7 +223,7 @@ function render(){
     });
     h += `</div>`;
   } else {
-    h += `<div class="subtitle">共 ${fc.length} 个${curCat?" · "+curCat:""} · ${curType==="free"?"免费":"付费"}</div><div class="grid">`;
+    h += `<div class="subtitle">共 ${fc.length} 个${curCat?" · "+curCat:""}${!curCat?(" · "+(curType==="free"?"免费":"付费")):""}</div><div class="grid">`;
     fc.forEach(t=>{
       const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);
       h += `<div class="card"><div class="ci"><img src="${getFav(t.url||'')}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${(t.name||"?").trim().charAt(0)}</span></div>
