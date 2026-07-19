@@ -134,7 +134,7 @@ function buildNav(){
   $("nav-AI编程工具").onclick=function(){pickTool("AI编程工具");};
 }
 
-function pickCat(c){curCat=(curCat===c)?null:c;curTool=null;buildNav();rf();}
+function pickCat(c){if(curCat===c)return;curCat=c;curTool=null;buildNav();rf();}
 function pickTool(t){if(curTool===t)return;curTool=t;curCat=null;buildNav();rf();}
 function swt(t){curType=t;document.querySelectorAll(".tbar-tab").forEach(e=>e.classList.toggle("on",e.dataset.type===t));rf();}
 
@@ -144,7 +144,7 @@ function rf(){
     let tl=TOOLS.filter(t=>t.c===curTool);
     $("tbar").style.display="none";
     $("sub").textContent="";
-    $("list").innerHTML='<div class="tgrid">'+tl.map(t=>'<div class="tcard"><div class="ico"><span class="fb">'+t.n.charAt(0)+'</span></div><div class="tb"><b>'+t.n+'</b><div class="td">'+t.d+'</div></div><a class="btn btn-pri" href="'+t.u+'" target="_blank">官网</a></div>').join("")+'</div>';
+    $("list").innerHTML='<div class="tgrid">'+tl.map(t=>'<div class="tcard"><div class="ico"><img src="'+fav(t.u)+'" alt="" onerror="this.remove();this.parentElement.innerHTML=\'<span class=fb>'+t.n.charAt(0)+'\'"></div><div class="tb"><b>'+t.n+'</b><div class="td">'+t.d+'</div></div><a class="btn btn-pri" href="'+t.u+'" target="_blank">官网</a></div>').join("")+'</div>';
     return;
   }
   $("tbar").style.display=curCat?"none":"";
