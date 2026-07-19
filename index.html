@@ -23,7 +23,7 @@ a{color:var(--primary);text-decoration:none}
 .sb-ft{padding:10px 16px;font-size:10px;color:#9ca3af;border-top:1px solid var(--line);margin-top:auto}
 .main{margin-left:200px;flex:1;min-width:0}
 .content{padding:16px 20px 80px;max-width:1200px}
-@media(max-width:760px){.sidebar{width:50px}.sb-logo span,.sb-g,.sb-nav a span:not(.si),.sb-nav a .n,.sb-ft{display:none}.sb-nav a{justify-content:center;padding:8px 0}.main{margin-left:50px}.content{padding:10px 8px 80px}}
+@media(max-width:760px){.layout{flex-direction:column}.sidebar{position:relative;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);overflow-x:auto}.sidebar .sb-logo{padding:8px 12px}.sidebar .sb-logo span{display:inline}.sb-nav{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:2px;padding:4px 8px}.sb-nav a{white-space:nowrap;flex-shrink:0;font-size:11px;padding:5px 8px}.sb-nav a .n{display:none}.sb-g{display:none}.sb-ft{display:none}.main{margin-left:0}.content{padding:10px 8px 80px}.caro{flex-direction:column}.caro-l{min-height:150px}.grid{grid-template-columns:1fr}}
 
 /* carousel */
 .caro{background:#fff;border-radius:12px;padding:14px 18px;display:flex;gap:14px;margin-bottom:16px;border:1px solid var(--line);min-height:180px}
@@ -91,7 +91,7 @@ a{color:var(--primary);text-decoration:none}
   <div class="sb-logo"><svg viewBox="0 0 34 34"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1677ff"/><stop offset="100%" stop-color="#2979ff"/></linearGradient></defs><circle cx="17" cy="17" r="15" fill="none" stroke="url(#g2)" stroke-width="2.6"/><polygon points="13.5,8.5 6,17 13.5,25.5 8.5,17" fill="url(#g2)"/><polygon points="20.5,8.5 28,17 20.5,25.5 25.5,17" fill="url(#g2)"/></svg><span>API Token 大全</span></div>
   <div class="sb-g">模型分类</div>
   <div class="sb-nav" id="navCat"></div>
-  <div class="sb-g">Token 工具</div>
+  <div class="sb-g">Token工具</div>
   <div class="sb-nav" id="navTool"></div>
   <div class="sb-ft" id="sideStat">加载中…</div>
 </nav>
