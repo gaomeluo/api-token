@@ -23,7 +23,7 @@ a{color:var(--primary);text-decoration:none}
 .sb-ft{padding:10px 16px;font-size:10px;color:#9ca3af;border-top:1px solid var(--line);margin-top:auto}
 .main{margin-left:200px;flex:1;min-width:0}
 .content{padding:16px 20px 80px;max-width:1200px}
-@media(max-width:760px){.layout{flex-direction:column}.sidebar{position:relative;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);overflow-x:auto}.sidebar .sb-logo{padding:8px 12px}.sidebar .sb-logo span{display:inline}.sb-nav{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:2px;padding:4px 8px}.sb-nav a{white-space:nowrap;flex-shrink:0;font-size:11px;padding:5px 8px}.sb-nav a .n{display:none}.sb-g{display:none}.sb-ft{display:none}.main{margin-left:0}.content{padding:10px 8px 80px}.caro{flex-direction:column}.caro-l{min-height:150px}.grid{grid-template-columns:1fr}}
+@media(max-width:760px){.layout{flex-direction:column}.sidebar{position:relative;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);overflow-x:auto}.sidebar .sb-logo{padding:8px 12px}.sidebar .sb-logo span{display:inline}.sb-nav{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:2px;padding:4px 8px}.sb-nav a{white-space:nowrap;flex-shrink:0;font-size:11px;padding:5px 8px}.sb-nav a .n{display:none}.sb-g{display:none}.main{margin-left:0}.content{padding:10px 8px 80px}.caro{flex-direction:column}.caro-l{min-height:150px}.grid{grid-template-columns:1fr}}
 
 /* carousel */
 .caro{background:#fff;border-radius:12px;padding:14px 18px;display:flex;gap:14px;margin-bottom:16px;border:1px solid var(--line);min-height:180px}
@@ -89,7 +89,7 @@ a{color:var(--primary);text-decoration:none}
   <div class="sb-nav" id="navCat"></div>
   <div class="sb-g">Token工具</div>
   <div class="sb-nav" id="navTool"></div>
-  <div class="sb-ft" id="sideStat">加载中…</div>
+  <div class="sb-ft" style="text-align:center">© <span id="cpy">2025</span> <a href="https://inurl.link/" target="_blank" style="color:var(--muted)">inurl.link</a></div>
 </nav>
 <main class="main">
   <div class="content">
@@ -115,6 +115,7 @@ let ALL=[],curType="free",curCat=null,curTool=null,news=[],ni=0,nt=null;
 
 function $(id){return document.getElementById(id);}
 function fav(u){try{return"https://www.google.com/s2/favicons?domain="+new URL(u).hostname+"&sz=64";}catch(e){return"";}}
+setTimeout(function(){document.querySelectorAll(".ico img").forEach(function(img){if(!img.complete||img.naturalWidth===0||img.naturalWidth<3){img.remove();var fb=img.parentElement.querySelector(".fb");if(!fb)img.parentElement.innerHTML='<span class="fb">'+(img.alt||"?")[0]+'</span>'}})},2500);
 
 // ====== sidebar nav (use className "on" consistently) ======
 function buildNav(){
@@ -134,7 +135,7 @@ function buildNav(){
 }
 
 function pickCat(c){curCat=(curCat===c)?null:c;curTool=null;buildNav();rf();}
-function pickTool(t){curTool=(curTool===t)?null:t;curCat=null;buildNav();rf();}
+function pickTool(t){if(curTool===t)return;curTool=t;curCat=null;buildNav();rf();}
 function swt(t){curType=t;document.querySelectorAll(".tbar-tab").forEach(e=>e.classList.toggle("on",e.dataset.type===t));rf();}
 
 // ====== render ======
@@ -169,13 +170,13 @@ function det(id){
 
 // ====== carousel ======
 async function ln(){try{news=await(await fetch(API+"/api/site-news")).json();}catch(e){news=[];return;}if(!news.length)return;$("caro").classList.remove("hide");rn(false);setTimeout(()=>{if(news.length>1){ni=1;rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true)},8000)}},4000);}
-function rn(a){let n=news[ni],ci=$("ci"),cf=$("cfb");if(n.image){cf.style.display="none";ci.style.display="";if(a){ci.classList.add("hiding");setTimeout(()=>{ci.src=n.image;ci.classList.remove("hiding")},300)}else ci.src=n.image}else{ci.style.display="none";cf.style.display="flex";cf.querySelector("span").textContent=n.title}$("cd").innerHTML=news.map((_,i)=>'<span class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"></span>').join("");$("cl").innerHTML=news.map((it,i)=>'<li class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"><a href="'+it.link+'" target="_blank">'+it.title+'</a><div style="font-size:12px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(it.summary||"")+'</div></li>').join("");}
+function rn(a){let n=news[ni],ci=$("ci"),cf=$("cfb");if(n.image){cf.style.display="none";ci.style.display="";if(a){ci.classList.add("hiding");setTimeout(()=>{ci.src=n.image;ci.classList.remove("hiding")},300)}else ci.src=n.image}else{ci.style.display="none";cf.style.display="flex";cf.querySelector("span").textContent=n.title}$("cd").innerHTML=news.map((_,i)=>'<span class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"></span>').join("");$("cl").innerHTML=news.map((it,i)=>"<li class=\""+(i===ni?"on":"")+"\" onclick=\"gn("+i+")\"><a href=\""+it.link+"\" target=\"_blank\">"+it.title+" <span style=\"background:#f59e0b;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;font-weight:600\">推荐</span></a><div style=\"font-size:12px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap\">"+(it.summary||"")+"</div></li>").join("");}
 function gn(x){ni=x;clearInterval(nt);rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true)},8000)}
 function pv(){gn((ni-1+news.length)%news.length)}function nx(){gn((ni+1)%news.length)}
 
 // ====== init ======
-async function load(){try{let r=await fetch(API+"/api/tokens");ALL=await r.json();$("sideStat").textContent=ALL.length+" API"}catch(e){ALL=[]}$("tstat").innerHTML='<b style="color:var(--primary)">'+ALL.length+'</b> 个 API';buildNav();rf();}
-ln();load();
+async function load(){try{let r=await fetch(API+"/api/tokens");ALL=await r.json();}catch(e){ALL=[]}$("tstat").innerHTML='<b style="color:var(--primary)">'+ALL.length+'</b> 个 API';buildNav();rf();}
+$("cpy").textContent=new Date().getFullYear();ln();load();
 </script>
 </body>
 </html>
