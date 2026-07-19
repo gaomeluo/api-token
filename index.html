@@ -13,7 +13,7 @@ a{color:var(--primary);text-decoration:none}
 .sb-logo{padding:14px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
 .sb-logo svg{width:30px;height:30px}
 .sb-logo span{font-size:14px;font-weight:700}
-.sb-g{padding:10px 16px 2px;font-size:10px;font-weight:600;color:#9ca3af;letter-spacing:1px}
+.sb-g{padding:10px 16px 2px;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:1px}
 .sb-nav{padding:2px 8px}
 .sb-nav a{display:flex;align-items:center;gap:6px;padding:7px 10px;border-radius:7px;font-size:13px;color:var(--muted);cursor:pointer;transition:.1s}
 .sb-nav a:hover,.sb-nav a.on{color:var(--primary);background:var(--pl);font-weight:600}
@@ -129,7 +129,7 @@ function buildNav(){
     h+='<a class="'+(c===curCat?'on':'')+'" id="nav-'+c+'"><span class="si">'+CI[c]+'</span><span>'+c+'</span><span class="n">'+n+'</span></a>';
   }
   $("navCat").innerHTML=h;
-  $("navTool").innerHTML='<a class="sub'+(curTool==='AI智能体'?' on':'')+'" id="nav-AI智能体"><span class="si">🤖</span><span>AI智能体</span><span class="n">30</span></a><a class="sub'+(curTool==='AI编程工具'?' on':'')+'" id="nav-AI编程工具"><span class="si">💻</span><span>AI编程工具</span><span class="n">29</span></a>';
+  $("navTool").innerHTML='<a class="'+(curTool==='AI智能体'?' on':'')+'" id="nav-AI智能体"><span class="si">🤖</span><span>AI智能体</span><span class="n">'+TOOLS.filter(t=>t.c==="AI智能体").length+'</span></a><a class="'+(curTool==='AI编程工具'?' on':'')+'" id="nav-AI编程工具"><span class="si">💻</span><span>AI编程工具</span><span class="n">'+TOOLS.filter(t=>t.c==="AI编程工具").length+'</span></a>';
   // Bind clicks
   $("nav-all").onclick=function(){pickCat(null);};
   for(let c of CATS){$("nav-"+c).onclick=function(){pickCat(c);};}
@@ -175,7 +175,7 @@ function det(id){
 
 // ====== carousel ======
 async function ln(){try{news=await(await fetch(API+"/api/site-news")).json();}catch(e){news=[];return;}if(!news.length)return;$("caro").classList.remove("hide");rn(false);setTimeout(()=>{if(news.length>1){ni=1;rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true)},8000)}},4000);}
-function rn(a){let n=news[ni],ci=$("ci"),cf=$("cfb");if(n.image){cf.style.display="none";ci.style.display="";if(a){ci.classList.add("hiding");setTimeout(()=>{ci.src=n.image;ci.classList.remove("hiding")},300)}else ci.src=n.image}else{ci.style.display="none";cf.style.display="flex";cf.querySelector("span").textContent=n.title}$("cd").innerHTML=news.map((_,i)=>'<span class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"></span>').join("");$("cl").innerHTML=news.map((it,i)=>'<li class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"><a href="'+it.link+'" target="_blank">'+it.title+'</a></li>').join("");}
+function rn(a){let n=news[ni],ci=$("ci"),cf=$("cfb");if(n.image){cf.style.display="none";ci.style.display="";if(a){ci.classList.add("hiding");setTimeout(()=>{ci.src=n.image;ci.classList.remove("hiding")},300)}else ci.src=n.image}else{ci.style.display="none";cf.style.display="flex";cf.querySelector("span").textContent=n.title}$("cd").innerHTML=news.map((_,i)=>'<span class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"></span>').join("");$("cl").innerHTML=news.map((it,i)=>'<li class="'+(i===ni?"on":"")+'" onclick="gn('+i+')"><a href="'+it.link+'" target="_blank">'+it.title+'</a><div style="font-size:10px;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(it.summary||"")+'</div></li>').join("");}
 function gn(x){ni=x;clearInterval(nt);rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true)},8000)}
 function pv(){gn((ni-1+news.length)%news.length)}function nx(){gn((ni+1)%news.length)}
 
