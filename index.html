@@ -76,7 +76,7 @@ a{color:var(--primary);text-decoration:none;}
 .card:hover{transform:translateY(-1px);box-shadow:var(--shadow-hover);border-color:rgba(22,119,255,.2);}
 .ci{width:44px;height:44px;flex-shrink:0;border-radius:8px;overflow:hidden;background:var(--bg);display:flex;align-items:center;justify-content:center;}
 .ci img{width:100%;height:100%;object-fit:contain;padding:4px;}
-.ci .fb{font-size:18px;font-weight:800;color:var(--primary);}
+.ci{flex-shrink:0;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,var(--primary-light),#dbeafe);display:flex;align-items:center;justify-content:center;}.ci .fb{font-size:18px;font-weight:800;color:var(--primary);}
 .cb{flex:1;min-width:0;display:flex;flex-direction:column;}
 .cn{font-size:15px;font-weight:700;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
 .badge{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:500;}
@@ -104,7 +104,7 @@ a{color:var(--primary);text-decoration:none;}
 .tcard:hover{transform:translateY(-1px);box-shadow:var(--shadow-hover);}
 .tcard .ti{width:40px;height:40px;flex-shrink:0;border-radius:8px;overflow:hidden;background:var(--bg);display:flex;align-items:center;justify-content:center;}
 .tcard .ti img{width:100%;height:100%;object-fit:contain;padding:3px;}
-.tcard .ti .fb{font-size:16px;font-weight:700;color:var(--primary);}
+.tcard .ti{flex-shrink:0;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,var(--primary-light),#dbeafe);display:flex;align-items:center;justify-content:center;}.ti .fb{font-size:16px;font-weight:700;color:var(--primary);}
 .tcard .tb{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
 .tcard .tb b{font-size:14px;font-weight:600;}
 .tcard .tb .td{font-size:11px;color:var(--muted);line-height:1.3;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
@@ -167,29 +167,13 @@ function bs(){
 
 // 图标两源：直连 favicon.ico → DDG兜底 → 首字母
 let fixIconsRan=false;
-function fixIcons(){
-  if(fixIconsRan)return;fixIconsRan=true;
-  setTimeout(()=>{
-    document.querySelectorAll(".ti img,.ci img").forEach(img=>{
-      if(!img.complete||img.naturalWidth===0||img.naturalWidth<2){
-        const fb=img.nextElementSibling;
-        if(!img.src||img.src.includes("data:")){if(fb)fb.style.display="flex";img.style.display="none";return;}
-        try{var h=new URL(img.src).hostname;img.src="https://icons.duckduckgo.com/ip3/"+h+".ico";img.onerror=function(){if(fb)fb.style.display="flex";img.style.display="none";};}
-        catch(e){if(fb)fb.style.display="flex";img.style.display="none";}
-      }
-    });fixIconsRan=false;
-  },2000);
-}
-
-// 事件委托：点击侧边栏任意链接
-$("sideNav").addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;e.preventDefault();const c=a.dataset.cat;pickCat(c==="all"?null:c);});
-$("toolNav").addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;e.preventDefault();const t=a.dataset.tool;pickTool(t||null);});
+function fixIcons(){}
 
 function pickCat(c){curCat=(curCat===c)?null:c;curTool=null;bs();rf();}
 function pickTool(t){if(curTool===t)return;curTool=t;curCat=null;bs();rf();}
 function swt(t){curType=t;document.querySelectorAll(".tbar-tab").forEach(e=>e.classList.toggle("active",e.dataset.type===t));rf();}
 
-function getFav(u){try{return`https://${new URL(u).hostname}/favicon.ico`;}catch(e){return"";}}
+function getFav(u){return"";}
 
 function rf(){
   let list;
@@ -197,8 +181,7 @@ function rf(){
     list=TOOLS.filter(t=>t.c===curTool);
     $("sub").textContent=`${curTool} · ${list.length} 个工具`;
     $("tbar").style.display="none";$("q").parentElement.parentElement.style.display="none";
-    $("list").innerHTML=`<div class="tool-grid">${list.map(t=>`<div class="tcard"><div class="ti"><img loading="lazy" src="${getFav(t.u)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${t.n.charAt(0)}</span></div><div class="tb"><b>${t.n}</b><div class="td">${t.d}</div></div><a class="btn btn-pri" href="${t.u}" target="_blank">官网</a></div>`).join("")}</div>`;
-    fixIcons();
+    $("list").innerHTML=`<div class="tool-grid">${list.map(t=>`<div class="tcard"><div class="ti"><span class="fb">${t.n.charAt(0)}</span></div><div class="tb"><b>${t.n}</b><div class="td">${t.d}</div></div><a class="btn btn-pri" href="${t.u}" target="_blank">官网</a></div>`).join("")}</div>`;
     return;
   }
   $("tbar").style.display=curCat?"none":"";$("q").parentElement.parentElement.style.display="";
@@ -212,7 +195,7 @@ function rf(){
   $("tbs").innerHTML=`<b style="color:var(--primary)">${ALL.length}</b> 个 API · ${curCat?curCat:(curType==="free"?"免费榜":"付费榜")}`;
   $("sub").textContent=`共 ${list.length} 个`;
   if(!list.length){$("list").innerHTML='<div style="color:var(--muted);text-align:center;padding:40px">该分类下暂无 token</div>';return;}
-  $("list").innerHTML=`<div class="grid">${list.map(t=>{const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);return`<div class="card"><div class="ci"><img loading="lazy" src="${getFav(t.url||'')}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${(t.name||"?").trim().charAt(0)}</span></div><div class="cb"><div class="cn">${t.name}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span>${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}</div><div class="ct">${(t.tags||[]).slice(0,5).map(x=>`<span class="chip">${x}</span>`).join("")}</div><div class="cd">${t.description||""}</div>${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.slice(0,2).map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}<div class="cf"><button class="btn btn-pri" onclick="det('${t.id}')">详情</button><a class="btn btn-ghost" href="${t.url}" target="_blank">前往 ↗</a></div></div></div>`}).join("")}</div>`;fixIcons();
+  $("list").innerHTML=`<div class="grid">${list.map(t=>{const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);return`<div class="card"><div class="ci"><span class="fb">${(t.name||"?").trim().charAt(0)}</span></div><div class="cb"><div class="cn">${t.name}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span>${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}</div><div class="ct">${(t.tags||[]).slice(0,5).map(x=>`<span class="chip">${x}</span>`).join("")}</div><div class="cd">${t.description||""}</div>${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.slice(0,2).map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}<div class="cf"><button class="btn btn-pri" onclick="det('${t.id}')">详情</button><a class="btn btn-ghost" href="${t.url}" target="_blank">前往 ↗</a></div></div></div>`}).join("")}</div>`;
 }
 
 function det(id){
