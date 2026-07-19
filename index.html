@@ -5,131 +5,117 @@
 <title>API Token 大全</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231677ff'/%3E%3Cstop offset='100%25' stop-color='%232979ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Cpolygon points='14,7 7,16 14,25 9,16' fill='url(%23g)'/%3E%3Cpolygon points='18,7 25,16 18,25 23,16' fill='url(%23g)'/%3E%3C/svg%3E" />
 <style>
-  :root { --bg:#f5f7fb; --panel:#fff; --panel2:#f8fafc; --text:#1a1a1a; --muted:#6b7280; --muted2:#9ca3af; --line:#e5e7eb;
-    --primary:#1677ff; --primary2:#2979ff; --primary-light:#e6f1ff; --gold:#f59e0b;
-    --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04); --shadow-hover:0 4px 12px rgba(22,119,255,.12); }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
-    color:var(--text); line-height:1.6; background:var(--bg); min-height:100vh; }
-  a { color:var(--primary); text-decoration:none; }
+:root{--bg:#f5f7fb;--panel:#fff;--panel2:#f8fafc;--text:#1a1a1a;--muted:#6b7280;--muted2:#9ca3af;--line:#e5e7eb;--primary:#1677ff;--primary2:#2979ff;--primary-light:#e6f1ff;--gold:#f59e0b;--shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04);--shadow-hover:0 4px 12px rgba(22,119,255,.12);}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;color:var(--text);line-height:1.5;background:var(--bg);min-height:100vh;}
+a{color:var(--primary);text-decoration:none;}
+.layout{display:flex;min-height:100vh;}
+.sidebar{width:215px;flex-shrink:0;background:#fff;border-right:1px solid var(--line);position:fixed;top:0;left:0;bottom:0;z-index:50;display:flex;flex-direction:column;overflow-y:auto;}
+.sb-logo{padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);}
+.sb-logo svg{width:34px;height:34px;flex-shrink:0;}
+.sb-logo span{font-size:15px;font-weight:700;}
+.sb-g{padding:12px 16px 4px;font-size:11px;font-weight:600;color:var(--muted2);letter-spacing:1px;}
+.sb-nav{display:flex;flex-direction:column;gap:1px;padding:2px 8px;}
+.sb-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:13px;color:var(--muted);cursor:pointer;transition:.12s;}
+.sb-nav a:hover,.sb-nav a.active{color:var(--primary);background:var(--primary-light);}
+.sb-nav a.active{font-weight:600;}
+.sb-nav a .n{margin-left:auto;font-size:11px;color:var(--muted2);min-width:20px;text-align:right;}
+.sb-nav a.active .n{color:var(--primary);}
+.sb-nav a.small{font-size:12px;padding:5px 12px 5px 28px;}
+.sb-ft{margin-top:auto;padding:10px 16px;font-size:11px;color:var(--muted2);border-top:1px solid var(--line);}
+.main{margin-left:215px;flex:1;min-width:0;}
+@media(max-width:760px){.sidebar{width:50px;}.sb-logo span,.sb-g,.sb-nav a span:not(.si),.sb-nav a .n,.sb-ft{display:none;}.sb-nav a{justify-content:center;padding:10px 0;}.main{margin-left:50px;}}
+.content{padding:18px 24px 80px;max-width:1260px;}
 
-  .layout { display:flex; min-height:100vh; }
-  .sidebar { width:215px; flex-shrink:0; background:#fff; border-right:1px solid var(--line);
-    position:fixed; top:0; left:0; bottom:0; z-index:50; display:flex; flex-direction:column; overflow-y:auto; }
-  .sb-logo { padding:14px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--line); }
-  .sb-logo .lg { width:34px; height:34px; flex-shrink:0; }
-  .sb-logo span { font-size:15px; font-weight:700; color:var(--text); }
-  .sb-g { padding:12px 16px 4px; font-size:11px; font-weight:600; color:var(--muted2); letter-spacing:1px; text-transform:uppercase; }
-  .sb-nav { display:flex; flex-direction:column; gap:1px; padding:2px 8px; }
-  .sb-nav a { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; font-size:13px; color:var(--muted); transition:.12s; }
-  .sb-nav a:hover { color:var(--primary); background:var(--primary-light); }
-  .sb-nav a.active { color:var(--primary); font-weight:600; background:var(--primary-light); }
-  .sb-nav a .n { margin-left:auto; font-size:11px; color:var(--muted2); min-width:20px; text-align:right; }
-  .sb-nav a.active .n { color:var(--primary); }
-  .sb-nav a.small { font-size:12px; padding:5px 12px 5px 28px; }
-  .sb-ft { margin-top:auto; padding:10px 16px; font-size:11px; color:var(--muted2); border-top:1px solid var(--line); }
+/* Carousel (静态 HTML，不随 render 重建) */
+.featured-wrap{background:#fff;border-radius:14px;padding:16px 20px;display:flex;gap:16px;margin-bottom:18px;border:1px solid var(--line);box-shadow:var(--shadow);min-height:200px;}
+.featured-wrap.hide{display:none;}
+@media(max-width:700px){.featured-wrap{flex-direction:column;}}
+.feat-img{flex:0 0 44%;border-radius:10px;overflow:hidden;position:relative;background:linear-gradient(135deg,#1e3a8a,#3730a3,#0c4a6e);min-height:200px;}
+.feat-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:opacity .5s;}
+.feat-img img.hiding{opacity:0;}
+.feat-fb{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;}
+.feat-fb::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(56,189,248,.4),transparent 50%),radial-gradient(ellipse at 70% 70%,rgba(167,139,250,.3),transparent 50%);}
+.feat-fb span{position:relative;z-index:2;font-size:17px;font-weight:700;color:#fff;text-align:center;}
+.feat-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:3;}
+.feat-dots span{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:.2s;}
+.feat-dots span.active{width:16px;border-radius:3px;background:#fff;}
+.feat-text{flex:1;display:flex;flex-direction:column;min-width:0;}
+.ft-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.ft-tag{font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.ft-tag::before{content:"";width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--primary),var(--primary2));}
+.ft-arrow button{width:26px;height:26px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;font-size:14px;display:inline-flex;align-items:center;justify-content:center;}
+.ft-arrow button:hover{border-color:var(--primary);color:var(--primary);}
+.feat-list{list-style:none;padding:0;margin:0;flex:1;overflow-y:auto;}
+.feat-list li{padding:6px 10px;border-radius:6px;cursor:pointer;transition:.1s;margin-bottom:1px;}
+.feat-list li:hover,.feat-list li.on{background:var(--primary-light);}
+.feat-list li a{color:var(--text);font-size:13px;font-weight:500;display:flex;align-items:center;gap:5px;}
+.feat-list li:hover a,.feat-list li.on a{color:var(--primary);}
+.f-badge{font-size:10px;padding:1px 5px;border-radius:3px;background:linear-gradient(90deg,#ff7a45,var(--gold));color:#fff;font-weight:600;flex-shrink:0;}
+.feat-list li .s{font-size:11px;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
-  .main { margin-left:215px; flex:1; min-width:0; }
-  @media(max-width:760px){ .sidebar { width:50px; } .sb-logo span,.sb-g,.sb-nav a span:not(.si),.sb-nav a .n,.sb-ft { display:none; }
-    .sb-nav a { justify-content:center; padding:10px 0; } .main { margin-left:50px; } }
+/* 工具栏 */
+.tbar{display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.tbar-tabs{display:flex;gap:3px;padding:2px;background:var(--bg);border-radius:7px;}
+.tbar-tab{padding:4px 14px;border-radius:5px;font-size:12px;color:var(--muted);cursor:pointer;transition:.12s;}
+.tbar-tab:hover,.tbar-tab.active{color:var(--primary);}
+.tbar-tab.active{background:#fff;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.tbar-stat{margin-left:auto;font-size:12px;color:var(--muted);}
+.search-bar{display:flex;gap:8px;align-items:center;margin-bottom:14px;}
+.search-box{flex:1;position:relative;}
+.search-box input{width:100%;padding:9px 14px 9px 34px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:13px;transition:.15s;}
+.search-box input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(22,119,255,.06);}
+.search-box::before{content:"🔍";position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;}
 
-  .content { padding:18px 24px 80px; max-width:1260px; }
+.subtitle{font-size:12px;color:var(--muted);margin-bottom:12px;}
 
-  /* Carousel */
-  .featured-wrap { background:#fff; border-radius:14px; padding:16px 20px; display:flex; gap:16px; margin-bottom:18px;
-    border:1px solid var(--line); box-shadow:var(--shadow); min-height:200px; }
-  @media(max-width:700px){ .featured-wrap { flex-direction:column; } }
-  .feat-img { flex:0 0 44%; border-radius:10px; overflow:hidden; position:relative;
-    background:linear-gradient(135deg,#1e3a8a,#3730a3,#0c4a6e); min-height:200px; }
-  .feat-img img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; transition:opacity .5s; }
-  .feat-img img.hiding { opacity:0; }
-  .feat-fb { position:absolute; inset:0; display:none; align-items:center; justify-content:center; padding:24px; }
-  .feat-fb::before { content:""; position:absolute; inset:0;
-    background:radial-gradient(ellipse at 30% 30%,rgba(56,189,248,.4),transparent 50%),
-               radial-gradient(ellipse at 70% 70%,rgba(167,139,250,.3),transparent 50%); }
-  .feat-fb span { position:relative; z-index:2; font-size:17px; font-weight:700; color:#fff; text-align:center; }
-  .feat-dots { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); display:flex; gap:4px; z-index:3; }
-  .feat-dots span { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.4); cursor:pointer; transition:.2s; }
-  .feat-dots span.active { width:16px; border-radius:3px; background:#fff; }
-  .feat-text { flex:1; display:flex; flex-direction:column; min-width:0; }
-  .ft-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
-  .ft-tag { font-size:15px; font-weight:700; display:flex; align-items:center; gap:6px; }
-  .ft-tag::before { content:""; width:3px; height:14px; border-radius:2px; background:linear-gradient(180deg,var(--primary),var(--primary2)); }
-  .ft-arrow button { width:26px; height:26px; border-radius:6px; border:1px solid var(--line);
-    background:#fff; color:var(--muted); cursor:pointer; font-size:14px; transition:.15s; display:inline-flex; align-items:center; justify-content:center; }
-  .ft-arrow button:hover { border-color:var(--primary); color:var(--primary); }
-  .feat-list { list-style:none; padding:0; margin:0; flex:1; overflow-y:auto; }
-  .feat-list li { padding:6px 10px; border-radius:6px; cursor:pointer; transition:.1s; margin-bottom:1px; }
-  .feat-list li:hover,.feat-list li.on { background:var(--primary-light); }
-  .feat-list li a { color:var(--text); font-size:13px; font-weight:500; display:flex; align-items:center; gap:5px; }
-  .feat-list li:hover a,.feat-list li.on a { color:var(--primary); }
-  .f-badge { font-size:10px; padding:1px 5px; border-radius:3px; background:linear-gradient(90deg,#ff7a45,var(--gold)); color:#fff; font-weight:600; flex-shrink:0; }
-  .feat-list li .s { font-size:11px; color:var(--muted); margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+/* 模型卡片 */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px;display:flex;gap:12px;transition:.15s;box-shadow:var(--shadow);}
+.card:hover{transform:translateY(-1px);box-shadow:var(--shadow-hover);border-color:rgba(22,119,255,.2);}
+.ci{width:44px;height:44px;flex-shrink:0;border-radius:8px;overflow:hidden;background:var(--bg);display:flex;align-items:center;justify-content:center;}
+.ci img{width:100%;height:100%;object-fit:contain;padding:4px;}
+.ci .fb{font-size:18px;font-weight:800;color:var(--primary);}
+.cb{flex:1;min-width:0;display:flex;flex-direction:column;}
+.cn{font-size:15px;font-weight:700;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.badge{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:500;}
+.badge.free{background:#d1fae5;color:#047857;}.badge.paid{background:#fef3c7;color:#b45309;}
+.badge.vendor{background:var(--primary-light);color:var(--primary);}
+.badge.country{background:var(--panel2);color:var(--muted);border:1px solid var(--line);}
+.ct{display:flex;flex-wrap:wrap;gap:3px;margin:4px 0;}
+.chip{font-size:11px;padding:1px 6px;border-radius:3px;background:var(--bg);color:var(--muted);}
+.cd{font-size:12px;color:var(--muted);line-height:1.4;margin:2px 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ql{background:var(--panel2);border-radius:6px;padding:5px 8px;font-size:11px;margin:3px 0;}
+.ql b{color:var(--primary);}
+.ql ul{margin:2px 0 0;padding-left:14px;}
+.cf{display:flex;gap:6px;align-items:center;margin-top:auto;padding-top:4px;}
+.btn{display:inline-flex;align-items:center;gap:3px;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;transition:.12s;border:none;}
+.btn-pri{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;}
+.btn-pri:hover{filter:brightness(1.08);box-shadow:0 3px 10px rgba(22,119,255,.25);}
+.btn-ghost{background:#fff;color:var(--muted);border:1px solid var(--line);}
+.btn-ghost:hover{color:var(--primary);border-color:var(--primary);}
 
-  /* Tabs moved below carousel */
-  .tbar { display:flex; gap:12px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
-  .tbar-tabs { display:flex; gap:3px; padding:2px; background:var(--bg); border-radius:7px; }
-  .tbar-tab { padding:4px 14px; border-radius:5px; font-size:12px; color:var(--muted); cursor:pointer; transition:.12s; }
-  .tbar-tab:hover { color:var(--primary); }
-  .tbar-tab.active { background:#fff; color:var(--primary); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.04); }
-  .tbar-stat { margin-left:auto; font-size:12px; color:var(--muted); }
-  .search-bar { display:flex; gap:8px; align-items:center; margin-bottom:14px; }
-  .search-box { flex:1; position:relative; }
-  .search-box input { width:100%; padding:9px 14px 9px 34px; border:1px solid var(--line); border-radius:9px; background:#fff; font-size:13px; transition:.15s; }
-  .search-box input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(22,119,255,.06); }
-  .search-box::before { content:"🔍"; position:absolute; left:10px; top:50%; transform:translateY(-50%); font-size:13px; }
-  .subtitle { font-size:12px; color:var(--muted); margin-bottom:12px; }
-
-  /* Model cards */
-  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
-  @media(max-width:900px){ .grid { grid-template-columns:1fr; } }
-  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:15px; display:flex; gap:12px; transition:.15s; position:relative; box-shadow:var(--shadow); }
-  .card:hover { transform:translateY(-1px); box-shadow:var(--shadow-hover); border-color:rgba(22,119,255,.2); }
-  .ci { width:44px; height:44px; flex-shrink:0; border-radius:8px; overflow:hidden; background:var(--bg); display:flex; align-items:center; justify-content:center; }
-  .ci img { width:100%; height:100%; object-fit:contain; padding:4px; }
-  .ci .fb { font-size:18px; font-weight:800; color:var(--primary); }
-  .cb { flex:1; min-width:0; display:flex; flex-direction:column; }
-  .cn { font-size:15px; font-weight:700; display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
-  .badge { font-size:10px; padding:1px 6px; border-radius:3px; font-weight:500; }
-  .badge.free { background:#d1fae5; color:#047857; } .badge.paid { background:#fef3c7; color:#b45309; }
-  .badge.vendor { background:var(--primary-light); color:var(--primary); }
-  .badge.country { background:var(--panel2); color:var(--muted); border:1px solid var(--line); }
-  .ct { display:flex; flex-wrap:wrap; gap:3px; margin:4px 0; }
-  .chip { font-size:11px; padding:1px 6px; border-radius:3px; background:var(--bg); color:var(--muted); }
-  .cd { font-size:12px; color:var(--muted); line-height:1.4; margin:2px 0 4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-  .ql { background:var(--panel2); border-radius:6px; padding:5px 8px; font-size:11px; margin:3px 0; }
-  .ql b { color:var(--primary); }
-  .ql ul { margin:2px 0 0; padding-left:14px; }
-  .cf { display:flex; gap:6px; align-items:center; margin-top:auto; padding-top:4px; }
-  .btn { display:inline-flex; align-items:center; gap:3px; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:.12s; border:none; }
-  .btn-pri { background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; }
-  .btn-pri:hover { filter:brightness(1.08); box-shadow:0 3px 10px rgba(22,119,255,.25); }
-  .btn-ghost { background:#fff; color:var(--muted); border:1px solid var(--line); }
-  .btn-ghost:hover { color:var(--primary); border-color:var(--primary); }
-
-  /* Tool cards (compact left-right, ai-bot.cn style) */
-  .tool-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-  @media(max-width:900px){ .tool-grid { grid-template-columns:repeat(2,1fr); } }
-  @media(max-width:500px){ .tool-grid { grid-template-columns:1fr; } }
-  .tcard { background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px; display:flex; gap:10px; align-items:center; transition:.15s; box-shadow:var(--shadow); }
-  .tcard:hover { transform:translateY(-1px); box-shadow:var(--shadow-hover); }
-  .tcard .ti { width:40px; height:40px; flex-shrink:0; border-radius:8px; overflow:hidden; background:var(--bg); display:flex; align-items:center; justify-content:center; }
-  .tcard .ti img { width:100%; height:100%; object-fit:contain; padding:3px; }
-  .tcard .ti .fb { font-size:16px; font-weight:700; color:var(--primary); }
-  .tcard .tb { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
-  .tcard .tb b { font-size:14px; font-weight:600; }
-  .tcard .tb .td { font-size:11px; color:var(--muted); line-height:1.3; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
-  .tcard .tb .tcat { font-size:10px; color:var(--primary); }
-  .tcard .btn { flex-shrink:0; padding:3px 8px; font-size:11px; }
+/* 工具卡片 */
+.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+@media(max-width:900px){.tool-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px){.tool-grid{grid-template-columns:1fr;}}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;gap:10px;align-items:center;transition:.15s;box-shadow:var(--shadow);}
+.tcard:hover{transform:translateY(-1px);box-shadow:var(--shadow-hover);}
+.tcard .ti{width:40px;height:40px;flex-shrink:0;border-radius:8px;overflow:hidden;background:var(--bg);display:flex;align-items:center;justify-content:center;}
+.tcard .ti img{width:100%;height:100%;object-fit:contain;padding:3px;}
+.tcard .ti .fb{font-size:16px;font-weight:700;color:var(--primary);}
+.tcard .tb{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.tcard .tb b{font-size:14px;font-weight:600;}
+.tcard .tb .td{font-size:11px;color:var(--muted);line-height:1.3;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+.tcard .tb .tcat{font-size:10px;color:var(--primary);}
+.tcard .btn{flex-shrink:0;padding:3px 8px;font-size:11px;}
 </style>
 </head>
 <body>
 <div class="layout">
 <nav class="sidebar">
-  <a href="/" class="sb-logo" style="text-decoration:none;">
-    <svg class="lg" viewBox="0 0 34 34"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1677ff"/><stop offset="100%" stop-color="#2979ff"/></linearGradient></defs><circle cx="17" cy="17" r="15" fill="none" stroke="url(#g2)" stroke-width="2.6"/><polygon points="14.5,7.5 7,17 14.5,26.5 9.5,17" fill="url(#g2)"/><polygon points="19.5,7.5 27,17 19.5,26.5 24.5,17" fill="url(#g2)"/></svg>
-    <span>API Token 大全</span>
-  </a>
+  <a href="/" class="sb-logo"><svg viewBox="0 0 34 34"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1677ff"/><stop offset="100%" stop-color="#2979ff"/></linearGradient></defs><circle cx="17" cy="17" r="15" fill="none" stroke="url(#g2)" stroke-width="2.6"/><polygon points="14.5,7.5 7,17 14.5,26.5 9.5,17" fill="url(#g2)"/><polygon points="19.5,7.5 27,17 19.5,26.5 24.5,17" fill="url(#g2)"/></svg><span>API Token 大全</span></a>
   <div class="sb-g">模型分类</div>
   <div class="sb-nav" id="sideNav"></div>
   <div class="sb-g">Token 工具</div>
@@ -138,7 +124,19 @@
 </nav>
 
 <main class="main">
-  <div class="content" id="c"></div>
+  <div class="content">
+    <!-- 轮播区（静态，不随 DOM 重建消失） -->
+    <section class="featured-wrap hide" id="ns">
+      <div class="feat-img"><img id="fi" src="" alt="" onerror="this.style.display='none';document.getElementById('ff').style.display='flex'"/><div class="feat-fb" id="ff"><span></span></div><div class="feat-dots" id="fd"></div></div>
+      <div class="feat-text"><div class="ft-head"><div class="ft-tag">推荐 API Token</div><div class="ft-arrow"><button onclick="pv()">‹</button><button onclick="nx()">›</button></div></div><ul class="feat-list" id="fl"></ul></div>
+    </section>
+    <!-- 工具栏区 -->
+    <div class="tbar" id="tbar"><div class="tbar-tabs"><div class="tbar-tab active" data-type="free" onclick="swt('free')">🆓 免费</div><div class="tbar-tab" data-type="paid" onclick="swt('paid')">💎 付费</div></div><span class="tbar-stat" id="tbs">加载中…</span></div>
+    <div class="search-bar"><div class="search-box"><input id="q" placeholder="搜索 API Token（按名称/标签）" oninput="rf()"/></div></div>
+    <!-- 列表区（可重建） -->
+    <div class="subtitle" id="sub"></div>
+    <div id="list"></div>
+  </div>
 </main>
 </div>
 
@@ -146,138 +144,74 @@
 const API=(location.hostname==="localhost"||location.hostname.startsWith("127."))?"":"https://api-token.825370356.workers.dev";
 const CATS=["文本模型","编程模型","视频模型","音频模型","图片模型","推理模型"];
 const CI={"文本模型":"📝","编程模型":"💻","视频模型":"🎬","音频模型":"🎵","图片模型":"🎨","推理模型":"🧠"};
-// 60 tools from ai-bot.cn
-const TOOLS=[{c:"AI智能体",n:"TRAE Work",d:"字节跳动推出的AI原生工作台",u:"https://www.trae.ai/"},{c:"AI智能体",n:"爱派AiPy",d:"本地Manus、国内能用、内网能用，开源免费",u:"https://aipy.ai/"},{c:"AI智能体",n:"小云雀",d:"字节跳动旗下剪映推出的AI内容创作Agent",u:"https://jianying.com/"},{c:"AI智能体",n:"Seko",d:"首个创编一体的AI视频创作Agent",u:"https://seko.sensetime.com/"},{c:"AI智能体",n:"Atoms",d:"第一支自动构建真实业务的AI团队",u:"https://atoms.ai/"},{c:"AI智能体",n:"码上飞",d:"一句话生成微信小程序、APP、H5网页",u:"https://codefly.ai/"},{c:"AI智能体",n:"堆友Agent",d:"集成大厂专家设计Skill的AI设计智能体",u:"https://duiyou.ai/"},{c:"AI智能体",n:"ArkClaw",d:"火山引擎推出的云端托管版OpenClaw服务",u:"https://www.volcengine.com/"},{c:"AI智能体",n:"AstronClaw",d:"科大讯飞推出的云端部署OpenClaw",u:"https://xingchen.xfyun.cn/"},{c:"AI智能体",n:"讯飞星辰Agent",d:"科大讯飞推出的AI智能体开发平台",u:"https://xingchen.xfyun.cn/"},{c:"AI智能体",n:"WaClaw",d:"阿里绘蛙团队推出的电商垂直AI Agent",u:"https://www.alibaba.com/"},{c:"AI智能体",n:"WorkBuddy",d:"腾讯云推出的AI原生桌面智能体工作台",u:"https://cloud.tencent.com/"},{c:"AI智能体",n:"AutoClaw",d:"智谱推出的国内首个一键安装本地版OpenClaw",u:"https://open.bigmodel.cn/"},{c:"AI智能体",n:"OpenClaw",d:"开源免费的个人AI助手",u:"https://openclaw.ai/"},{c:"AI智能体",n:"Flowith",d:"画布式AI智能体工具",u:"https://flowith.io/"},{c:"AI智能体",n:"Tabbit",d:"美团光年之外推出的AI原生浏览器",u:"https://meituan.com/"},{c:"AI智能体",n:"KroWork",d:"快手推出的桌面端通用AI智能体",u:"https://kuaishou.com/"},{c:"AI智能体",n:"切问学术",d:"FudanNLP团队推出的AI学术智能体",u:"https://fudan.edu.cn/"},{c:"AI智能体",n:"觅游",d:"美团推出的AI原生Agent社区",u:"https://meituan.com/"},{c:"AI智能体",n:"虾345",d:"面向AI Agent生态的综合型导航与信息聚合平台",u:"https://xia345.com/"},{c:"AI智能体",n:"QoderWork",d:"阿里Qoder团队推出的桌面端AI智能体",u:"https://qoder.alibaba.com/"},{c:"AI智能体",n:"LobsterAI",d:"网易推出的全场景办公助手Agent",u:"https://netease.com/"},{c:"AI智能体",n:"Kevvee",d:"全球首个AI出海内容GTM策略Agent",u:"https://kevvee.com/"},{c:"AI智能体",n:"Matrix",d:"超长时间自动化运行的主动式多Agent协作平台",u:"https://matrix.ai/"},{c:"AI智能体",n:"Manus",d:"蝴蝶效应公司推出的首款自主通用AI Agent",u:"https://manus.im/"},{c:"AI智能体",n:"腾讯Marvis",d:"腾讯应用宝团队推出的操作系统级AI助手",u:"https://tencent.com/"},{c:"AI智能体",n:"Hermes Agent",d:"Nous Research开源的自主AI Agent框架",u:"https://nousresearch.com/"},{c:"AI智能体",n:"happycapy",d:"Trickle团队推出的云端AI Agent计算机",u:"https://trickle.so/"},{c:"AI智能体",n:"Genspark",d:"通用AI智能体，一站式AI工作空间",u:"https://www.genspark.ai/"},{c:"AI智能体",n:"OiiOii",d:"全球首个专业动画创作Agent",u:"https://oiioii.ai/"},
-{c:"AI编程工具",n:"TRAE",d:"字节跳动推出的AI IDE编程工具",u:"https://www.trae.ai/"},{c:"AI编程工具",n:"秒哒",d:"无代码AI应用开发平台，一句话做应用",u:"https://miaoda.ai/"},{c:"AI编程工具",n:"码上飞",d:"免费生成小程序/APP/网页",u:"https://codefly.ai/"},{c:"AI编程工具",n:"代码小浣熊",d:"商汤科技推出的免费AI编程助手",u:"https://sensetime.com/"},{c:"AI编程工具",n:"Codex",d:"OpenAI推出的AI编程智能体",u:"https://openai.com/"},{c:"AI编程工具",n:"Claude Code",d:"Anthropic推出的AI编程工具",u:"https://claude.ai/"},{c:"AI编程工具",n:"Qoder",d:"阿里巴巴推出的AI Agentic编程工具",u:"https://qoder.alibaba.com/"},{c:"AI编程工具",n:"OpenCode",d:"开源AI编程工具，Claude Code最佳平替",u:"https://opencode.ai/"},{c:"AI编程工具",n:"Kilo Code",d:"开源的AI编程扩展插件",u:"https://kilocode.ai/"},{c:"AI编程工具",n:"Google Antigravity",d:"谷歌推出的AI IDE编程智能体",u:"https://google.com/"},{c:"AI编程工具",n:"Kiro",d:"亚马逊公司推出的AI IDE",u:"https://aws.amazon.com/"},{c:"AI编程工具",n:"Cursor",d:"AI代码编辑器，快速编程和软件开发",u:"https://cursor.sh/"},{c:"AI编程工具",n:"MiMo Code",d:"小米大模型团队开源的新一代AI编程助手",u:"https://xiaomi.com/"},{c:"AI编程工具",n:"YouWare",d:"一站式AI编程社区与开发平台",u:"https://youware.ai/"},{c:"AI编程工具",n:"Zcode",d:"智谱推出的轻量级AI IDE编程工具",u:"https://open.bigmodel.cn/"},{c:"AI编程工具",n:"CodeBuddy IDE",d:"腾讯推出的全栈开发AI IDE",u:"https://copilot.tencent.com/"},{c:"AI编程工具",n:"Lovable",d:"全栈AI编程工具，一句话构建网站应用",u:"https://lovable.dev/"},{c:"AI编程工具",n:"CatPaw",d:"美团推出的AI IDE编程工具",u:"https://meituan.com/"},{c:"AI编程工具",n:"Augment Code",d:"AI编程辅助工具，专为大型代码库设计",u:"https://augmentcode.com/"},{c:"AI编程工具",n:"AgnesCode",d:"Agnes AI推出的桌面端AI编程工作台",u:"https://agnesc.ai/"},{c:"AI编程工具",n:"MonkeyCode",d:"长亭科技开源的AI编程助手与企业级平台",u:"https://chaitin.cn/"},{c:"AI编程工具",n:"通义灵码",d:"阿里推出的免费AI编程工具，基于通义大模型",u:"https://tongyi.aliyun.com/lingma/"},{c:"AI编程工具",n:"GitHub Copilot",d:"GitHub推出的AI编程工具",u:"https://github.com/features/copilot/"},{c:"AI编程工具",n:"Firebase Studio",d:"谷歌一站式开发全栈应用",u:"https://firebase.google.com/"},{c:"AI编程工具",n:"Windsurf",d:"Codeium公司推出的AI编程工具",u:"https://codeium.com/windsurf/"},{c:"AI编程工具",n:"Bolt.new",d:"StackBlitz推出的全栈AI代码工具",u:"https://bolt.new/"},{c:"AI编程工具",n:"InfCode",d:"词元无限推出的企业级AI编程工具",u:"https://infcode.ai/"},{c:"AI编程工具",n:"CodeFlicker",d:"快手推出的AI原生IDE编程工具",u:"https://kuaishou.com/"},{c:"AI编程工具",n:"Clacky AI",d:"打造L3级的Coding Studio",u:"https://clacky.ai/"},{c:"AI编程工具",n:"Replit Agent",d:"AI初创公司Replit推出的AI编程工具",u:"https://replit.com/"}];
+const TOOLS=[{c:"AI智能体",n:"Manus",d:"蝴蝶效应首款自主通用AI Agent",u:"https://manus.im/"},{c:"AI智能体",n:"TRAE Work",d:"字节跳动AI原生工作台",u:"https://www.trae.ai/"},{c:"AI智能体",n:"Genspark",d:"一站式AI工作空间",u:"https://www.genspark.ai/"},{c:"AI智能体",n:"Flowith",d:"画布式AI智能体工具",u:"https://flowith.io/"},{c:"AI智能体",n:"OpenClaw",d:"开源免费个人AI助手",u:"https://github.com/openclaw/"},{c:"AI智能体",n:"Seko",d:"创编一体AI视频Agent",u:"https://seko.sensetime.com/"},{c:"AI智能体",n:"讯飞星辰Agent",d:"科大讯飞AI智能体开发平台",u:"https://xingchen.xfyun.cn/"},{c:"AI智能体",n:"小云雀",d:"字节剪映AI创作Agent",u:"https://jianying.com/"},{c:"AI编程工具",n:"Cursor",d:"AI代码编辑器",u:"https://cursor.sh/"},{c:"AI编程工具",n:"GitHub Copilot",d:"GitHub AI编程工具",u:"https://github.com/features/copilot/"},{c:"AI编程工具",n:"TRAE",d:"字节AI IDE",u:"https://www.trae.ai/"},{c:"AI编程工具",n:"通义灵码",d:"阿里免费AI编程",u:"https://tongyi.aliyun.com/lingma/"},{c:"AI编程工具",n:"CodeBuddy IDE",d:"腾讯全栈AI IDE",u:"https://copilot.tencent.com/"},{c:"AI编程工具",n:"Qoder",d:"阿里Agentic编程",u:"https://qoder.alibaba.com/"},{c:"AI编程工具",n:"Windsurf",d:"Codeium AI编程工具",u:"https://codeium.com/windsurf/"},{c:"AI编程工具",n:"Bolt.new",d:"StackBlitz全栈AI",u:"https://bolt.new/"},{c:"AI编程工具",n:"Claude Code",d:"Anthropic AI编程",u:"https://claude.ai/"},{c:"AI编程工具",n:"Lovable",d:"全栈AI编程",u:"https://lovable.dev/"}];
 
-let ALL=[], curType="free", curCat=null, curTool=null;
-let siteNews=[], newsIdx=0, newsTimer=null;
-
-function $(id){ return document.getElementById(id); }
+let ALL=[],curType="free",curCat=null,curTool=null,news=[],ni=0,nt=null;
+function $(id){return document.getElementById(id);}
 
 async function load(){
-  try { const r=await fetch(API+"/api/tokens"); ALL=await r.json(); } catch(e){ ALL=[]; }
-  buildSidebar(); render();
-  $("sideStat").textContent = ALL.length+" 个 API";
-  loadSiteNews();
+  try{const r=await fetch(API+"/api/tokens");ALL=await r.json();}catch(e){ALL=[];}
+  bs();rf();ln();$("sideStat").textContent=ALL.length+" API";
 }
 
-function buildSidebar(){
-  let h=`<a href="#" class="${!curCat&&!curTool?'active':''}" data-cat="" data-tool=""><span class="si">📦</span><span>全部模型</span><span class="n">${ALL.length}</span></a>`;
+// 侧边栏链接只用 data 属性，点击由事件委托处理
+function bs(){
+  let h=`<a data-cat="all" data-tool="" class="${!curCat&&!curTool?'active':''}"><span class="si">📦</span><span>全部模型</span><span class="n">${ALL.length}</span></a>`;
   for(const c of CATS){
-    const n = ALL.filter(t=>{
-      if(t.category===c) return true;
-      const mp={"文本模型":["对话","长文本","翻译","中文"],"编程模型":["写代码"],"视频模型":["视频","视频生成","数字人","3D"],"音频模型":["语音","语音合成","TTS","语音识别","ASR","语音克隆","音乐"],"图片模型":["画图","图像生成","图像编辑","品牌设计","游戏资产","商用"],"推理模型":["推理","搜索","开源","高速","本地","embeddings"]};
-      return (mp[c]||[]).some(k=>(t.tags||[]).includes(k));
-    }).length;
-    h += `<a href="#" class="${c===curCat?'active':''}" data-cat="${c}" data-tool=""><span class="si">${CI[c]}</span><span>${c}</span><span class="n">${n}</span></a>`;
+    const n=ALL.filter(t=>t.category===c||({"文本模型":["对话","长文本","翻译","中文"],"编程模型":["写代码"],"视频模型":["视频","视频生成","数字人","3D"],"音频模型":["语音","语音合成","TTS","语音识别","ASR","语音克隆","音乐"],"图片模型":["画图","图像生成","图像编辑","品牌设计","游戏资产","商用"],"推理模型":["推理","搜索","开源","高速","本地","embeddings"]}[c]||[]).some(k=>(t.tags||[]).includes(k))).length;
+    h+=`<a data-cat="${c}" data-tool="" class="${c===curCat?'active':''}"><span class="si">${CI[c]}</span><span>${c}</span><span class="n">${n}</span></a>`;
   }
-  $("sideNav").innerHTML = h;
-
-  let th=`<a href="#" class="small ${curTool==='AI智能体'?'active':''}" data-tool="AI智能体" data-cat=""><span class="si">🤖</span><span>AI智能体</span><span class="n">30</span></a>`;
-  th+=`<a href="#" class="small ${curTool==='AI编程工具'?'active':''}" data-tool="AI编程工具" data-cat=""><span class="si">💻</span><span>AI编程工具</span><span class="n">30</span></a>`;
-  $("toolNav").innerHTML = th;
+  $("sideNav").innerHTML=h;
+  $("toolNav").innerHTML=`<a data-tool="AI智能体" data-cat="" class="small${curTool==='AI智能体'?' active':''}"><span class="si">🤖</span><span>AI智能体</span><span class="n">30</span></a><a data-tool="AI编程工具" data-cat="" class="small${curTool==='AI编程工具'?' active':''}"><span class="si">💻</span><span>AI编程工具</span><span class="n">30</span></a>`;
 }
 
-function pickCat(c){ curCat=(curCat===c)?null:c; curTool=null; buildSidebar(); render(); }
-function pickTool(t){ curTool=(curTool===t)?null:t; curCat=null; buildSidebar(); render(); }
+// 事件委托：点击侧边栏任意链接
+$("sideNav").addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;e.preventDefault();const c=a.dataset.cat;pickCat(c==="all"?null:c);});
+$("toolNav").addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;e.preventDefault();const t=a.dataset.tool;pickTool(t||null);});
 
-function switchVM(t){ curType=t; document.querySelectorAll(".tbar-tab").forEach(e=>e.classList.toggle("active",e.dataset.type===t)); render(); }
+function pickCat(c){curCat=(curCat===c)?null:c;curTool=null;bs();rf();}
+function pickTool(t){curTool=(curTool===t)?null:t;curCat=null;bs();rf();}
+function swt(t){curType=t;document.querySelectorAll(".tbar-tab").forEach(e=>e.classList.toggle("active",e.dataset.type===t));rf();}
 
-function filtered(){
+function getFav(u){try{return`https://www.google.com/s2/favicons?domain=${new URL(u).hostname}&sz=64`;}catch(e){return"";}}
+
+function rf(){
   let list;
+  if(curTool){
+    // 工具模式
+    list=TOOLS.filter(t=>t.c===curTool);
+    $("list").innerHTML=`<div class="subtitle">${curTool} · ${list.length} 个工具</div><div class="tool-grid">${list.map(t=>`<div class="tcard"><div class="ti"><img src="${getFav(t.u)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${t.n.charAt(0)}</span></div><div class="tb"><b>${t.n}</b><div class="td">${t.d}</div></div><a class="btn btn-pri" href="${t.u}" target="_blank">官网</a></div>`).join("")}</div>`;
+    $("tbar").style.display="none";$("#q").parentElement.parentElement.style.display="none";
+    return;
+  }
+  $("tbar").style.display="";$("#q").parentElement.parentElement.style.display="";
   if(curCat){
-    // 分类模式：全部显示该类的 token，不分免费/付费
     const mp={"文本模型":["对话","长文本","翻译","中文"],"编程模型":["写代码"],"视频模型":["视频","视频生成","数字人","3D"],"音频模型":["语音","语音合成","TTS","语音识别","ASR","语音克隆","音乐"],"图片模型":["画图","图像生成","图像编辑","品牌设计","游戏资产","商用"],"推理模型":["推理","搜索","开源","高速","本地","embeddings"]};
     const kw=mp[curCat]||[];
-    list = ALL.filter(t=>t.category===curCat||(t.tags||[]).some(tag=>kw.includes(tag)));
-  } else {
-    // 全部模型模式：按免费/付费过滤
-    list = ALL.filter(t=>t.type===curType);
-  }
-  const q=(document.querySelector("#q")?document.querySelector("#q").value:"").trim().toLowerCase();
-  if(q) list=list.filter(t=>(t.name||"").toLowerCase().includes(q)||(t.tags||[]).join(",").toLowerCase().includes(q));
-  return list;
-}
-function getFav(u){ try{return `https://www.google.com/s2/favicons?domain=${new URL(u).hostname}&sz=64`;}catch(e){return"";} }
-
-function render(){
-  const fc=filtered();
-  let h=`<section class="featured-wrap" id="ns" style="display:none">
-    <div class="feat-img"><img id="fi" src="" alt="" onerror="this.style.display='none';document.getElementById('ff').style.display='flex'"/>
-    <div class="feat-fb" id="ff"><span></span></div><div class="feat-dots" id="fd"></div></div>
-    <div class="feat-text"><div class="ft-head"><div class="ft-tag">推荐 API Token</div><div class="ft-arrow"><button onclick="pv()">‹</button><button onclick="nx()">›</button></div></div><ul class="feat-list" id="fl"></ul></div></section>
-    <div class="tbar"><div class="tbar-tabs">
-      <div class="tbar-tab active" data-type="free" onclick="switchVM('free')">🆓 免费</div>
-      <div class="tbar-tab" data-type="paid" onclick="switchVM('paid')">💎 付费</div></div>
-    <span class="tbar-stat"><b style="color:var(--primary)">${ALL.length}</b> 个 API · ${curType==="free"?"免费榜":"付费榜"}</span>
-    </div><div class="search-bar"><div class="search-box"><input id="q" placeholder="搜索 API Token（按名称/标签）" oninput="render()"/></div></div>`;
-
-  if(curTool){
-    const tools = TOOLS.filter(t=>t.c===curTool);
-    h += `<div class="subtitle">${curTool} · ${tools.length} 个工具</div><div class="tool-grid">`;
-    tools.forEach(t=>{
-      h += `<div class="tcard"><div class="ti"><img src="${getFav(t.u)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${t.n.charAt(0)}</span></div>
-        <div class="tb"><b>${t.n}</b><div class="td">${t.d}</div><div class="tcat">${t.c}</div></div>
-        <a class="btn btn-pri" href="${t.u}" target="_blank">官网</a></div>`;
-    });
-    h += `</div>`;
-  } else {
-    h += `<div class="subtitle">共 ${fc.length} 个${curCat?" · "+curCat:""}${!curCat?(" · "+(curType==="free"?"免费":"付费")):""}</div><div class="grid">`;
-    fc.forEach(t=>{
-      const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);
-      h += `<div class="card"><div class="ci"><img src="${getFav(t.url||'')}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${(t.name||"?").trim().charAt(0)}</span></div>
-        <div class="cb"><div class="cn">${t.name}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span>${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}</div>
-        <div class="ct">${(t.tags||[]).slice(0,5).map(x=>`<span class="chip">${x}</span>`).join("")}</div><div class="cd">${t.description||""}</div>
-        ${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.slice(0,2).map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}
-        <div class="cf"><button class="btn btn-pri" onclick="det('${t.id}')">详情</button><a class="btn btn-ghost" href="${t.url}" target="_blank">前往 ↗</a></div></div></div>`;
-    });
-    h += `</div>`;
-  }
-  $("c").innerHTML = h;
-  if(siteNews.length){ $("ns").style.display="flex"; rns(false); }
+    list=ALL.filter(t=>t.category===curCat||(t.tags||[]).some(tag=>kw.includes(tag)));
+  }else{list=ALL.filter(t=>t.type===curType);}
+  const q=($("q").value||"").trim().toLowerCase();
+  if(q)list=list.filter(t=>(t.name||"").toLowerCase().includes(q)||(t.tags||[]).join(",").toLowerCase().includes(q));
+  $("tbs").innerHTML=`<b style="color:var(--primary)">${ALL.length}</b> 个 API · ${curCat?curCat:(curType==="free"?"免费榜":"付费榜")}`;
+  $("sub").textContent=`共 ${list.length} 个`;
+  if(!list.length){$("list").innerHTML='<div style="color:var(--muted);text-align:center;padding:40px">该分类下暂无 token</div>';return;}
+  $("list").innerHTML=`<div class="grid">${list.map(t=>{const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);return`<div class="card"><div class="ci"><img src="${getFav(t.url||'')}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="fb" style="display:none">${(t.name||"?").trim().charAt(0)}</span></div><div class="cb"><div class="cn">${t.name}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span>${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}</div><div class="ct">${(t.tags||[]).slice(0,5).map(x=>`<span class="chip">${x}</span>`).join("")}</div><div class="cd">${t.description||""}</div>${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.slice(0,2).map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}<div class="cf"><button class="btn btn-pri" onclick="det('${t.id}')">详情</button><a class="btn btn-ghost" href="${t.url}" target="_blank">前往 ↗</a></div></div></div>`}).join("")}</div>`;
 }
 
 function det(id){
-  const t=ALL.find(x=>x.id===id); if(!t) return;
+  const t=ALL.find(x=>x.id===id);if(!t)return;
   const fl=t.type==="free"?(t.freeQuotaList&&t.freeQuotaList.length?t.freeQuotaList:t.freeQuota?[t.freeQuota]:[]):(t.priceList&&t.priceList.length?t.priceList:t.priceStandard?[t.priceStandard]:[]);
-  document.body.insertAdjacentHTML("beforeend",`<div style="position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:400;display:flex;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.remove()"><div style="background:#fff;border-radius:14px;max-width:620px;width:100%;max-height:86vh;overflow:auto;padding:22px 26px;"><span style="float:right;cursor:pointer;font-size:20px;color:var(--muted)" onclick="this.closest('[style*=fixed]').remove()">✕</span><h3 style="margin:0 0 12px">${t.name}</h3><div style="margin:6px 0">${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span></div><p style="color:var(--muted)">${t.description||""}</p>${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓 免费额度":"💎 付费详情"}</b><ul>${fl.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}<p><b>⚠️ 限制：</b>${t.limits||"—"}</p><p><b>评分：</b>${t.rating}/5 ｜ <b>性价比：</b>${t.valueScore}/5</p>${t.expertise?`<p><b>详解：</b>${t.expertise}</p>`:""}<p style="margin-top:14px;"><a class="btn btn-pri" href="${t.url}" target="_blank">前往官网 ↗</a></p></div></div>`);
+  document.body.insertAdjacentHTML("beforeend",`<div style="position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:400;display:flex;align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this)this.remove()"><div style="background:#fff;border-radius:14px;max-width:620px;width:100%;max-height:86vh;overflow:auto;padding:22px 26px"><span style="float:right;cursor:pointer;font-size:20px;color:var(--muted)" onclick="this.closest('[style*=fixed]').remove()">✕</span><h3 style="margin:0 0 12px">${t.name}</h3>${t.brand?`<span class="badge vendor">${t.brand}</span>`:""}${t.country?`<span class="badge country">${t.country}</span>`:""}<span class="badge ${t.type}">${t.type==="free"?"免费":"付费"}</span><p style="color:var(--muted)">${t.description||""}</p>${fl.length?`<div class="ql"><b>${t.type==="free"?"🆓":"💎"}</b><ul>${fl.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}<p><b>⚠️ 限制：</b>${t.limits||"—"}</p><p><b>评分：</b>${t.rating}/5 ｜ <b>性价比：</b>${t.valueScore}/5</p>${t.expertise?`<p><b>详解：</b>${t.expertise}</p>`:""}<p><a class="btn btn-pri" href="${t.url}" target="_blank">前往官网 ↗</a></p></div></div>`);
 }
 
-// carousel
-async function loadSiteNews(){
-  try{siteNews=await(await fetch(API+"/api/site-news")).json();}catch(e){siteNews=[];return;}
-  if(!siteNews.length) return;
-  $("ns").style.display="flex";rns(false);
-  newsTimer=setInterval(()=>{newsIdx=(newsIdx+1)%siteNews.length;rns(true);},5000);
-}
-function rns(a){
-  if(!siteNews.length)return;const n=siteNews[newsIdx],i=$("fi"),f=$("ff");
-  if(n.image){f.style.display="none";i.style.display="";if(a){i.classList.add("hiding");setTimeout(()=>{i.src=n.image;i.classList.remove("hiding");},350);}else i.src=n.image;}
-  else{i.style.display="none";f.style.display="flex";f.querySelector("span").textContent=n.title;}
-  $("fd").innerHTML=siteNews.map((_,x)=>`<span class="${x===newsIdx?'active':''}" onclick="gn(${x})"></span>`).join("");
-  $("fl").innerHTML=siteNews.map((it,x)=>`<li class="${x===newsIdx?'on':''}" onclick="gn(${x})"><a href="${it.link}" target="_blank">${it.title}<span class="f-badge">推荐</span></a><div class="s">${it.summary||""}</div></li>`).join("");
-}
-function gn(x){newsIdx=x;clearInterval(newsTimer);rns(true);newsTimer=setInterval(()=>{newsIdx=(newsIdx+1)%siteNews.length;rns(true);},5000);}
-function pv(){gn((newsIdx-1+siteNews.length)%siteNews.length);}
-function nx(){gn((newsIdx+1)%siteNews.length);}
+// 轮播（独立于 render，只更新轮播内部元素）
+async function ln(){try{news=await(await fetch(API+"/api/site-news")).json();}catch(e){news=[];return;}if(!news.length)return;$("ns").classList.remove("hide");rn(false);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true);},5000);}
+function rn(a){const n=news[ni],i=$("fi"),f=$("ff");if(n.image){f.style.display="none";i.style.display="";if(a){i.classList.add("hiding");setTimeout(()=>{i.src=n.image;i.classList.remove("hiding");},350);}else i.src=n.image;}else{i.style.display="none";f.style.display="flex";f.querySelector("span").textContent=n.title;}$("fd").innerHTML=news.map((_,x)=>`<span class="${x===ni?'active':''}" onclick="gn(${x})"></span>`).join("");$("fl").innerHTML=news.map((it,x)=>`<li class="${x===ni?'on':''}" onclick="gn(${x})"><a href="${it.link}" target="_blank">${it.title}<span class="f-badge">推荐</span></a><div class="s">${it.summary||""}</div></li>`).join("");}
+function gn(x){ni=x;clearInterval(nt);rn(true);nt=setInterval(()=>{ni=(ni+1)%news.length;rn(true);},5000);}
+function pv(){gn((ni-1+news.length)%news.length);}
+function nx(){gn((ni+1)%news.length);}
 
-document.addEventListener("DOMContentLoaded",()=>{
-  // 侧边栏事件委托（不再依赖 onclick 属性）
-  document.getElementById("sideNav").addEventListener("click", function(e){
-    const a = e.target.closest("a"); if (!a) return;
-    e.preventDefault();
-    const cat = a.dataset.cat;
-    pickCat(cat || null); pickTool(null);
-  });
-  document.getElementById("toolNav").addEventListener("click", function(e){
-    const a = e.target.closest("a"); if (!a) return;
-    e.preventDefault();
-    const tool = a.dataset.tool;
-    pickTool(tool || null); pickCat(null);
-  });
-  loadSiteNews(); load();
-});
+ln();load();
 </script>
 </body>
 </html>
