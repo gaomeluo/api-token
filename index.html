@@ -153,10 +153,50 @@ function avatar(name){
   return "data:image/svg+xml,"+encodeURIComponent(svg);
 }
 
-/* ---- brand logo: localized favicons (zero runtime network), letter-avatar fallback ---- */
-function hostOf(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "";}}
-function logo(domain){domain=(domain||"").replace(/^www\./,"");return (window.__LOGOS__&&window.__LOGOS__[domain])||null;}
-function brandImg(name,url){const l=logo(hostOf(url));return l?l:avatar(name);}
+/* ---- brand logo: built-in localized favicons (zero runtime network for known brands),
+   runtime auto-fetch for NEW brands added in admin, letter-avatar as final fallback ---- */
+function hostOf(u){try{return new URL(u).hostname;}catch(e){return "";}}
+function normHost(d){d=(d||"");while(d.indexOf("www.")===0)d=d.slice(4);return d;}
+function logo(domain){domain=normHost(domain);return (window.__LOGOS__&&window.__LOGOS__[domain])||null;}
+
+/* runtime-resolved logos for brands missing from logos.js (e.g. added later in admin).
+   Persisted to localStorage so repeat visits are instant; letter-avatar is the fallback. */
+const _LSLOGO="apitk_rtlogos_v1";
+const _rtResolved={};
+try{Object.assign(_rtResolved,JSON.parse(localStorage.getItem(_LSLOGO)||"{}"));}catch(e){}
+function _saveRt(){try{localStorage.setItem(_LSLOGO,JSON.stringify(_rtResolved));}catch(e){}}
+const _rtPending={},_rtFailed={};
+function brandImg(name,url){
+  const h=normHost(hostOf(url));
+  if(h&&logo(h))return logo(h);
+  if(h&&_rtResolved[h])return _rtResolved[h];
+  return avatar(name);
+}
+function resolveLogos(){
+  const imgs=document.querySelectorAll("img.brand-ico");
+  for(let i=0;i<imgs.length;i++){
+    const im=imgs[i];
+    const h=im.getAttribute("data-host");
+    if(!h||logo(h)||_rtResolved[h]||_rtFailed[h]||_rtPending[h])continue;
+    _rtPending[h]=true;
+    (function(domain){
+      const sources=["https://icons.duckduckgo.com/ip3/"+domain+".ico","https://favicon.im/"+domain];
+      let idx=0;
+      (function tryNext(){
+        if(idx>=sources.length){_rtFailed[domain]=true;_rtPending[domain]=false;return;}
+        const u=sources[idx++];
+        const probe=new Image();
+        probe.onload=function(){
+          _rtResolved[domain]=u;_saveRt();_rtPending[domain]=false;
+          const live=document.querySelector('img.brand-ico[data-host="'+domain+'"]');
+          if(live)live.src=u;
+        };
+        probe.onerror=tryNext;
+        probe.src=u;
+      })();
+    })(h);
+  }
+}
 
 /* ---- cache helpers (instant paint + offline) ---- */
 function rc(k){try{const v=JSON.parse(localStorage.getItem(k));return v&&v.d?v.d:null;}catch(e){return null;}}
@@ -217,7 +257,8 @@ function rf(){
     let tl=(window.__TOOLS__||[]).filter(function(t){return t.c===curTool;});
     $("tbar").style.display="none";
     $("sub").textContent="";
-    $("list").innerHTML='<div class="tgrid">'+tl.map(function(t){return '<div class="tcard"><div class="ico"><img src="'+brandImg(t.n,t.u)+'" alt="" loading="lazy"></div><div class="tb"><b>'+esc(t.n)+'</b><div class="td">'+esc(t.d)+'</div></div><a class="btn btn-pri" href="'+esc(t.u)+'" target="_blank" rel="noopener">官网</a></div>';}).join("")+'</div>';
+    $("list").innerHTML='<div class="tgrid">'+tl.map(function(t){return '<div class="tcard"><div class="ico"><img class="brand-ico" data-host="'+esc(normHost(hostOf(t.u)))+'" src="'+brandImg(t.n,t.u)+'" alt="" loading="lazy"></div><div class="tb"><b>'+esc(t.n)+'</b><div class="td">'+esc(t.d)+'</div></div><a class="btn btn-pri" href="'+esc(t.u)+'" target="_blank" rel="noopener">官网</a></div>';}).join("")+'</div>';
+    resolveLogos();
     return;
   }
   $("tbar").style.display=curCat?"none":"";
@@ -231,8 +272,9 @@ function rf(){
   if(!list.length){$("list").innerHTML='<div style="color:var(--muted);text-align:center;padding:40px">暂无</div>';return;}
   $("list").innerHTML='<div class="grid">'+list.map(function(t){
     let fl=quotaList(t);
-    return'<div class="card"><div class="ico"><img src="'+brandImg(t.name,t.url)+'" alt="" loading="lazy"></div><div class="cb"><div class="cn">'+esc(t.name)+'<span class="badge '+t.type+'">'+(t.type==="free"?"免费":"付费")+'</span>'+(t.brand?'<span class="badge vendor">'+esc(t.brand)+'</span>':'')+(t.country?'<span class="badge country">'+esc(t.country)+'</span>':'')+'</div><div class="ct">'+(t.tags||[]).slice(0,5).map(function(x){return '<span class="chip">'+esc(x)+'</span>';}).join("")+'</div><div class="cd">'+(t.description||"")+'</div>'+(fl.length?'<div class="ql"><b>'+(t.type==="free"?"🆓":"💎")+'</b><ul>'+fl.slice(0,2).map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>':"")+'<div class="cf"><button class="btn btn-pri" data-detail="'+esc(t.id)+'">详情</button><a class="btn btn-ghost" href="'+esc(t.url)+'" target="_blank" rel="noopener">前往 ↗</a></div></div></div>';
+    return'<div class="card"><div class="ico"><img class="brand-ico" data-host="'+esc(normHost(hostOf(t.url)))+'" src="'+brandImg(t.name,t.url)+'" alt="" loading="lazy"></div><div class="cb"><div class="cn">'+esc(t.name)+'<span class="badge '+t.type+'">'+(t.type==="free"?"免费":"付费")+'</span>'+(t.brand?'<span class="badge vendor">'+esc(t.brand)+'</span>':'')+(t.country?'<span class="badge country">'+esc(t.country)+'</span>':'')+'</div><div class="ct">'+(t.tags||[]).slice(0,5).map(function(x){return '<span class="chip">'+esc(x)+'</span>';}).join("")+'</div><div class="cd">'+(t.description||"")+'</div>'+(fl.length?'<div class="ql"><b>'+(t.type==="free"?"🆓":"💎")+'</b><ul>'+fl.slice(0,2).map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>':"")+'<div class="cf"><button class="btn btn-pri" data-detail="'+esc(t.id)+'">详情</button><a class="btn btn-ghost" href="'+esc(t.url)+'" target="_blank" rel="noopener">前往 ↗</a></div></div></div>';
   }).join("")+'</div>';
+  resolveLogos();
 }
 function det(id){
   let t=ALL.find(function(x){return x.id===id;});if(!t)return;

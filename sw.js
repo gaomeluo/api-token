@@ -2,9 +2,9 @@
  * 作用：缓存应用外壳（HTML + 数据快照），使二次访问与弱网/离线也能秒开。
  * 数据以「实时 API 优先、localStorage 缓存、静态快照兜底」三重保障，
  * 这里只负责把静态资源缓存住，html 采用 network-first 以便更新能生效。
- * ⚠️ 更新数据快照(data.tokens.js / data.news.js)后，请修改 CACHE 版本号以触发刷新。
+ * ⚠️ 更新前端代码/数据快照后，请修改 CACHE 版本号以触发刷新。
  */
-const CACHE = "apitk-shell-v2";
+const CACHE = "apitk-shell-v3";
 const SHELL = ["./", "index.html", "data.tokens.js", "data.news.js", "data.tools.js", "logos.js", "sw.js"];
 
 self.addEventListener("install", function(e){
