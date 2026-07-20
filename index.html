@@ -172,15 +172,17 @@ function brandImg(name,url){
   if(h&&_rtResolved[h])return _rtResolved[h];
   return avatar(name);
 }
+/* 确认无真实 favicon 的域名(各源只返回占位SVG),跳过运行时抓取,保留干净字母头像 */
+const NO_LOGO=new Set(["xingchen.xfyun.cn","qoder.alibaba.com","netease.com","miaoda.ai","agnesc.ai","infcode.ai","play.ht"]);
 function resolveLogos(){
   const imgs=document.querySelectorAll("img.brand-ico");
   for(let i=0;i<imgs.length;i++){
     const im=imgs[i];
     const h=im.getAttribute("data-host");
-    if(!h||logo(h)||_rtResolved[h]||_rtFailed[h]||_rtPending[h])continue;
+    if(!h||logo(h)||NO_LOGO.has(h)||_rtResolved[h]||_rtFailed[h]||_rtPending[h])continue;
     _rtPending[h]=true;
     (function(domain){
-      const sources=["https://icons.duckduckgo.com/ip3/"+domain+".ico","https://favicon.im/"+domain];
+      const sources=["https://icons.duckduckgo.com/ip3/"+domain+".ico"];
       let idx=0;
       (function tryNext(){
         if(idx>=sources.length){_rtFailed[domain]=true;_rtPending[domain]=false;return;}
