@@ -4,8 +4,8 @@
  * 这里只负责把静态资源缓存住，html 采用 network-first 以便更新能生效。
  * ⚠️ 更新数据快照(data.tokens.js / data.news.js)后，请修改 CACHE 版本号以触发刷新。
  */
-const CACHE = "apitk-shell-v1";
-const SHELL = ["./", "index.html", "data.tokens.js", "data.news.js", "data.tools.js", "sw.js"];
+const CACHE = "apitk-shell-v2";
+const SHELL = ["./", "index.html", "data.tokens.js", "data.news.js", "data.tools.js", "logos.js", "sw.js"];
 
 self.addEventListener("install", function(e){
   e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(SHELL);}).then(function(){return self.skipWaiting();}));

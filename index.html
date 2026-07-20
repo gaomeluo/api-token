@@ -14,7 +14,8 @@
 *{box-sizing:border-box}body{margin:0;font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);line-height:1.5;background:var(--bg);overflow-x:hidden;-webkit-text-size-adjust:100%}
 a{color:var(--primary);text-decoration:none}
 .layout{display:flex;min-height:100vh}
-.sidebar{width:200px;flex-shrink:0;background:#fff;border-right:1px solid var(--line);position:fixed;top:0;left:0;bottom:0;z-index:50;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sidebar{width:200px;flex-shrink:0;background:#fff;border-right:1px solid var(--line);position:fixed;top:0;left:0;bottom:0;z-index:50;display:flex;flex-direction:column;overflow:hidden}
+.sb-top{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .sb-logo{padding:14px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
 .sb-logo svg{width:30px;height:30px;flex-shrink:0}
 .sb-logo span{font-size:14px;font-weight:700}
@@ -25,10 +26,10 @@ a{color:var(--primary);text-decoration:none}
 .sb-nav a .n{margin-left:auto;font-size:11px;color:#9ca3af}
 .sb-nav a.on .n{color:var(--primary)}
 .sb-nav a.sub{padding-left:24px;font-size:12px}
-.sb-ft{padding:10px 16px;font-size:10px;color:#9ca3af;border-top:1px solid var(--line);margin-top:auto}
+.sb-ft{padding:10px 16px;font-size:10px;color:#9ca3af;border-top:1px solid var(--line);flex-shrink:0;text-align:center;line-height:1.6}
 .main{margin-left:200px;flex:1;min-width:0}
 .content{padding:16px 20px calc(80px + env(safe-area-inset-bottom));max-width:1200px}
-@media(max-width:760px){.layout{flex-direction:column}.sidebar{position:relative;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);overflow-x:auto}.sidebar .sb-logo{padding:8px 12px}.sidebar .sb-logo span{display:inline}.sb-nav{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:2px;padding:4px 8px;-webkit-overflow-scrolling:touch}.sb-nav a{white-space:nowrap;flex-shrink:0;font-size:11px;padding:5px 8px}.sb-nav a .n{display:none}.sb-g{display:none}.main{margin-left:0}.content{padding:10px 8px calc(80px + env(safe-area-inset-bottom))}.caro{flex-direction:column}.caro-l{min-height:150px}.grid{grid-template-columns:1fr}}
+@media(max-width:760px){.layout{flex-direction:column}.sidebar{position:relative;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);overflow:hidden}.sb-top{overflow-x:auto}.sb-ft{margin-top:6px}.sidebar .sb-logo{padding:8px 12px}.sidebar .sb-logo span{display:inline}.sb-nav{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:2px;padding:4px 8px;-webkit-overflow-scrolling:touch}.sb-nav a{white-space:nowrap;flex-shrink:0;font-size:11px;padding:5px 8px}.sb-nav a .n{display:none}.sb-g{display:none}.main{margin-left:0}.content{padding:10px 8px calc(80px + env(safe-area-inset-bottom))}.caro{flex-direction:column}.caro-l{min-height:150px}.grid{grid-template-columns:1fr}}
 
 /* carousel */
 .caro{background:#fff;border-radius:12px;padding:14px 18px;display:flex;gap:14px;margin-bottom:16px;border:1px solid var(--line);min-height:180px}
@@ -100,12 +101,14 @@ a{color:var(--primary);text-decoration:none}
 <body>
 <div class="layout">
 <nav class="sidebar">
-  <div class="sb-logo"><svg viewBox="0 0 34 34"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1677ff"/><stop offset="100%" stop-color="#2979ff"/></linearGradient></defs><circle cx="17" cy="17" r="15" fill="none" stroke="url(#g2)" stroke-width="2.6"/><polygon points="13.5,8.5 6,17 13.5,25.5 8.5,17" fill="url(#g2)"/><polygon points="20.5,8.5 28,17 20.5,25.5 25.5,17" fill="url(#g2)"/></svg><span>API Token 大全</span></div>
-  <div class="sb-g">模型分类</div>
-  <div class="sb-nav" id="navCat"></div>
-  <div class="sb-g">Token工具</div>
-  <div class="sb-nav" id="navTool"></div>
-  <div class="sb-ft" style="text-align:center">© <span id="cpy">2025</span> <a href="https://inurl.link/" target="_blank" style="color:var(--muted)">inurl.link</a></div>
+  <div class="sb-top">
+    <div class="sb-logo"><svg viewBox="0 0 34 34"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1677ff"/><stop offset="100%" stop-color="#2979ff"/></linearGradient></defs><circle cx="17" cy="17" r="15" fill="none" stroke="url(#g2)" stroke-width="2.6"/><polygon points="13.5,8.5 6,17 13.5,25.5 8.5,17" fill="url(#g2)"/><polygon points="20.5,8.5 28,17 20.5,25.5 25.5,17" fill="url(#g2)"/></svg><span>API Token 大全</span></div>
+    <div class="sb-g">模型分类</div>
+    <div class="sb-nav" id="navCat"></div>
+    <div class="sb-g">Token工具</div>
+    <div class="sb-nav" id="navTool"></div>
+  </div>
+  <div class="sb-ft">© <span id="cpy">2025</span> <a href="https://inurl.link/" target="_blank" style="color:var(--muted)">inurl.link</a><br/>All rights reserved</div>
 </nav>
 <main class="main">
   <div class="content">
@@ -125,6 +128,7 @@ a{color:var(--primary);text-decoration:none}
 <script src="data.tokens.js"></script>
 <script src="data.news.js"></script>
 <script src="data.tools.js"></script>
+<script src="logos.js"></script>
 <script>
 "use strict";
 const API=(location.hostname==="localhost"||location.hostname.startsWith("127."))?"":"https://api-token.825370356.workers.dev";
@@ -148,6 +152,11 @@ function avatar(name){
   const svg="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='"+c+"'/><text x='32' y='34' text-anchor='middle' dominant-baseline='central' font-size='34' font-family='PingFang SC,Microsoft YaHei,sans-serif' fill='#fff' font-weight='700'>"+esc(ch)+"</text></svg>";
   return "data:image/svg+xml,"+encodeURIComponent(svg);
 }
+
+/* ---- brand logo: localized favicons (zero runtime network), letter-avatar fallback ---- */
+function hostOf(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "";}}
+function logo(domain){domain=(domain||"").replace(/^www\./,"");return (window.__LOGOS__&&window.__LOGOS__[domain])||null;}
+function brandImg(name,url){const l=logo(hostOf(url));return l?l:avatar(name);}
 
 /* ---- cache helpers (instant paint + offline) ---- */
 function rc(k){try{const v=JSON.parse(localStorage.getItem(k));return v&&v.d?v.d:null;}catch(e){return null;}}
@@ -208,7 +217,7 @@ function rf(){
     let tl=(window.__TOOLS__||[]).filter(function(t){return t.c===curTool;});
     $("tbar").style.display="none";
     $("sub").textContent="";
-    $("list").innerHTML='<div class="tgrid">'+tl.map(function(t){return '<div class="tcard"><div class="ico"><img src="'+avatar(t.n)+'" alt="" loading="lazy"></div><div class="tb"><b>'+esc(t.n)+'</b><div class="td">'+esc(t.d)+'</div></div><a class="btn btn-pri" href="'+esc(t.u)+'" target="_blank" rel="noopener">官网</a></div>';}).join("")+'</div>';
+    $("list").innerHTML='<div class="tgrid">'+tl.map(function(t){return '<div class="tcard"><div class="ico"><img src="'+brandImg(t.n,t.u)+'" alt="" loading="lazy"></div><div class="tb"><b>'+esc(t.n)+'</b><div class="td">'+esc(t.d)+'</div></div><a class="btn btn-pri" href="'+esc(t.u)+'" target="_blank" rel="noopener">官网</a></div>';}).join("")+'</div>';
     return;
   }
   $("tbar").style.display=curCat?"none":"";
@@ -222,7 +231,7 @@ function rf(){
   if(!list.length){$("list").innerHTML='<div style="color:var(--muted);text-align:center;padding:40px">暂无</div>';return;}
   $("list").innerHTML='<div class="grid">'+list.map(function(t){
     let fl=quotaList(t);
-    return'<div class="card"><div class="ico"><img src="'+avatar(t.name)+'" alt="" loading="lazy"></div><div class="cb"><div class="cn">'+esc(t.name)+'<span class="badge '+t.type+'">'+(t.type==="free"?"免费":"付费")+'</span>'+(t.brand?'<span class="badge vendor">'+esc(t.brand)+'</span>':'')+(t.country?'<span class="badge country">'+esc(t.country)+'</span>':'')+'</div><div class="ct">'+(t.tags||[]).slice(0,5).map(function(x){return '<span class="chip">'+esc(x)+'</span>';}).join("")+'</div><div class="cd">'+(t.description||"")+'</div>'+(fl.length?'<div class="ql"><b>'+(t.type==="free"?"🆓":"💎")+'</b><ul>'+fl.slice(0,2).map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>':"")+'<div class="cf"><button class="btn btn-pri" data-detail="'+esc(t.id)+'">详情</button><a class="btn btn-ghost" href="'+esc(t.url)+'" target="_blank" rel="noopener">前往 ↗</a></div></div></div>';
+    return'<div class="card"><div class="ico"><img src="'+brandImg(t.name,t.url)+'" alt="" loading="lazy"></div><div class="cb"><div class="cn">'+esc(t.name)+'<span class="badge '+t.type+'">'+(t.type==="free"?"免费":"付费")+'</span>'+(t.brand?'<span class="badge vendor">'+esc(t.brand)+'</span>':'')+(t.country?'<span class="badge country">'+esc(t.country)+'</span>':'')+'</div><div class="ct">'+(t.tags||[]).slice(0,5).map(function(x){return '<span class="chip">'+esc(x)+'</span>';}).join("")+'</div><div class="cd">'+(t.description||"")+'</div>'+(fl.length?'<div class="ql"><b>'+(t.type==="free"?"🆓":"💎")+'</b><ul>'+fl.slice(0,2).map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>':"")+'<div class="cf"><button class="btn btn-pri" data-detail="'+esc(t.id)+'">详情</button><a class="btn btn-ghost" href="'+esc(t.url)+'" target="_blank" rel="noopener">前往 ↗</a></div></div></div>';
   }).join("")+'</div>';
 }
 function det(id){
