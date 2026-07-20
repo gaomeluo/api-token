@@ -333,7 +333,7 @@ ln();
 load();
 
 /* service worker for instant repeat loads / offline */
-if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js").catch(function(){});});}
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw-app.js").catch(function(){});});}
 </script>
 </body>
 </html>
